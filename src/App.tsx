@@ -1,34 +1,62 @@
+import GridCanvas from './components/GridCanvas';
+import BackgroundVideo from './components/BackgroundVideo';
+import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
-import Services from './components/Services';
-import Process from './components/Process';
-import Projects from './components/Projects';
 import Skills from './components/Skills';
-import Testimonials from './components/Testimonials';
+import Experience from './components/Experience';
 import Writing from './components/Writing';
+import FeaturedProject from './components/FeaturedProject';
+import Projects from './components/Projects';
+import Certifications from './components/Certifications';
+import Milestones from './components/Milestones';
+import VelocityBanner from './components/VelocityBanner';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import { useMediumArticles } from './hooks/useMediumArticles';
+
+/**
+ * Approximation of the reference's runtime-injected #frosted SVG backdrop
+ * filter. Browsers that don't support url() backdrop-filters fall back to
+ * the blur(20px) saturate(180%) declaration that precedes it in the CSS.
+ */
+function FrostedFilter() {
+  return (
+    <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false">
+      <filter id="frosted">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="6" />
+      </filter>
+    </svg>
+  );
+}
 
 export default function App() {
   const { articles, loading } = useMediumArticles();
 
   return (
-    <div className="bg-white text-[#0A0A0A] font-sans antialiased">
+    <div>
+      <FrostedFilter />
+      <Preloader />
+      <GridCanvas />
+      <BackgroundVideo />
       <Navbar />
       <main>
         <Hero />
         <About />
-        <Services />
-        <Process />
-        <Projects />
         <Skills />
-        <Testimonials />
+        <Experience />
         <Writing articles={articles} loading={loading} />
+        <FeaturedProject />
+        <Projects />
+        <Certifications />
+        <Milestones />
+        <VelocityBanner />
         <Contact />
       </main>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }

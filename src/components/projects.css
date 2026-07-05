@@ -1,0 +1,383 @@
+/* ============================================================
+ * PROJECTS (#projects) — horizontal card carousel with domain
+ * chips, expandable description, glass icon buttons, tech row.
+ * Values ported from specs/projects.md. Arrows + bubbles come
+ * from index.css.
+ * ============================================================ */
+#projects {
+  position: relative;
+}
+
+.experience-details-container-project {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding: 0 2rem;
+  gap: 1rem;
+  position: relative;
+}
+
+.experience-details-container-project .btn2.leftbtn {
+  position: absolute;
+  left: 1rem;
+  z-index: 10;
+}
+
+.experience-details-container-project .btn2.rightbtn {
+  position: absolute;
+  right: 1rem;
+  z-index: 10;
+}
+
+/* --- Track --- */
+.about-containers2 {
+  gap: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-mask: linear-gradient(90deg, #0000, #000 3% 97%, #0000);
+  mask: linear-gradient(90deg, #0000, #000 3% 97%, #0000);
+}
+
+.about-containers2::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- Card --- */
+.details-container {
+  position: relative;
+  padding: 1.5rem;
+  flex: 1 1;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-color: #a3a3a3;
+  text-align: center;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.details-container p {
+  font-size: 0.8rem;
+}
+
+/* --- Domain chip --- */
+.domain-chip {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+.domain-chip.ai-ml {
+  background: linear-gradient(135deg, #673ab7, #3f51b5);
+}
+
+.domain-chip.fullstack {
+  background: linear-gradient(135deg, #4caf50, #2196f3);
+}
+
+.domain-chip.backend {
+  background: linear-gradient(135deg, #ff9800, #f44336);
+}
+
+.domain-chip.computer-vision {
+  background: linear-gradient(135deg, #e91e63, #9c27b0);
+}
+
+.domain-chip.system {
+  background: linear-gradient(135deg, #607d8b, #455a64);
+}
+
+/* --- Expand/collapse info panel --- */
+.info {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-items: center;
+  align-items: center;
+}
+
+.info2 {
+  display: flex;
+  opacity: 0;
+  max-height: 0;
+  width: 0;
+  overflow: hidden;
+  flex-direction: column;
+  gap: 1rem;
+  transform: translateX(-30px) scale(0.95);
+  animation: fadeSlideOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.info2 h3 {
+  font-weight: 500;
+  font-size: medium;
+  transition:
+    opacity 0.4s ease 0.2s,
+    transform 0.4s ease 0.2s;
+}
+
+.info2 h3,
+.info2 p {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.info2 p {
+  width: 200px;
+  font-size: 0.7rem;
+  transition:
+    opacity 0.4s ease 0.35s,
+    transform 0.4s ease 0.35s;
+}
+
+.details-container.expanded .info2 {
+  width: 100%;
+  max-height: 500px;
+  animation: fadeSlideIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.details-container.expanded .info2 h3,
+.details-container.expanded .info2 p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.details-container.expanded .info1 {
+  transform: translateX(-10px);
+}
+
+.info1 {
+  transition: transform 0.3s ease;
+}
+
+.info1:hover {
+  transform: translateX(-10px);
+}
+
+/* --- Image --- */
+.article-container {
+  display: flex;
+  text-align: initial;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: space-around;
+}
+
+.project-img {
+  border-radius: 1rem;
+  width: 280px;
+  height: auto;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease;
+}
+
+.project-img:hover {
+  transform: scale(1.05) rotate(-2deg);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.4);
+}
+
+/* --- Card title --- */
+.project-title {
+  margin: 1rem;
+  color: #000;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+/* --- Glass icon buttons --- */
+.project-icon-btn {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: hsla(0, 0%, 100%, 0.15);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  position: relative;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 1px solid hsla(0, 0%, 100%, 0.3);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
+  color: #000;
+}
+
+.project-icon-btn,
+.project-icon-btn svg {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-icon-btn svg {
+  width: 22px;
+  height: 22px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.project-icon-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, hsla(0, 0%, 100%, 0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-radius: 12px;
+  z-index: 1;
+}
+
+.project-icon-btn:hover {
+  background: hsla(0, 0%, 100%, 0.25);
+  border: 1px solid hsla(0, 0%, 100%, 0.45);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.35);
+}
+
+.project-icon-btn:hover::before {
+  opacity: 1;
+}
+
+.project-icon-btn:hover svg {
+  transform: scale(1.1);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.project-icon-btn:active {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.15),
+    inset 0 2px 4px hsla(0, 0%, 100%, 0.2);
+}
+
+.project-icon-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* --- Tech stack row --- */
+.tech-stack {
+  margin-top: 0.8rem;
+  border-top: 1px solid #a3a3a3;
+  padding-top: 5px;
+}
+
+.iconss {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.iconss .tech-mini-icon {
+  width: 30px;
+  height: 30px;
+  color: #000;
+}
+
+.iconss .tech-mini-chip {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: #444;
+  padding: 2px 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+/* --- Mobile swipe hint --- */
+.swipe-hint {
+  display: none;
+}
+
+/* --- Breakpoints --- */
+@media screen and (max-width: 768px) {
+  #projects {
+    position: relative;
+    height: auto;
+    min-height: fit-content;
+  }
+  .experience-details-container-project .btn2.leftbtn,
+  .experience-details-container-project .btn2.rightbtn {
+    display: none;
+  }
+  .project-title {
+    font-size: 0.95rem;
+  }
+  .swipe-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: #777;
+    animation: swipeHintPulse 1.6s ease-in-out infinite;
+    white-space: nowrap;
+  }
+  .swipe-hint svg {
+    width: 14px;
+    height: 14px;
+    animation: swipeArrowMove 1.6s ease-in-out infinite;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .details-container {
+    padding: 0.7rem;
+  }
+  .project-img {
+    width: 200px;
+  }
+  .about-containers2 {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 2rem 1rem;
+  }
+  .btn-container {
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .experience-details-container-project {
+    padding: 0 0.5rem;
+    gap: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .experience-details-container-project {
+    padding: 0 0.25rem;
+    gap: 0.5rem;
+  }
+  .project-title {
+    font-size: 0.9rem;
+  }
+}

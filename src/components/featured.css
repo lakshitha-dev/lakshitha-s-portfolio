@@ -1,0 +1,397 @@
+/* ============================================================
+ * FEATURED PROJECT (#featured) — overview grid + stats chips +
+ * key-achievements marquee + quote divider.
+ * Values ported from specs/fyp.md.
+ * ============================================================ */
+#featured *,
+#featured ::after,
+#featured ::before {
+  box-sizing: border-box;
+}
+
+.nsf-eyebrow {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #555;
+  margin: 0 0 0.25rem;
+  letter-spacing: 0.02em;
+}
+
+.nsf-title {
+  text-align: center;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 600;
+  margin: 0 0 1.5rem;
+  color: #0a0a0a;
+}
+
+/* --- Overview grid --- */
+.nsf-overview {
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nsf-overview-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.nsf-project-name {
+  font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0;
+  color: #0a0a0a;
+}
+
+.nsf-desc {
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  line-height: 1.6;
+  color: #3a3a3a;
+  margin: 0;
+}
+
+/* --- Stat chips --- */
+.nsf-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.nsf-stat {
+  display: flex;
+  flex-direction: column;
+  padding: 0.6rem 1rem;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  background: #fafafa;
+  min-width: 110px;
+}
+
+.nsf-stat-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0a0a0a;
+  line-height: 1.1;
+}
+
+.nsf-stat-label {
+  font-size: 0.78rem;
+  color: #666;
+  margin-top: 0.15rem;
+}
+
+/* --- Team avatar stack (4th flex item inside .nsf-stats) --- */
+.team-members {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 10px 0;
+}
+
+.achv-member {
+  height: 3.5rem;
+  width: 3.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  border: 3px solid hsla(0, 0%, 100%, 0.9);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  object-fit: cover;
+  background: #fff;
+}
+
+.team-members .achv-member:not(:first-child) {
+  margin-left: -15px;
+}
+
+.achv-member:hover {
+  transform: translateY(-8px) scale(1.15);
+  z-index: 100;
+  border-color: #fff;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+}
+
+.team-members:hover .achv-member:not(:hover) {
+  opacity: 0.6;
+  filter: grayscale(20%);
+}
+
+/* --- Image column --- */
+.nsf-image-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nsf-image-wrap img {
+  height: auto;
+  max-height: 38vh;
+  object-fit: contain;
+  border-radius: 12px;
+  max-width: 100%;
+}
+
+/* --- Key Achievements marquee --- */
+.nsf-achievements {
+  width: 100%;
+  max-width: 1200px;
+  margin: 1.25rem auto 0;
+  min-width: 0;
+}
+
+.nsf-achievements-title {
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  font-weight: 700;
+  color: #0a0a0a;
+  margin: 0 0 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nsf-achievements-title::before {
+  content: "";
+  width: 6px;
+  height: 1.2em;
+  background: #0a0a0a;
+  border-radius: 3px;
+}
+
+.nsf-marquee {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent);
+}
+
+.nsf-track {
+  display: flex;
+  gap: 1.25rem;
+  width: max-content;
+  padding: 0.5rem 0;
+  animation: nsf-scroll 38s linear infinite;
+}
+
+.nsf-marquee.nsf-paused .nsf-track,
+.nsf-marquee:hover .nsf-track {
+  animation-play-state: paused;
+}
+
+@keyframes nsf-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nsf-track {
+    animation: none;
+  }
+  .nsf-marquee {
+    overflow-x: auto;
+  }
+}
+
+.nsf-card {
+  flex: 0 0 320px;
+  width: 320px;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 16px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+  user-select: text;
+}
+
+.nsf-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+  border-color: #0a0a0a;
+}
+
+.nsf-card-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #0a0a0a;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.nsf-card-text {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #444;
+  margin: 0;
+}
+
+.nsf-card-text strong {
+  color: #0a0a0a;
+  font-weight: 700;
+}
+
+.nsf-hint {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #888;
+  margin: 0.5rem 0 0;
+}
+
+/* --- Quote divider (after the section) --- */
+.movie-quote {
+  display: flex;
+  margin: 5rem 10%;
+  flex-direction: column;
+  padding: 0 1rem;
+}
+
+.quote-mark {
+  font-size: clamp(2rem, 8vw, 6rem);
+  color: #333;
+  vertical-align: top;
+  margin-right: 0.5rem;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: clamp(-2rem, -5vw, -5rem);
+}
+
+.quote-part1 {
+  font-size: clamp(1rem, 4.5vw, 3.5rem);
+  line-height: 1.3;
+}
+
+.quote-part1,
+.quote-part2 {
+  color: #555;
+  font-weight: 600;
+  display: block;
+  font-family: "Poppins", sans-serif;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.quote-part2 {
+  font-size: clamp(1.2rem, 7vw, 6.5rem);
+  line-height: 1.2;
+}
+
+.quote-part3 {
+  font-size: clamp(1.1rem, 5vw, 4rem);
+  color: #444;
+  font-weight: 600;
+  display: block;
+  font-style: italic;
+  line-height: 1.3;
+  overflow: visible;
+}
+
+.quote-author,
+.quote-part3 {
+  font-family: "Poppins", sans-serif;
+  white-space: nowrap;
+}
+
+.quote-author {
+  font-size: clamp(0.75rem, 1.5vw, 1.2rem);
+  color: #777;
+  font-weight: 500;
+  margin-top: 1.5rem;
+  align-self: flex-end;
+}
+
+/* --- Breakpoints --- */
+@media screen and (max-width: 900px) {
+  #featured {
+    max-height: none;
+    height: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .nsf-overview {
+    grid-template-columns: 1fr;
+  }
+  .nsf-image-wrap {
+    order: -1;
+  }
+  .nsf-image-wrap img {
+    max-height: 28vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .nsf-card {
+    flex-basis: 260px;
+    width: 260px;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .movie-quote {
+    margin: 4rem 5%;
+    padding: 0 2rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .movie-quote {
+    margin: 3rem 0;
+    padding: 0 5%;
+  }
+  .quote-mark {
+    font-size: 10vw;
+    margin-bottom: -5vw;
+  }
+  .quote-part1 {
+    font-size: 4.5vw;
+  }
+  .quote-part2 {
+    font-size: 7vw;
+  }
+  .quote-part3 {
+    font-size: 5vw;
+  }
+  .quote-author {
+    font-size: 2.5vw;
+    margin-top: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .movie-quote {
+    margin: 2.5rem 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .movie-quote {
+    margin: 2rem 0;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .movie-quote {
+    margin: 1.5rem 0;
+  }
+}

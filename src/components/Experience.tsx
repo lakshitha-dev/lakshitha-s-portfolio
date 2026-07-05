@@ -1,89 +1,120 @@
-import { motion } from 'motion/react';
-import { EXPERIENCES } from '../data';
+import './experience.css';
+import { Building2, MapPin, Calendar, Bot, Code2, Sparkles, PenLine } from 'lucide-react';
+import type { Experience as ExperienceItem } from '../data';
+import { BISTEC_MEMORIES, EXPERIENCE_META, EXPERIENCES, LOGOS } from '../data';
+import { Reveal } from './Reveal';
+import PhotoPile from './PhotoPile';
 
+/** Split a role description into bullet sentences. */
+function toBullets(description: string): string[] {
+  return description
+    .split(/(?<=\.)\s+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+interface EmployerCard {
+  company: string;
+  jobTitle: string;
+  location: string;
+  period: string;
+  logo?: string;
+  roles: { exp: ExperienceItem; Icon: typeof Bot }[];
+}
+
+const bistec = EXPERIENCES.filter((e) => e.company === 'BISTEC Global Services');
+const independent = EXPERIENCES.filter((e) => e.company !== 'BISTEC Global Services');
+
+const EMPLOYERS: EmployerCard[] = [
+  {
+    company: 'BISTEC Global Services',
+    jobTitle: bistec[0]?.role ?? '',
+    location: 'Colombo, Sri Lanka',
+    period: 'Aug 2025 — Present',
+    logo: LOGOS.bistec,
+    roles: bistec.map((exp, i) => ({ exp, Icon: i === 0 ? Bot : Code2 })),
+  },
+  {
+    company: 'Freelance & Writing',
+    jobTitle: 'AI Agent Developer · Technical Writer',
+    location: 'Remote',
+    period: 'Mar 2025 — Present',
+    roles: independent.map((exp) => ({
+      exp,
+      Icon: exp.company === 'Upwork' ? Sparkles : PenLine,
+    })),
+  },
+];
+
+/** Professional experience: white employer cards with role sub-cards. */
 export default function Experience() {
   return (
-    <section
-      id="experience"
-      className="relative py-32 px-6 md:px-12 lg:px-24 bg-[var(--bg-secondary)]"
-    >
-      <div className="mx-auto max-w-5xl">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: '-100px' }}
-          className="mb-20"
-        >
-          <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-[var(--text-muted)]">
-            CAREER
-          </p>
-          <h2 className="text-section font-display font-bold text-[var(--text-primary)]">
-            Experience
-          </h2>
-        </motion.div>
+    <section id="experience">
+      <p className="section-text-p1">{EXPERIENCE_META.eyebrow}</p>
+      <h1 className="title">{EXPERIENCE_META.title}</h1>
 
-        <div className="relative pl-10">
-          <div className="timeline-line" />
-
-          {EXPERIENCES.map((exp, i) => (
-            <motion.div
-              key={exp.id}
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: i * 0.15 }}
-              viewport={{ once: true, margin: '-80px' }}
-              className="relative mb-14 last:mb-0"
-            >
-              <div
-                className={`timeline-dot ${exp.isCurrent ? 'timeline-dot-active' : ''}`}
-              />
-              {exp.isCurrent && (
-                <div className="absolute left-[-6px] top-0 h-3 w-3 animate-ping rounded-full bg-[var(--accent)] opacity-20" />
-              )}
-
-              <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] p-6 transition-all duration-500 hover:border-[var(--border-hover)] hover:bg-[var(--bg-card-hover)]">
-                <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.25em] text-[var(--text-muted)]">
-                  {exp.period}
-                </p>
-                <h3 className="mb-1 text-lg font-semibold text-[var(--text-primary)]">
-                  {exp.role}
-                </h3>
-                <p className="mb-3 text-sm font-medium text-[var(--text-secondary)]">
-                  {exp.company}
-                </p>
-                <p className="text-sm leading-relaxed text-[var(--text-muted)]">
-                  {exp.description}
-                </p>
+      {EMPLOYERS.map((employer) => (
+        <Reveal key={employer.company} variant="fade">
+          <div className="experience-container">
+            <div className="experience-header">
+              <div className="company-info">
+                <div className="company-logo" aria-hidden="true">
+                  {employer.logo ? (
+                    <img src={employer.logo} alt="" />
+                  ) : (
+                    <Building2 size={34} strokeWidth={1.5} />
+                  )}
+                </div>
+                <div className="company-details">
+                  <h3>{employer.company}</h3>
+                  <p className="job-title">{employer.jobTitle}</p>
+                  <div className="job-meta">
+                    <span>
+                      <MapPin aria-hidden="true" />
+                      {employer.location}
+                    </span>
+                    <span>
+                      <Calendar aria-hidden="true" />
+                      {employer.period}
+                    </span>
+                  </div>
+                </div>
               </div>
-            </motion.div>
-          ))}
-        </div>
+            </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true, margin: '-80px' }}
-          className="mt-24"
-        >
-          <p className="mb-6 font-mono text-xs uppercase tracking-[0.3em] text-[var(--text-muted)]">
-            EDUCATION
-          </p>
-
-          <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] p-6 transition-all duration-500 hover:border-[var(--border-hover)] hover:bg-[var(--bg-card-hover)]">
-            <h3 className="mb-1 text-lg font-semibold text-[var(--text-primary)]">
-              NSBM Green University
-            </h3>
-            <p className="mb-2 text-sm font-medium text-[var(--text-secondary)]">
-              BSc (Hons) in Software Engineering
-            </p>
-            <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[var(--text-muted)]">
-              2022 — 2026
-            </p>
+            <div className="experience-content">
+              <div className="projects-row">
+                {employer.roles.map(({ exp, Icon }) => (
+                  <div key={exp.id} className="project-section">
+                    <div className="project-header">
+                      <div className="project-icon">
+                        <Icon aria-hidden="true" />
+                      </div>
+                      <div className="project-title-container">
+                        <h4 className="project-title-experience">
+                          {exp.role}
+                          {exp.company !== employer.company && ` — ${exp.company}`}
+                        </h4>
+                        <p className="project-period">{exp.period}</p>
+                      </div>
+                    </div>
+                    <ul className="project-description">
+                      {toBullets(exp.description).map((bullet) => (
+                        <li key={bullet.slice(0, 24)}>{bullet}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              {employer.company === 'BISTEC Global Services' && (
+                <div style={{ position: 'relative', marginTop: '2rem' }}>
+                  <PhotoPile photos={BISTEC_MEMORIES} />
+                </div>
+              )}
+            </div>
           </div>
-        </motion.div>
-      </div>
+        </Reveal>
+      ))}
     </section>
   );
 }

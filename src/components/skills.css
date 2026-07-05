@@ -1,0 +1,183 @@
+/* ============================================================
+ * SKILLS (#skills) — category pills + tile grid with hover
+ * proficiency overlay. Values ported from specs/skills.md.
+ * The reference's skill-background.png is replaced by a soft
+ * CSS radial backdrop (own asset slot), feathered by the same
+ * four white edge gradients.
+ * ============================================================ */
+#skills {
+  position: relative;
+  background:
+    linear-gradient(180deg, #fff 0, hsla(0, 0%, 100%, 0) 10%, hsla(0, 0%, 100%, 0) 90%, #fff),
+    linear-gradient(0deg, #fff 0, hsla(0, 0%, 100%, 0) 10%, hsla(0, 0%, 100%, 0) 90%, #fff),
+    linear-gradient(90deg, #fff 0, hsla(0, 0%, 100%, 0) 10%, hsla(0, 0%, 100%, 0) 90%, #fff),
+    linear-gradient(270deg, #fff 0, hsla(0, 0%, 100%, 0) 10%, hsla(0, 0%, 100%, 0) 90%, #fff),
+    radial-gradient(ellipse 60% 55% at 70% 50%, rgba(103, 58, 183, 0.12), rgba(33, 150, 243, 0.08) 55%, transparent 75%);
+  background-attachment: scroll;
+  background-repeat: no-repeat;
+  background-position: 70%;
+}
+
+@media screen and (max-width: 1400px) {
+  #skills {
+    margin-top: 2rem;
+  }
+}
+
+/* --- Category pills --- */
+.category-buttons {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.category-btn {
+  padding: 8px 16px;
+  border: 1px solid hsla(0, 0%, 100%, 0.3);
+  border-radius: 20px;
+  background: hsla(0, 0%, 100%, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #000;
+}
+
+.category-btn:hover {
+  background: hsla(0, 0%, 100%, 0.15);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.3);
+  border: 1px solid hsla(0, 0%, 100%, 0.4);
+}
+
+.category-btn.active {
+  background-color: #333;
+  color: #fff;
+}
+
+/* --- Tile grid --- */
+.skills-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.skills-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+.skills-row.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tech-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.tech-icon:hover {
+  transform: scale(1.1);
+}
+
+.tech-icon .tech-icon-glyph {
+  width: 60px;
+  height: 60px;
+  color: #000;
+}
+
+.tech-icon span {
+  margin-top: 8px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.tech-icon .experience-level {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: hsla(0, 0%, 100%, 0.25);
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 20%;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid hsla(0, 0%, 100%, 0.3);
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.tech-icon:hover .experience-level {
+  opacity: 1;
+}
+
+/* --- Mobile --- */
+@media screen and (max-width: 600px) {
+  .skills-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 10px;
+  }
+  .skills-row {
+    display: contents;
+  }
+  .skills-row .tech-icon {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s ease;
+  }
+  .skills-row.show .tech-icon {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .tech-icon {
+    width: 85px;
+    height: 85px;
+    margin: 5px;
+  }
+  .tech-icon .tech-icon-glyph {
+    width: 60px;
+    height: 60px;
+  }
+  .tech-icon span {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+  .tech-icon .experience-level {
+    font-size: 10px;
+    padding: 2px 6px;
+    bottom: -18px;
+  }
+}

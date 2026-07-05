@@ -1,0 +1,580 @@
+/* ============================================================
+ * WRITING (#writing) — publications-style horizontal slider of
+ * Medium articles. Values ported from specs/publications.md.
+ * Arrow buttons (.btn2/.publications-nav-btn) + bubbles come
+ * from index.css; positioning overrides live here.
+ * ============================================================ */
+#writing {
+  position: relative;
+  padding: 3rem 2rem;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.publications-wrapper {
+  flex: 1 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.publications-scroll-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1rem 0 2rem;
+  margin: 1rem 0;
+  position: relative;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  flex: 1 1;
+  display: flex;
+  align-items: center;
+  -webkit-mask: linear-gradient(90deg, #0000, #000 3% 97%, #0000);
+  mask: linear-gradient(90deg, #0000, #000 3% 97%, #0000);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.publications-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.publications-container {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  min-width: min-content;
+}
+
+/* --- Card --- */
+.publication-card {
+  min-width: 550px;
+  max-width: 550px;
+  height: 100%;
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.publication-card:hover {
+  transform: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.publication-main {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex: 1 1;
+}
+
+/* --- Thumbnail --- */
+.paper-preview {
+  width: 140px;
+  flex-shrink: 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.paper-preview img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: none;
+  background: #f5f5f5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.paper-preview:hover img {
+  transform: scale(1.15) translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.paper-preview::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-color: transparent #fff transparent transparent;
+  border-style: solid;
+  border-width: 0 15px 15px 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 11;
+}
+
+.paper-preview:hover::after {
+  opacity: 0.8;
+}
+
+/* --- Header / meta --- */
+.publication-info {
+  flex: 1 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.publication-header {
+  margin-bottom: 0.5rem;
+}
+
+.publication-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.venue-wrapper {
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.publication-venue {
+  font-size: 0.75rem;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 0;
+}
+
+.publication-metadata {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  margin-top: 0.4rem;
+}
+
+.publication-date,
+.publication-venue-info {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  color: #777;
+}
+
+.publication-date svg,
+.publication-venue-info svg {
+  width: 14px;
+  height: 14px;
+  color: #777;
+  flex-shrink: 0;
+}
+
+/* --- Summary (abstract-style) --- */
+.publication-abstract {
+  flex: 1 1;
+}
+
+.publication-abstract h4 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.abstract-text {
+  font-size: 0.75rem;
+  color: #333;
+  line-height: 1.5;
+  text-align: justify;
+  max-height: 90px;
+  overflow-y: auto;
+  padding-right: 0.3rem;
+}
+
+.abstract-text::-webkit-scrollbar {
+  width: 4px;
+}
+
+.abstract-text::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.abstract-text::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.abstract-text::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* --- Topics strip (co-authors-style) --- */
+.coauthors-section {
+  margin-bottom: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid #eee;
+}
+
+.coauthors-section h4 {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.coauthors-grid {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.coauthors-grid::-webkit-scrollbar {
+  height: 3px;
+}
+
+.coauthors-grid::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.coauthor-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0.4rem;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 0.8rem;
+  transition: all 0.3s ease;
+  min-width: 85px;
+  flex-shrink: 0;
+  justify-content: center;
+}
+
+.coauthor-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.coauthor-name {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: #000;
+  line-height: 1.2;
+}
+
+/* --- Actions --- */
+.publication-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  gap: 1rem;
+}
+
+.paper-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: hsla(0, 0%, 100%, 0.15);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  position: relative;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid hsla(0, 0%, 100%, 0.3);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #000;
+}
+
+.paper-link-btn,
+.paper-link-btn:active,
+.paper-link-btn:focus,
+.paper-link-btn:hover,
+.paper-link-btn:visited {
+  text-decoration: none !important;
+}
+
+.paper-link-btn svg {
+  width: 18px;
+  height: 18px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  flex-shrink: 0;
+}
+
+.paper-link-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, hsla(0, 0%, 100%, 0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-radius: 12px;
+  z-index: 0;
+}
+
+.paper-link-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.paper-link-btn:hover {
+  background: hsla(0, 0%, 100%, 0.25);
+  border: 1px solid hsla(0, 0%, 100%, 0.45);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.35);
+}
+
+.paper-link-btn:hover::before {
+  opacity: 1;
+}
+
+.paper-link-btn:hover svg {
+  transform: scale(1.1) translateX(2px);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.paper-link-btn:active {
+  transform: translateY(-1px) scale(1);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.15),
+    inset 0 2px 4px hsla(0, 0%, 100%, 0.2);
+}
+
+/* --- Nav buttons (section-specific absolute-positioned layer) --- */
+.publications-nav-btn {
+  font-weight: 600;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 0.75rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  background: hsla(0, 0%, 100%, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 8px 32px rgba(31, 38, 135, 0.15),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.3);
+  z-index: 10;
+}
+
+.publications-nav-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 2px;
+  background: linear-gradient(135deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.1));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.publications-nav-btn:hover::before {
+  opacity: 1;
+}
+
+.publications-nav-btn::after {
+  content: "";
+  position: absolute;
+  inset: -15px;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.08) 0, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: -1;
+}
+
+.publications-nav-btn:hover::after {
+  opacity: 1;
+  inset: -20px;
+}
+
+.publications-nav-btn:hover {
+  transform: translateY(-50%) scale(1.12);
+  background: hsla(0, 0%, 100%, 0.35);
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  box-shadow:
+    0 12px 40px rgba(31, 38, 135, 0.25),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.5),
+    0 0 0 4px hsla(0, 0%, 100%, 0.1);
+}
+
+.publications-nav-btn:active {
+  transform: translateY(-50%) scale(1.05);
+  box-shadow:
+    0 4px 16px rgba(31, 38, 135, 0.2),
+    inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.publications-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: translateY(-50%);
+  background: hsla(0, 0%, 100%, 0.15);
+  border: 2px solid rgba(0, 0, 0, 0.08);
+}
+
+.publications-nav-btn:disabled:hover {
+  transform: translateY(-50%);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+}
+
+.publications-nav-btn .icon {
+  width: 28px;
+  height: 28px;
+  color: #333;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.publications-nav-btn:hover .icon {
+  color: #1a1a1a;
+  transform: scale(1.15);
+}
+
+.publications-nav-btn.left {
+  left: -30px;
+}
+
+.publications-nav-btn.right {
+  right: -30px;
+}
+
+/* --- Skeleton loading --- */
+.publication-card.skeleton {
+  min-height: 320px;
+  animation: pulse 1.6s ease-in-out infinite;
+  background: #f5f5f5;
+}
+
+/* --- Breakpoints --- */
+@media screen and (max-width: 1200px) {
+  .publication-card {
+    min-width: 500px;
+    max-width: 500px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #writing {
+    padding: 2rem 1rem;
+    position: relative;
+    height: auto;
+    min-height: 80vh;
+  }
+  .paper-preview {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .paper-preview img {
+    width: 160px;
+    height: 100%;
+  }
+  .publication-info {
+    width: 100%;
+  }
+  .publication-title {
+    font-size: 0.9rem;
+  }
+  .publication-venue {
+    font-size: 0.7rem;
+  }
+  .publication-date {
+    font-size: 0.65rem;
+  }
+  .publication-abstract h4 {
+    font-size: 0.75rem;
+  }
+  .abstract-text {
+    font-size: 0.7rem;
+    max-height: 70px;
+  }
+  .coauthors-section h4 {
+    font-size: 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+  .coauthors-grid {
+    justify-content: flex-start;
+    gap: 0.6rem;
+    padding: 0 0.5rem;
+    scroll-padding-left: 0.5rem;
+  }
+  .coauthor-item {
+    min-width: 70px;
+    padding: 0.35rem;
+  }
+  .coauthor-name {
+    font-size: 0.6rem;
+  }
+  .publications-nav-btn {
+    display: none;
+  }
+  .publication-card {
+    min-width: 70vw;
+    max-width: 70vw;
+    padding: 1rem;
+    box-sizing: border-box;
+    margin: 0 auto;
+    height: auto;
+    min-height: min-content;
+  }
+  .publication-main {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .paper-link-btn {
+    font-size: 0.8rem;
+    padding: 7px 14px;
+    width: auto;
+    min-width: 180px;
+    justify-content: center;
+  }
+  .publication-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}

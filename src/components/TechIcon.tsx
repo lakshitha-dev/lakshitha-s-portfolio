@@ -15,6 +15,19 @@ import {
   siPostgresql,
   siGit,
   siFirebase,
+  siFlask,
+  siMysql,
+  siSupabase,
+  siJenkins,
+  siCloudflare,
+  siN8n,
+  siLangchain,
+  siGithub,
+  siQdrant,
+  siGithubactions,
+  siApachekafka,
+  siGooglegemini,
+  siMedium,
 } from 'simple-icons';
 
 const ICONS = {
@@ -34,6 +47,19 @@ const ICONS = {
   postgresql: siPostgresql,
   git: siGit,
   firebase: siFirebase,
+  flask: siFlask,
+  mysql: siMysql,
+  supabase: siSupabase,
+  jenkins: siJenkins,
+  cloudflare: siCloudflare,
+  n8n: siN8n,
+  langchain: siLangchain,
+  github: siGithub,
+  qdrant: siQdrant,
+  githubactions: siGithubactions,
+  apachekafka: siApachekafka,
+  googlegemini: siGooglegemini,
+  medium: siMedium,
 } as const;
 
 export type TechIconSlug = keyof typeof ICONS;

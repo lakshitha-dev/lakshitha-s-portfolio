@@ -1,3 +1,35 @@
+import type { TechIconSlug } from '../components/TechIcon';
+import profileImg from '../assets/profile.jpg';
+import bistecLogo from '../assets/logos/bistec-logo.png';
+import nsbmLogo from '../assets/logos/nsbm-logo.png';
+import thomasLogo from '../assets/logos/thomas-logo.png';
+import duothanTeamImg from '../assets/achievements/duothan-team.jpg';
+import duothanAwardImg from '../assets/achievements/duothan-award.jpg';
+import schoolColoursImg from '../assets/milestones/school-colours.jpg';
+import bistecWorkImg from '../assets/milestones/bistec-work.jpg';
+import bistecAwardImg from '../assets/milestones/bistec-award.jpg';
+import travelplanArchImg from '../assets/projects/travelplan-arch.jpg';
+import bistecWorksession from '../assets/bistec/team-worksession.jpg';
+import bistecHearts from '../assets/bistec/hearts-academy.jpg';
+import bistecAiExpo from '../assets/bistec/ai-expo.jpg';
+import bistecHackathon from '../assets/bistec/hackathon-team.jpg';
+import bistecLimitless from '../assets/bistec/limitless-workshop.jpg';
+import bistecOffice from '../assets/bistec/office-selfie.jpg';
+import bistecAvurudu from '../assets/bistec/avurudu.jpg';
+import bistecEventNight from '../assets/bistec/event-night.jpg';
+/* Generated showcase set (SHOWCASE_IMAGE_PROMPTS.md) — one visual identity
+ * across the carousel. Real screenshots remain in src/assets/projects/
+ * (docmind.jpg, article-generator.jpg, travelplan-chat.jpg) to swap back. */
+import expenseShowcase from '../assets/projects/expense-agent-showcase.jpg';
+import servicenowShowcase from '../assets/projects/servicenow-showcase.jpg';
+import docmindShowcase from '../assets/projects/docmind-showcase.jpg';
+import travelplanShowcase from '../assets/projects/travelplan-showcase.jpg';
+import quizbankShowcase from '../assets/projects/quizbank-showcase.jpg';
+import articleGenShowcase from '../assets/projects/article-generator-showcase.jpg';
+import auctionShowcase from '../assets/projects/auction-showcase.jpg';
+import financeShowcase from '../assets/projects/finance-showcase.jpg';
+import wasteShowcase from '../assets/projects/waste-showcase.jpg';
+
 export interface Project {
   id: string;
   title: string;
@@ -32,6 +64,15 @@ export interface Certification {
   skills: string[];
 }
 
+export interface Achievement {
+  id: string;
+  place: string;
+  title: string;
+  organizer: string;
+  description: string;
+  images: { src: string; alt: string }[];
+}
+
 export interface MediumArticle {
   title: string;
   pubDate: string;
@@ -41,13 +82,31 @@ export interface MediumArticle {
   categories: string[];
 }
 
-export interface Testimonial {
-  id: string;
+export type SkillLevel = 'Experienced' | 'Intermediate' | 'Familiar';
+
+export type LucideSkillIcon =
+  | 'database'
+  | 'cloud'
+  | 'brain'
+  | 'bot'
+  | 'sparkles'
+  | 'braces'
+  | 'plug';
+
+export interface SkillItem {
   name: string;
-  role: string;
-  company: string;
-  content: string;
-  avatar?: string;
+  slug?: TechIconSlug;
+  lucide?: LucideSkillIcon;
+  level: SkillLevel;
+}
+
+export interface Milestone {
+  id: string;
+  date: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  image?: { src: string; alt: string; tilt?: 'left' | 'right' };
 }
 
 export const GITHUB_USERNAME = 'mlswijerathne';
@@ -59,7 +118,8 @@ export const MEDIUM_USERNAME = 'lakshithaa';
  * ────────────────────────────────────────────────────────────── */
 
 export const SITE = {
-  name: 'Lakshitha',
+  name: 'Lakshitha Wijerathne',
+  firstName: 'Lakshitha',
   brand: 'lakshitha.dev',
   role: 'Associate Software Engineer',
   email: 'lakshitha.dev@outlook.com',
@@ -71,277 +131,177 @@ export const SITE = {
 };
 
 export const NAV_LINKS: { label: string; href: string }[] = [
-  { label: 'Home', href: '#home' },
   { label: 'About', href: '#about' },
-  { label: 'Projects', href: '#projects' },
   { label: 'Skills', href: '#skills' },
+  { label: 'Experience', href: '#experience' },
   { label: 'Writing', href: '#writing' },
+  { label: 'Featured', href: '#featured' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Achievements', href: '#certifications' },
+  { label: 'Milestones', href: '#milestones' },
   { label: 'Contact', href: '#contact' },
 ];
 
-export const WRITING_META = {
-  heading: 'Writing & thoughts',
-  intro:
-    'Notes from the work — short pieces on engineering, AI agents, and the patterns I keep coming back to.',
-  ctaLabel: 'Read on Medium',
-};
-
-const HERO_IMAGE_BASE =
-  'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&fm=webp';
-
 export const HERO = {
-  tagline: 'AI Agent Developer & n8n Automation Expert',
-  headline1: 'Innovative',
-  headline2: 'Software Engineer',
-  intro:
-    'I build clean, reliable, and thoughtful web and mobile experiences — from clear interfaces to dependable backends and AI-powered features.',
-  ctaLabel: 'Explore my work',
-  ctaHref: '#projects',
-  image: `${HERO_IMAGE_BASE}&w=800&q=75`,
-  imageSrcSet: [
-    `${HERO_IMAGE_BASE}&w=480&q=70 480w`,
-    `${HERO_IMAGE_BASE}&w=800&q=75 800w`,
-    `${HERO_IMAGE_BASE}&w=1200&q=80 1200w`,
-    `${HERO_IMAGE_BASE}&w=1600&q=82 1600w`,
-  ].join(', '),
-  imageSizes: '(min-width: 1024px) 58vw, (min-width: 768px) 50vw, 100vw',
-  imageAlt: 'Abstract AI and automation visual',
-};
-
-export const HERO_STATS: { value: string; symbol: string; label: string }[] = [
-  { value: '20', symbol: '+', label: 'Projects delivered' },
-  { value: '3', symbol: '+', label: 'Years experience' },
-];
-
-export const AVAILABILITY = {
-  status: 'Available for new projects',
-};
-
-export const PROCESS_META = {
-  eyebrow: 'How I work',
-  heading: 'From first message to shipped',
-  intro:
-    'A simple, low-risk way to work together — clear scope, steady updates, and no surprises. The same process my Upwork clients rely on.',
-};
-
-export const PROCESS: { step: string; title: string; description: string }[] = [
-  {
-    step: '01',
-    title: 'Discovery',
-    description:
-      'We talk through your goal, scope, and what success looks like — no jargon, just a clear plan.',
-  },
-  {
-    step: '02',
-    title: 'Proposal & milestones',
-    description:
-      'You get a fixed scope, timeline, and milestones, so you always know what is happening and when.',
-  },
-  {
-    step: '03',
-    title: 'Build & iterate',
-    description:
-      'I ship in increments with regular updates — you review and refine as the work takes shape.',
-  },
-  {
-    step: '04',
-    title: 'Deliver & support',
-    description:
-      'Full handover with docs and deployment, plus post-launch support to keep things running.',
-  },
-];
-
-export const TESTIMONIALS_META = {
-  eyebrow: 'Social proof',
-  heading: 'What people say',
-  intro:
-    'Feedback from teams, mentors, and collaborators I have built with.',
-};
-
-export const CONTACT_META = {
-  eyebrow: "Let's work together",
-  heading: 'Have a project in mind?',
-  intro:
-    "Tell me what you're building — an AI agent, an automation, or a full web or mobile app. I usually reply within 24 hours and can hop on a quick call to scope it out.",
-  responseTime: 'Replies within 24 hours',
-  points: [
-    'Free 20-minute scoping call',
-    'Clear milestones & fixed scope',
-    'Post-launch support included',
+  name: 'Lakshitha Wijerathne',
+  roleLine: 'Software Engineer Specializing in AI Agents & Automation',
+  affiliations: [
+    {
+      logo: nsbmLogo,
+      logoAlt: 'NSBM Green University',
+      text: 'BSc (Hons) in Software Engineering — NSBM Green University',
+    },
+    {
+      logo: bistecLogo,
+      logoAlt: 'BISTEC Global Services',
+      text: 'Associate Software Engineer at BISTEC Global Services',
+    },
   ],
-  upworkCtaLabel: 'Hire me on Upwork',
-  emailCtaLabel: 'Email me directly',
+  buttons: [
+    { label: 'Download CV', href: '/resume.pdf', download: true },
+    { label: 'Contact Info', href: '#contact', download: false },
+  ],
 };
 
-const ABOUT_IMAGE_BASE =
-  'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&fm=webp';
+export const LOADING = {
+  title: 'Just a moment…',
+  subtitle: 'Preparing the portfolio',
+};
+
+export const VELOCITY = {
+  row1: 'Dream big. Build fast. Ship often.',
+  row2: 'AI Agents · Automation · Full-Stack',
+};
+
+export const QUOTE_BLOCK = {
+  part1: 'Dream in systems.',
+  part2: 'Build with intent.',
+  part3: 'ship without fear.',
+  author: '–  notes to self',
+};
+
+export interface AboutCardLine {
+  text: string;
+  highlight?: boolean;
+}
 
 export const ABOUT = {
-  year: '2022',
-  tagline: 'AI Agent Developer & n8n Automation Expert',
-  heading: 'Built on logic, driven by craft',
-  intro:
-    'I started writing code in 2022 and have spent the years since shipping production software — from real-time auction platforms to AI-driven agents. I care about clean architecture, predictable systems, and details that hold up under pressure.',
-  bullets: [
-    'Clean code practices',
-    'On-time delivery',
-    'Problem-solving mindset',
-    'Continuous learning',
-    'Team collaboration',
+  eyebrow: 'Get to Know More',
+  title: 'About Me',
+  cards: [
+    {
+      heading: 'Academic Standing',
+      logo: { src: nsbmLogo, alt: 'NSBM Green University' },
+      lines: [
+        { text: 'BSc (Hons) in Software Engineering', highlight: true },
+        { text: 'Specializing in AI & Full-Stack' },
+        { text: 'NSBM Green University' },
+        { text: '2022 — 2026', highlight: true },
+      ] as AboutCardLine[],
+    },
+    {
+      heading: 'Experience',
+      logo: { src: bistecLogo, alt: 'BISTEC Global Services' },
+      lines: [
+        { text: 'Associate Software Engineer', highlight: true },
+        { text: 'BISTEC Global Services · Jan 2026 — Present' },
+        { text: 'AI Agent Developer (Freelance)', highlight: true },
+        { text: 'Upwork · Sep 2025 — Present' },
+      ] as AboutCardLine[],
+    },
   ],
-  ctaLabel: 'Know more about me',
-  ctaHref: '#contact',
-  image: `${ABOUT_IMAGE_BASE}&w=800&q=78`,
-  imageSrcSet: [
-    `${ABOUT_IMAGE_BASE}&w=480&q=72 480w`,
-    `${ABOUT_IMAGE_BASE}&w=800&q=78 800w`,
-    `${ABOUT_IMAGE_BASE}&w=1100&q=80 1100w`,
-  ].join(', '),
-  imageSizes: '(min-width: 768px) 42vw, 100vw',
-  imageAlt: 'Engineer at work',
+  bio: [
+    'I started writing code in 2022 and have spent the years since shipping production software — from a 13-microservice travel marketplace to enterprise AI agents and MCP gateways running on Azure.',
+    'I care about clean architecture, predictable systems, and details that hold up under pressure — the kind of engineering that keeps working long after launch.',
+  ],
+  image: profileImg,
+  imageAlt: 'Lakshitha Wijerathne',
 };
 
-export const SERVICES: {
-  title: string;
-  description: string;
-  icon: 'ai' | 'mobile' | 'web' | 'agent' | 'n8n';
-}[] = [
-  {
-    title: 'AI Development',
-    description:
-      'Production-ready AI features with LLMs, RAG pipelines, and prompt engineering — practical, not hype.',
-    icon: 'ai',
-  },
-  {
-    title: 'Web Development',
-    description:
-      'Modern, responsive web apps with React, Next.js, Spring Boot, and .NET — fast and accessible.',
-    icon: 'web',
-  },
-  {
-    title: 'Mobile Development',
-    description:
-      'Cross-platform mobile apps with Flutter — one codebase, native feel on iOS and Android.',
-    icon: 'mobile',
-  },
-  {
-    title: 'Agent Development',
-    description:
-      'Autonomous AI agents with MCP and Google ADK — tool-use, memory, and reliable orchestration.',
-    icon: 'agent',
-  },
-  {
-    title: 'N8N Development',
-    description:
-      'Workflow automation that connects your stack — webhooks, integrations, and custom nodes.',
-    icon: 'n8n',
-  },
-];
-
-export const PROJECTS_META = {
-  heading: 'Featured projects',
-  intro:
-    'From web platforms to mobile and AI-driven tools — selected work that shows how I think and build.',
-  ctaLabel: 'View all projects',
-  ctaHref: SITE.github,
-  statValue: '5',
-  statSymbol: '',
-  statLabel: 'Selected for showcase',
+export const SLOGAN = {
+  serifWords: 'dream. build.',
+  scriptWord: 'ship.',
 };
 
-import type { TechIconSlug } from '../components/TechIcon';
+export const SKILLS_META = {
+  eyebrow: 'Explore My',
+  title: 'Tech Skills',
+};
 
-export const TECH: { name: string; slug: TechIconSlug; group: 'Languages' | 'Frameworks' | 'Tools' }[] = [
-  // Languages
-  { name: 'JavaScript', slug: 'javascript', group: 'Languages' },
-  { name: 'TypeScript', slug: 'typescript', group: 'Languages' },
-  { name: 'Python', slug: 'python', group: 'Languages' },
-  { name: 'Java', slug: 'openjdk', group: 'Languages' },
-  // Frameworks
-  { name: 'React', slug: 'react', group: 'Frameworks' },
-  { name: 'Next.js', slug: 'nextdotjs', group: 'Frameworks' },
-  { name: 'Node.js', slug: 'nodedotjs', group: 'Frameworks' },
-  { name: 'Spring Boot', slug: 'spring', group: 'Frameworks' },
-  { name: '.NET', slug: 'dotnet', group: 'Frameworks' },
-  { name: 'FastAPI', slug: 'fastapi', group: 'Frameworks' },
-  { name: 'Flutter', slug: 'flutter', group: 'Frameworks' },
-  { name: 'Tailwind CSS', slug: 'tailwindcss', group: 'Frameworks' },
-  // Tools
-  { name: 'Docker', slug: 'docker', group: 'Tools' },
-  { name: 'PostgreSQL', slug: 'postgresql', group: 'Tools' },
-  { name: 'Git', slug: 'git', group: 'Tools' },
-  { name: 'Firebase', slug: 'firebase', group: 'Tools' },
+/* Evidence-based: extracted from ExpenseAgent, ServiceNow platform,
+ * QuizBank, DocMind, Medium Article Generator, and Travel Plan Platform. */
+export const SKILL_CATEGORIES: { category: string; items: SkillItem[] }[] = [
+  {
+    category: 'Programming Languages',
+    items: [
+      { name: 'C#', slug: 'dotnet', level: 'Experienced' },
+      { name: 'Python', slug: 'python', level: 'Experienced' },
+      { name: 'TypeScript', slug: 'typescript', level: 'Experienced' },
+      { name: 'JavaScript', slug: 'javascript', level: 'Experienced' },
+      { name: 'Java', slug: 'openjdk', level: 'Experienced' },
+      { name: 'SQL', lucide: 'database', level: 'Experienced' },
+    ],
+  },
+  {
+    category: 'Web & Mobile',
+    items: [
+      { name: 'ASP.NET Core', slug: 'dotnet', level: 'Experienced' },
+      { name: 'Next.js', slug: 'nextdotjs', level: 'Experienced' },
+      { name: 'React', slug: 'react', level: 'Experienced' },
+      { name: 'Spring Boot', slug: 'spring', level: 'Experienced' },
+      { name: 'FastAPI', slug: 'fastapi', level: 'Experienced' },
+      { name: 'Tailwind CSS', slug: 'tailwindcss', level: 'Experienced' },
+      { name: 'Node.js', slug: 'nodedotjs', level: 'Intermediate' },
+      { name: 'Flutter', slug: 'flutter', level: 'Intermediate' },
+    ],
+  },
+  {
+    category: 'AI & Agents',
+    items: [
+      { name: 'MCP', lucide: 'plug', level: 'Experienced' },
+      { name: 'Copilot Studio', lucide: 'bot', level: 'Experienced' },
+      { name: 'Google ADK', lucide: 'bot', level: 'Experienced' },
+      { name: 'LangChain', slug: 'langchain', level: 'Experienced' },
+      { name: 'Semantic Kernel', lucide: 'brain', level: 'Intermediate' },
+      { name: 'OpenAI API', lucide: 'sparkles', level: 'Experienced' },
+      { name: 'Google Gemini', slug: 'googlegemini', level: 'Experienced' },
+      { name: 'n8n', slug: 'n8n', level: 'Experienced' },
+      { name: 'LlamaIndex', lucide: 'brain', level: 'Intermediate' },
+      { name: 'Prompt Engineering', lucide: 'sparkles', level: 'Experienced' },
+    ],
+  },
+  {
+    category: 'Databases',
+    items: [
+      { name: 'PostgreSQL', slug: 'postgresql', level: 'Experienced' },
+      { name: 'Qdrant', slug: 'qdrant', level: 'Experienced' },
+      { name: 'Cosmos DB', lucide: 'database', level: 'Intermediate' },
+      { name: 'Supabase', slug: 'supabase', level: 'Experienced' },
+      { name: 'Firebase', slug: 'firebase', level: 'Experienced' },
+      { name: 'SQL Server', lucide: 'database', level: 'Intermediate' },
+      { name: 'MySQL', slug: 'mysql', level: 'Intermediate' },
+    ],
+  },
+  {
+    category: 'Cloud & DevOps',
+    items: [
+      { name: 'Microsoft Azure', lucide: 'cloud', level: 'Experienced' },
+      { name: 'Azure DevOps', lucide: 'cloud', level: 'Experienced' },
+      { name: 'Docker', slug: 'docker', level: 'Experienced' },
+      { name: 'GitHub Actions', slug: 'githubactions', level: 'Experienced' },
+      { name: 'Bicep (IaC)', lucide: 'braces', level: 'Intermediate' },
+      { name: 'Apache Kafka', slug: 'apachekafka', level: 'Intermediate' },
+      { name: 'Cloudflare', slug: 'cloudflare', level: 'Intermediate' },
+      { name: 'Git', slug: 'git', level: 'Experienced' },
+      { name: 'GitHub', slug: 'github', level: 'Experienced' },
+    ],
+  },
 ];
 
-export const PROJECTS: Project[] = [
-  {
-    id: '1',
-    title: 'Production AI Agent Platform',
-    description:
-      'Designing and shipping production AI agents for enterprise workflows — Model Context Protocol integrations, tool-use orchestration, and reliable LLM-driven automation.',
-    tags: ['MCP', 'Google ADK', 'Python', 'FastAPI', 'LLMs'],
-    category: 'AI',
-    image:
-      'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&fm=webp&w=1400&q=82',
-    liveUrl: '#',
-    repoUrl: '#',
-    year: '2026',
-    company: 'BISTEC Global Services',
-    confidential: true,
-  },
-  {
-    id: '5',
-    title: 'Agentic AI Travel Planner',
-    description:
-      'Multi-agent system that generates personalized multi-day itineraries from a user\'s budget, dates, and travel style — destination researcher, accommodation finder, and activity recommender agents calling external tools autonomously, with a conversational UI to re-plan any day. Cut trip planning from ~3 hours to under 2 minutes.',
-    tags: ['LangChain', 'OpenAI GPT-4', 'FastAPI', 'n8n', 'Google Places API'],
-    category: 'AI',
-    image:
-      'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&fm=webp&w=1400&q=82',
-    liveUrl: '#',
-    repoUrl: '#',
-    year: '2025',
-  },
-  {
-    id: '2',
-    title: 'Real-Time Auction Platform',
-    description:
-      'Real-time bidding engine with Stripe-integrated escrow, role-based admin tooling, and concurrent-update handling for fair, high-traffic auctions.',
-    tags: ['React', 'ASP.NET Core', 'SQL Server', 'Stripe'],
-    category: 'Web',
-    image:
-      'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&fm=webp&w=1400&q=82',
-    liveUrl: '#',
-    repoUrl: 'https://github.com/mlswijerathne/AuctionManagement/blob/main/README.md',
-    year: '2024',
-  },
-  {
-    id: '3',
-    title: 'AI Finance Management Platform',
-    description:
-      'AI-driven personal finance app with automated transaction categorization, subscription monitoring, and goal-based savings insights — deployed and live.',
-    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Axios'],
-    category: 'Web',
-    image:
-      'https://images.unsplash.com/photo-1579621970795-87facc2f976d?auto=format&fit=crop&fm=webp&w=1400&q=82',
-    liveUrl: 'http://152.67.3.153/',
-    repoUrl: 'https://github.com/mlswijerathne/financeManagement/blob/test/README.md',
-    year: '2024',
-  },
-  {
-    id: '4',
-    title: 'Smart Waste Coordination App',
-    description:
-      'Cross-platform mobile app coordinating residents, drivers, and city operators — live geolocation routing, incident reporting, and operational analytics.',
-    tags: ['Flutter', 'Firebase', 'Google Maps', 'Provider'],
-    category: 'Mobile',
-    image:
-      'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&fm=webp&w=1400&q=82',
-    liveUrl: '#',
-    repoUrl: 'https://github.com/mlswijerathne/Waste-Management-System/blob/main/README.md',
-    year: '2024',
-  },
-];
+export const EXPERIENCE_META = {
+  eyebrow: 'Explore My',
+  title: 'Professional Experience',
+};
 
 export const EXPERIENCES: Experience[] = [
   {
@@ -349,7 +309,8 @@ export const EXPERIENCES: Experience[] = [
     role: 'Associate Software Engineer',
     company: 'BISTEC Global Services',
     period: 'Jan 2026 — Present',
-    description: 'Focused on Agent Development and Model Context Protocol (MCP). Building intelligent systems using Google ADK and Large Language Models.',
+    description:
+      'Building production AI agents on the Agent Accelerator team. Developing multi-tenant MCP gateways in .NET 10 that power Microsoft Copilot Studio agents in Teams — OAuth 2.1 authorization with dynamic client registration, Entra ID On-Behalf-Of identity passthrough, and 15+ ServiceNow tools. Shipping to Azure with Bicep IaC, Azure DevOps CI/CD with SAST scanning, and Azure Marketplace packaging.',
     isCurrent: true,
   },
   {
@@ -357,31 +318,238 @@ export const EXPERIENCES: Experience[] = [
     role: 'Software Engineer Intern',
     company: 'BISTEC Global Services',
     period: 'Aug 2025 — Jan 2026',
-    description: 'Worked with Python, ASP.NET Core, Next.js, Docker, Supabase, and Cloudflare. Gained hands-on experience with LLMs and AI integration.',
+    description:
+      'Built QuizBank, a multi-tenant AI evaluation platform live at quizbank.ai.bistecglobal.com — Clean Architecture .NET 9 API with CQRS, Next.js 15 frontend, GPT-4o question generation, and Dockerized Azure DevOps CI/CD. Conducted R&D on Cloudflare, Supabase, and Google ADK.',
   },
   {
     id: '4',
     role: 'AI Agent Developer (Freelance)',
     company: 'Upwork',
     period: 'Sep 2025 — Present',
-    description: 'Building AI agents, chatbots, and n8n automation workflows for small and medium businesses — LangChain, OpenAI, FastAPI, and end-to-end API integration, owning projects from design to deployment.',
+    description:
+      'Building AI agents, RAG systems, and n8n automation workflows for businesses. Shipped DocMind — a production RAG document Q&A platform on Azure Container Apps — and a five-agent n8n content pipeline that turns a topic into a publication-ready, fact-checked article.',
+    isCurrent: true,
   },
   {
     id: '3',
     role: 'Technical Writer',
     company: 'Medium',
-    period: 'Mar 2025 — Sep 2025',
-    description: 'Published technical articles translating complex software engineering concepts into clear, accessible content for developers.',
+    period: 'Mar 2025 — Present',
+    description:
+      'Published technical articles translating complex software engineering concepts into clear, accessible content for developers.',
   },
 ];
 
-export const SKILLS: Record<string, string[]> = {
-  Frontend: ['React.js', 'Next.js', 'Tailwind CSS', 'Flutter', 'TypeScript', 'JavaScript'],
-  Backend: ['ASP.NET Core', 'Python', 'Flask', 'Java', 'C#', 'Node.js'],
-  Databases: ['SQL Server', 'MySQL', 'PostgreSQL', 'Firebase', 'Supabase'],
-  DevOps: ['Docker', 'Git/GitHub', 'Jenkins', 'Azure', 'AWS', 'Cloudflare'],
-  'AI & Agents': ['MCP', 'Agent Dev', 'Google ADK', 'LLMs', 'Prompt Engineering'],
+export const WRITING_META = {
+  eyebrow: 'Browse My Recent',
+  title: 'Articles & Writing',
+  ctaLabel: 'Read on Medium',
 };
+
+/* Two-row photo collage inside the BISTEC experience card.
+ * Fills column by column; `tall` photos span both rows. */
+export const BISTEC_MEMORIES: { src: string; alt: string; tall?: boolean }[] = [
+  { src: bistecWorksession, alt: 'Working session with the team at BISTEC' },
+  { src: bistecOffice, alt: 'With the team at the BISTEC office' },
+  { src: bistecHearts, alt: 'Recognition at BISTEC Hearts Academy' },
+  { src: bistecHackathon, alt: 'Internal hackathon team at BISTEC' },
+  { src: bistecAiExpo, alt: 'Delegate at the In Pursuit of AI expo', tall: true },
+  { src: bistecLimitless, alt: 'Limitless workshop with colleagues' },
+  { src: bistecEventNight, alt: 'Event night with the BISTEC team' },
+  { src: bistecAvurudu, alt: 'Avurudu celebrations at BISTEC', tall: true },
+];
+
+export const FEATURED_META = {
+  eyebrow: 'A Closer Look At My',
+  title: 'Final Year Project',
+};
+
+export const FEATURED = {
+  name: 'Travel Plan Platform: an AI-powered travel marketplace for Sri Lanka',
+  tagline: 'Live at travel-plan.live — 13 microservices, one conversational travel agent.',
+  description:
+    'Connects tourists with hotels, tour guides, and vehicle owners in one marketplace. A streaming AI assistant calls live services as tools to answer travel questions, recommend providers, and generate full multi-day itineraries with cost breakdowns — on top of a Spring Boot microservices backbone with saga-orchestrated multi-provider booking and Kafka-driven review pipelines.',
+  stats: [
+    { value: '13', label: 'Microservices' },
+    { value: '5', label: 'User roles' },
+    { value: '<2 min', label: 'AI trip planning<br/>(from ~3 hours)' },
+  ],
+  image: travelplanArchImg,
+  imageAlt: 'Travel Plan Platform architecture overview',
+  team: [
+    { src: nsbmLogo, alt: 'NSBM Green University' },
+    { src: profileImg, alt: 'Lakshitha Wijerathne' },
+  ],
+  achievementsHeading: 'Key Achievements',
+  /* **text** segments render as <strong> metric emphasis */
+  achievements: [
+    {
+      title: 'Conversational AI Travel Agent',
+      text: 'An SSE-streamed chat assistant with tool-calling into live hotel, guide, vehicle, and trip-plan services — powered by **Google Gemini** with **LangChain4j** and **Google ADK**.',
+    },
+    {
+      title: 'Saga-Orchestrated Booking',
+      text: 'Multi-provider bookings execute as a single transaction with the **Saga pattern** — automatic rollback and a refund engine keep every party consistent.',
+    },
+    {
+      title: 'Event-Driven with Kafka',
+      text: '**4 Kafka topics** plus dead-letter queues drive itinerary creation, review prompts, and rating recalculation across services.',
+    },
+    {
+      title: '13-Service Architecture',
+      text: '**11 domain microservices** behind Spring Cloud Gateway and Eureka discovery — each service owns its own database.',
+    },
+    {
+      title: 'Deployed & Live',
+      text: 'Running at **travel-plan.live** — Next.js 16 frontend, Dockerized services, and **GitHub Actions CI** on every push.',
+    },
+    {
+      title: '~3 Hours to Under 2 Minutes',
+      text: 'The AI agent compresses typical trip planning from hours of manual research into a **two-minute conversation**.',
+    },
+  ],
+};
+
+export const PROJECTS_META = {
+  eyebrow: 'Explore My Recent',
+  title: 'Project Highlights',
+};
+
+export const PROJECTS: Project[] = [
+  {
+    id: 'expense-agent',
+    title: 'Enterprise Expense Agent & MCP Gateway',
+    description:
+      'AI expense assistant in Microsoft Teams: photograph receipts, get AI-extracted data, and receive finished Excel/PDF reports in OneDrive. Built on a multi-tenant .NET 10 MCP Gateway with a standards-compliant OAuth 2.1 authorization server, Entra ID identity passthrough, 580+ tests, and full Azure CI/CD.',
+    tags: ['.NET 10', 'MCP', 'Copilot Studio', 'Azure', 'Microsoft Graph', 'OAuth 2.1'],
+    category: 'AI',
+    image: expenseShowcase,
+    liveUrl: '#',
+    repoUrl: '#',
+    year: '2026',
+    company: 'BISTEC Global Services',
+    confidential: true,
+  },
+  {
+    id: 'servicenow',
+    title: 'AI IT-Support Platform for ServiceNow',
+    description:
+      'Enterprise IT-support agent connecting Copilot Studio to ServiceNow through a custom MCP gateway — 15 tools for incidents, service catalog, and knowledge base with Teams escalation, Polly resilience patterns, Cosmos DB multi-tenancy, and Azure Marketplace packaging.',
+    tags: ['.NET 10', 'MCP', 'ServiceNow', 'Copilot Studio', 'Cosmos DB', 'Bicep'],
+    category: 'AI',
+    image: servicenowShowcase,
+    liveUrl: '#',
+    repoUrl: '#',
+    year: '2026',
+    company: 'BISTEC Global Services',
+    confidential: true,
+  },
+  {
+    id: 'docmind',
+    title: 'DocMind — AI Document Q&A (RAG)',
+    description:
+      'Production RAG platform: upload any PDF and get cited answers grounded strictly in your document. LlamaIndex chunking, 3072-dim OpenAI embeddings in Qdrant with session isolation, GPT-4o-mini generation, and scale-to-zero deployment on Azure Container Apps with SHA-tagged CI/CD.',
+    tags: ['FastAPI', 'LlamaIndex', 'Qdrant', 'OpenAI', 'Next.js', 'Azure Container Apps'],
+    category: 'AI',
+    image: docmindShowcase,
+    liveUrl: '#',
+    repoUrl: '#',
+    year: '2026',
+  },
+  {
+    id: 'travelplan',
+    title: 'Travel Plan Platform',
+    description:
+      'AI-powered travel marketplace for Sri Lanka, live at travel-plan.live — a conversational agent plans multi-day trips over a 13-service Spring Boot backbone with saga-orchestrated bookings and Kafka-driven reviews.',
+    tags: ['Spring Boot', 'Kafka', 'Google Gemini', 'Next.js 16', 'Supabase', 'Docker'],
+    category: 'AI',
+    image: travelplanShowcase,
+    liveUrl: 'https://travel-plan.live/',
+    repoUrl: 'https://github.com/mlswijerathne/travel-plan-platform',
+    year: '2026',
+  },
+  {
+    id: 'quizbank',
+    title: 'QuizBank — AI Evaluation Platform',
+    description:
+      'Multi-tenant question bank and candidate evaluation platform with GPT-4o one-click question generation, four user roles, timed assessments, chart dashboards, and PDF reports — .NET 9 Clean Architecture + Next.js 15, Dockerized with Azure DevOps CI/CD.',
+    tags: ['.NET 9', 'Next.js 15', 'PostgreSQL', 'GPT-4o', 'Firebase Auth', 'Docker'],
+    category: 'Web',
+    image: quizbankShowcase,
+    liveUrl: 'https://quizbank.ai.bistecglobal.com',
+    repoUrl: '#',
+    year: '2025',
+    company: 'BISTEC Global Services',
+  },
+  {
+    id: 'article-gen',
+    title: 'AI Article Generator (n8n Pipeline)',
+    description:
+      'Five specialized AI sub-agents in a deterministic n8n pipeline turn a single topic into a publication-ready article — live web research with citations, auto-generated architecture diagrams, royalty-free image sourcing, grounded writing, and a fact-check QA gate before delivery.',
+    tags: ['n8n', 'OpenAI', 'Multi-Agent', 'Kroki', 'Google Sheets', 'Automation'],
+    category: 'AI',
+    image: articleGenShowcase,
+    liveUrl: '#',
+    repoUrl: '#',
+    year: '2025',
+  },
+  {
+    id: 'auction',
+    title: 'Real-Time Auction Platform',
+    description:
+      'Real-time bidding engine with Stripe-integrated escrow, role-based admin tooling, and concurrent-update handling for fair, high-traffic auctions.',
+    tags: ['React', 'ASP.NET Core', 'SQL Server', 'Stripe'],
+    category: 'Web',
+    image: auctionShowcase,
+    liveUrl: '#',
+    repoUrl: 'https://github.com/mlswijerathne/AuctionManagement/blob/main/README.md',
+    year: '2024',
+  },
+  {
+    id: 'finance',
+    title: 'AI Finance Management Platform',
+    description:
+      'AI-driven personal finance app with automated transaction categorization, subscription monitoring, and goal-based savings insights — deployed and live.',
+    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Axios'],
+    category: 'Web',
+    image: financeShowcase,
+    liveUrl: 'http://152.67.3.153/',
+    repoUrl: 'https://github.com/mlswijerathne/financeManagement/blob/test/README.md',
+    year: '2024',
+  },
+  {
+    id: 'waste',
+    title: 'Smart Waste Coordination App',
+    description:
+      'Cross-platform mobile app coordinating residents, drivers, and city operators — live geolocation routing, incident reporting, and operational analytics.',
+    tags: ['Flutter', 'Firebase', 'Google Maps', 'Provider'],
+    category: 'Mobile',
+    image: wasteShowcase,
+    liveUrl: '#',
+    repoUrl: 'https://github.com/mlswijerathne/Waste-Management-System/blob/main/README.md',
+    year: '2024',
+  },
+];
+
+export const CERTIFICATIONS_META = {
+  eyebrow: 'Explore My Recent',
+  title: 'Achievements & Certifications',
+};
+
+export const ACHIEVEMENTS: Achievement[] = [
+  {
+    id: 'duothan',
+    place: '5th Place',
+    title: 'Duothan 5.0 Hackathon',
+    organizer: 'NSBM Green University · IEEE',
+    description:
+      'Placed 5th at Duothan 5.0 — the university hackathon themed "Crack the code, Create the Future" — competing as team 404_NOTFOUND, building and shipping a working solution against the clock.',
+    images: [
+      { src: duothanTeamImg, alt: 'Team 404_NOTFOUND at Duothan 5.0' },
+      { src: duothanAwardImg, alt: 'Receiving the Duothan 5.0 certificate on stage' },
+    ],
+  },
+];
 
 export const CERTIFICATIONS: Certification[] = [
   {
@@ -431,26 +599,82 @@ export const CERTIFICATIONS: Certification[] = [
   },
 ];
 
-export const TESTIMONIALS: Testimonial[] = [
+export const MILESTONES_META = {
+  eyebrow: 'The Journey So Far',
+  title: 'Milestones',
+};
+
+export const MILESTONES: Milestone[] = [
   {
     id: '1',
-    name: 'Project Lead',
-    role: 'Team Lead',
-    company: 'BISTEC Global Services',
-    content: 'Lakshitha demonstrates exceptional problem-solving skills and a deep understanding of modern software architecture. His work on MCP and Agent Development has been instrumental to our team\'s success.',
+    date: '2019',
+    title: 'School Colours Award',
+    subtitle: "St. Thomas' College, Matale",
+    description:
+      'Received Colours at the 2019 Colours Night — the foundation years of discipline and teamwork, on and off the field.',
+    image: { src: schoolColoursImg, alt: 'Receiving the Colours award on stage in 2019', tilt: 'left' },
   },
   {
     id: '2',
-    name: 'University Supervisor',
-    role: 'Senior Lecturer',
-    company: 'NSBM Green University',
-    content: 'One of the most dedicated students I\'ve mentored. Lakshitha consistently delivers high-quality projects and shows a genuine passion for emerging technologies and continuous learning.',
+    date: '2022',
+    title: 'Started BSc (Hons) in Software Engineering',
+    subtitle: 'NSBM Green University',
+    description: 'Began the degree — and wrote my first lines of production-bound code the same year.',
   },
   {
     id: '3',
-    name: 'Open Source Collaborator',
-    role: 'Developer',
-    company: 'GitHub Community',
-    content: 'Working with Lakshitha on open-source projects has been a great experience. His code is clean, well-documented, and he brings creative solutions to complex technical challenges.',
+    date: 'Mar 2025',
+    title: 'Began Technical Writing',
+    subtitle: 'Medium',
+    description:
+      'Started publishing articles that translate complex engineering concepts into clear, accessible content.',
+  },
+  {
+    id: '4',
+    date: 'Aug 2025',
+    title: 'Software Engineer Intern',
+    subtitle: 'BISTEC Global Services',
+    description:
+      'First industry role — built the QuizBank AI evaluation platform end to end and did R&D on Cloudflare, Supabase, and Google ADK.',
+    image: { src: bistecWorkImg, alt: 'Working with the team at BISTEC Global Services', tilt: 'right' },
+  },
+  {
+    id: '5',
+    date: 'Sep 2025',
+    title: 'Started Freelancing on Upwork',
+    subtitle: 'AI Agent Developer',
+    description:
+      'Began shipping AI agents, RAG systems, and n8n automation workflows for businesses worldwide.',
+  },
+  {
+    id: '6',
+    date: 'Oct 2025',
+    title: 'Oracle Certified AI Foundations Associate',
+    subtitle: 'Oracle Cloud Infrastructure 2025',
+    description:
+      'Earned the OCI AI Foundations certification alongside Docker and prompt-engineering credentials.',
+  },
+  {
+    id: '7',
+    date: 'Jan 2026',
+    title: 'Associate Software Engineer',
+    subtitle: 'BISTEC Global Services',
+    description:
+      'Promoted to full-time on the Agent Accelerator team — building production MCP gateways and Copilot Studio agents on Azure.',
+    image: { src: bistecAwardImg, alt: 'Recognition on stage at BISTEC Hearts Academy', tilt: 'left' },
   },
 ];
+
+export const CONTACT_META = {
+  eyebrow: 'Get in Touch',
+  title: 'Contact Me',
+  intro:
+    'Tell me what you’re building — an AI agent, an automation, or a full web or mobile app. I usually reply within 24 hours.',
+};
+
+/* School/university logos available for future use */
+export const LOGOS = {
+  bistec: bistecLogo,
+  nsbm: nsbmLogo,
+  thomas: thomasLogo,
+};

@@ -1,116 +1,80 @@
-import { Github, Linkedin, BookOpen, Mail, ArrowUpRight } from 'lucide-react';
-import { motion } from 'motion/react';
-import { SITE } from '../data';
-import { EASE, DURATION } from '../lib/motion';
-import { Reveal } from './Reveal';
-import { UpworkIcon } from './UpworkIcon';
+import './contact.css';
+import { NAV_LINKS, SITE } from '../data';
+
+/** Morse for S T A Y — revealed on hover inside the STAY button. */
+const STAY_MORSE = '... - .- -.--';
+
+const BLUR_LAYERS = [
+  { mask: 'linear-gradient(to bottom, transparent 0%, black 16.7%, black 33.3%, transparent 50%)', blur: '0.230rem' },
+  { mask: 'linear-gradient(to bottom, transparent 16.7%, black 33.3%, black 50%, transparent 66.7%)', blur: '0.385rem' },
+  { mask: 'linear-gradient(to bottom, transparent 33.3%, black 50%, black 66.7%, transparent 83.3%)', blur: '0.750rem' },
+  { mask: 'linear-gradient(to bottom, transparent 50%, black 66.7%, black 83.3%, transparent 100%)', blur: '1.462rem' },
+  { mask: 'linear-gradient(to bottom, transparent 66.7%, black 83.3%, black 100%)', blur: '2.443rem' },
+  { mask: 'linear-gradient(to bottom, transparent 83.3%, black 100%)', blur: '3.000rem' },
+];
 
 export default function Footer() {
-  const year = new Date().getFullYear();
+  const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <footer className="border-t border-[#E5E5E5] bg-white">
-      <div className="mx-auto max-w-7xl px-5 py-14 md:px-8 md:py-16 lg:px-12">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-end">
-          <div className="md:col-span-7">
-            <h3 className="text-section text-[#0A0A0A]">
-              <Reveal>Let&apos;s build something</Reveal>
-              <Reveal delay={0.1}>
-                <span className="text-[#FF4D2E]">together</span>.
-              </Reveal>
-            </h3>
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: DURATION.enter, ease: EASE, delay: 0.3 }}
-              className="mt-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6"
-            >
-              <a
-                href={`mailto:${SITE.email}`}
-                className="group inline-flex items-center gap-2 text-[15px] font-medium text-[#0A0A0A]"
-              >
-                <Mail size={16} strokeWidth={1.8} />
-                <span className="relative">
-                  {SITE.email}
-                  <span
-                    aria-hidden
-                    className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-[#0A0A0A] transition-transform duration-500 ease-out group-hover:scale-x-100"
-                  />
-                </span>
-                <ArrowUpRight
-                  size={14}
-                  strokeWidth={2.25}
-                  className="text-[#FF4D2E] transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                />
-              </a>
-
-              <a
-                href={SITE.upwork}
-                target="_blank"
-                rel="noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full bg-[#14A800] px-4 py-2 text-[14px] font-medium text-white transition-transform duration-300 ease-out hover:-translate-y-0.5"
-              >
-                <UpworkIcon size={16} />
-                Hire me on Upwork
-                <ArrowUpRight
-                  size={14}
-                  strokeWidth={2.25}
-                  className="transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                />
-              </a>
-            </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: DURATION.enter, ease: EASE, delay: 0.4 }}
-            className="flex items-center gap-3 md:col-span-5 md:justify-end"
-          >
-            <SocialLink href={SITE.github} label="GitHub">
-              <Github size={16} strokeWidth={1.8} />
-            </SocialLink>
-            <SocialLink href={SITE.linkedin} label="LinkedIn">
-              <Linkedin size={16} strokeWidth={1.8} />
-            </SocialLink>
-            <SocialLink href={SITE.medium} label="Medium">
-              <BookOpen size={16} strokeWidth={1.8} />
-            </SocialLink>
-            <SocialLink href={SITE.upwork} label="Upwork">
-              <UpworkIcon size={16} />
-            </SocialLink>
-          </motion.div>
+    <>
+      <footer>
+        <div className="footer-button-container">
+          <button className="stay-top-btn" type="button" onClick={scrollTop} aria-label="Scroll to top">
+            <div className="stay-btn-content">
+              <span className="stay-text">S T A Y</span>
+              <div className="morse-code">{STAY_MORSE}</div>
+            </div>
+          </button>
         </div>
+        <nav aria-label="Footer navigation">
+          <ul className="nav-links">
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <p>
+          Copyright © {new Date().getFullYear()} {SITE.name}. All Rights Reserved.
+        </p>
+      </footer>
 
-        <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-[#E5E5E5] pt-6 text-[13px] text-[#6B6B6B] sm:flex-row sm:items-center">
-          <span>© {year} {SITE.name} Wijerathne. All rights reserved.</span>
-          <span>Designed and built with care.</span>
+      {/* Progressive-blur strip pinned to the viewport bottom */}
+      <div
+        className="gradual-blur gradual-blur-page"
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          pointerEvents: 'none',
+          opacity: 1,
+          transition: 'opacity 0.1s ease-out',
+          zIndex: 1100,
+          height: '3rem',
+          width: '100%',
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      >
+        <div className="gradual-blur-inner" style={{ position: 'relative', width: '100%', height: '100%' }}>
+          {BLUR_LAYERS.map((layer) => (
+            <div
+              key={layer.blur}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                opacity: 1,
+                maskImage: layer.mask,
+                WebkitMaskImage: layer.mask,
+                backdropFilter: `blur(${layer.blur})`,
+                WebkitBackdropFilter: `blur(${layer.blur})`,
+              }}
+            />
+          ))}
         </div>
       </div>
-    </footer>
-  );
-}
-
-function SocialLink({
-  href,
-  label,
-  children,
-}: {
-  href: string;
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={label}
-      className="grid h-10 w-10 place-items-center rounded-full border border-[#E5E5E5] text-[#0A0A0A] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white"
-    >
-      {children}
-    </a>
+    </>
   );
 }

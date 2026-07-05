@@ -1,0 +1,271 @@
+/* ============================================================
+ * ABOUT (#about) — portrait + two info cards + bio.
+ * Values ported from specs/about.md. The decorative quote block
+ * (.quote/.imagine/.achieve) is rendered by Slogan (slogan.css).
+ * ============================================================ */
+#about {
+  position: relative;
+}
+
+.about-title {
+  margin-bottom: 2rem;
+}
+
+/* .section-container base flex row lives in hero.css (shared class);
+   collapse to block ≤1400px is also declared there. */
+
+.section-pic-container {
+  display: flex;
+  height: 400px;
+  width: 400px;
+}
+
+.about-pic {
+  border-radius: 1rem;
+  filter: grayscale(100%) contrast(1.1);
+  -webkit-filter: grayscale(100%) contrast(1.1);
+  object-fit: cover;
+  width: 100%;
+}
+
+.about-detailes-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.cards-container {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/* --- Info card --- */
+.interstellar-card {
+  width: 300px;
+  height: 190px;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 1rem;
+  border: 1px solid #a3a3a3;
+}
+
+.interstellar-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* rotating orbit ring, hidden until hover */
+.interstellar-card::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.6s ease;
+  animation: rotate 20s linear infinite;
+}
+
+.interstellar-card:hover::before {
+  opacity: 0.3;
+}
+
+/* faint 40px grid crosshair overlay */
+.interstellar-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(90deg, transparent 49%, #000 50%, transparent 51%),
+    linear-gradient(0deg, transparent 49%, #000 50%, transparent 51%);
+  background-size: 40px 40px;
+  opacity: 0.02;
+  transition: opacity 0.4s ease;
+}
+
+.interstellar-card:hover::after {
+  opacity: 0.05;
+}
+
+/* --- Corner dots --- */
+.corner-dots {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #000;
+  border-radius: 50%;
+  opacity: 0.4;
+  transition: all 0.4s ease;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.corner-dots.top-left {
+  top: 15px;
+  left: 15px;
+}
+
+.corner-dots.top-right {
+  top: 15px;
+  right: 15px;
+}
+
+.corner-dots.bottom-left {
+  bottom: 15px;
+  left: 15px;
+}
+
+.corner-dots.bottom-right {
+  bottom: 15px;
+  right: 15px;
+}
+
+.interstellar-card:hover .corner-dots {
+  opacity: 0.8;
+  transform: scale(1.2);
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  to {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* --- Card content --- */
+.card-content {
+  padding: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.card-title::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 1px;
+  background: #000;
+  transition: width 0.4s ease;
+}
+
+.interstellar-card:hover .card-title::after {
+  width: 80px;
+}
+
+.card-text {
+  color: #333;
+  line-height: 1.8;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.card-text p {
+  margin-bottom: 6px;
+  transition: opacity 0.3s ease;
+  font-size: 12px;
+}
+
+.highlight {
+  font-weight: 500;
+  color: #000;
+}
+
+/* Faint watermark logo bleeding off the card's left edge.
+   Both logos are wide wordmarks, so keep them near natural height —
+   vertically centered, softly clipped by the card's overflow. */
+.card-background {
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: -30px;
+  height: 90px;
+  width: auto;
+  opacity: 0.12;
+  object-fit: contain;
+}
+
+/* --- Bio text --- */
+.text-container {
+  padding: 20px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.text-container p {
+  margin-bottom: 5px;
+  font-size: 0.85rem;
+}
+
+/* --- Breakpoints --- */
+@media screen and (max-width: 1400px) {
+  .section-pic-container {
+    margin: 2rem auto;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .section-pic-container {
+    margin: 1rem auto;
+    width: 85vw;
+    height: 85vw;
+    max-width: 340px;
+    max-height: 340px;
+  }
+  .text-container {
+    text-align: justify;
+  }
+}
+
+@media (max-width: 768px) {
+  .cards-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .interstellar-card {
+    width: 100%;
+    max-width: 340px;
+  }
+}

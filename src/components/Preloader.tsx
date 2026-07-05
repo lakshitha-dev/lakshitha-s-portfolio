@@ -1,83 +1,71 @@
+import './preloader.css';
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { LOADING } from '../data';
 
-interface PreloaderProps {
-  onComplete: () => void;
-}
-
-const letters = 'LAKSHITHA'.split('');
-
-export default function Preloader({ onComplete }: PreloaderProps) {
-  const [isVisible, setIsVisible] = useState(true);
+/**
+ * White full-viewport loading overlay with a solar-system spinner and a
+ * 0→100 percentage ramp. Hides via the .hidden class (0.8s fade), then
+ * unmounts.
+ */
+export default function Preloader() {
+  const [percent, setPercent] = useState(0);
+  const [hidden, setHidden] = useState(false);
+  const [gone, setGone] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 2500);
-    return () => clearTimeout(timer);
+    const start = performance.now();
+    const DURATION = 1600;
+    let raf = 0;
+    let hideTimer = 0;
+    let unmountTimer = 0;
+
+    const tick = (now: number) => {
+      const p = Math.min(100, Math.round(((now - start) / DURATION) * 100));
+      setPercent(p);
+      if (p < 100) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        setHidden(true);
+        unmountTimer = window.setTimeout(() => setGone(true), 850);
+      }
+    };
+    raf = requestAnimationFrame(tick);
+
+    // Safety: never trap the page if rAF is throttled.
+    hideTimer = window.setTimeout(() => {
+      setPercent(100);
+      setHidden(true);
+      unmountTimer = window.setTimeout(() => setGone(true), 850);
+    }, DURATION + 1200);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(hideTimer);
+      window.clearTimeout(unmountTimer);
+    };
   }, []);
 
+  if (gone) return null;
+
   return (
-    <AnimatePresence onExitComplete={onComplete}>
-      {isVisible && (
-        <motion.div
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center"
-          style={{ backgroundColor: 'var(--bg-primary)' }}
-          exit={{ y: '-100%' }}
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-        >
-          {/* --- Monogram --- */}
-          <motion.div
-            className="mb-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="flex overflow-hidden">
-              {letters.map((letter, i) => (
-                <motion.span
-                  key={i}
-                  className="font-display text-5xl font-bold tracking-tight md:text-7xl"
-                  style={{ color: 'var(--text-primary)' }}
-                  initial={{ y: '100%', opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{
-                    duration: 0.5,
-                    delay: 0.2 + i * 0.06,
-                    ease: [0.33, 1, 0.68, 1],
-                  }}
-                >
-                  {letter}
-                </motion.span>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* --- Line --- */}
-          <motion.div
-            className="h-px w-48 md:w-72"
-            style={{ backgroundColor: 'var(--text-primary)' }}
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{
-              duration: 1,
-              delay: 0.8,
-              ease: [0.25, 0.46, 0.45, 0.94],
-            }}
-          />
-
-          {/* --- Subtitle --- */}
-          <motion.p
-            className="mt-4 text-xs font-light uppercase tracking-[0.3em]"
-            style={{ color: 'var(--text-secondary)' }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1.4 }}
-          >
-            Portfolio
-          </motion.p>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div className={`loading-container${hidden ? ' hidden' : ''}`} aria-hidden="true">
+      <div className="loading-content">
+        <h2 className="loading-title">{LOADING.title}</h2>
+        <p className="loading-subtitle">{LOADING.subtitle}</p>
+        <div className="solar-system">
+          <div className="sun" />
+          <div className="orbit orbit-1">
+            <div className="planet planet-1" />
+          </div>
+          <div className="orbit orbit-2">
+            <div className="planet planet-2" />
+          </div>
+          <div className="orbit orbit-3">
+            <div className="planet planet-3" />
+          </div>
+        </div>
+        <div className="loading-percentage">{percent}%</div>
+      </div>
+    </div>
   );
 }

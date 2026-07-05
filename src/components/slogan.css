@@ -1,0 +1,78 @@
+/* ============================================================
+ * SLOGAN — decorative typographic block (.quote / .imagine / .achieve)
+ * Values ported from the reference spec (specs/slogan.md).
+ * Foundation (resets, fonts, --font-kaushan) lives in index.css.
+ * ============================================================ */
+
+/* --- Base (desktop, >600px) ---------------------------------------
+ * Rendered as the LAST CHILD of .about-detailes-container inside
+ * #about (reference placement). Two sibling h1s on one row,
+ * horizontally centered, baseline-aligned, 0.5rem apart. UA h1
+ * weight (bold) matches the .quote font-weight:700. */
+.quote {
+  display: flex;
+  flex-direction: row;
+  font-weight: 700;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: baseline;
+  width: 100%;
+  line-height: normal;
+}
+
+/* Serif words — Playfair Display at inherited weight 700 */
+.imagine {
+  font-size: 50px;
+  font-family: "Playfair Display", serif;
+}
+
+/* Script word — Kaushan Script (400-only face, synthetic-bolded),
+ * whole word rotated −15deg at EVERY breakpoint */
+.achieve {
+  font-size: 70px;
+  transform: rotate(-15deg);
+  font-family: var(--font-kaushan), cursive;
+}
+
+/* --- ≤600px — FIRST block ------------------------------------------
+ * Words stack vertically, right-aligned under the bio text. */
+@media screen and (max-width: 600px) {
+  .quote {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
+  }
+
+  .imagine {
+    font-size: 2.5rem;
+  }
+
+  .achieve {
+    font-size: 3.5rem;
+  }
+}
+
+/* --- ≤600px — SECOND block ------------------------------------------
+ * Reference cascade quirk (reproduced deliberately): this later block
+ * overrides the sizes above, so 501–600px renders SMALLER text than
+ * ≤500px does. */
+@media screen and (max-width: 600px) {
+  .imagine {
+    font-size: 1.5rem;
+  }
+
+  .achieve {
+    font-size: 2rem;
+  }
+}
+
+/* --- ≤500px — last in file, wins below 500px ----------------------- */
+@media screen and (max-width: 500px) {
+  .imagine {
+    font-size: 2.5rem;
+  }
+
+  .achieve {
+    font-size: 3.5rem;
+  }
+}

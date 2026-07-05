@@ -1,122 +1,82 @@
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import './navbar.css';
+import { useEffect, useRef, useState } from 'react';
 import { NAV_LINKS, SITE } from '../data';
+import logo from '../assets/logo.svg';
 
+/**
+ * Dual navbar: fixed frosted-glass pill on desktop (>1280px, hides on
+ * scroll-down) and an in-flow bar with a spring dropdown on mobile.
+ */
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [navHidden, setNavHidden] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const lastY = useRef(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
+    const onScroll = () => {
+      const y = window.scrollY;
+      // Hide when scrolling down past the bar; show on scroll-up or near top.
+      setNavHidden(y > lastY.current && y > 120);
+      lastY.current = y;
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [open]);
+  const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/85 backdrop-blur-md border-b border-[#E5E5E5]' : 'bg-transparent'
-      }`}
-    >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8 lg:px-12">
-        <a
-          href="#home"
-          className="text-[#0A0A0A] no-tap-highlight"
-          aria-label={`${SITE.brand} — home`}
-        >
-          <span className="text-[15px] font-semibold tracking-tight">
-            {SITE.brand}
-          </span>
-        </a>
-
-        <ul className="hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="group relative text-[14px] text-[#0A0A0A] transition-colors duration-300"
-              >
-                <span className="transition-colors duration-300 group-hover:text-[#FF4D2E]">
-                  {link.label}
-                </span>
-                <span
-                  aria-hidden
-                  className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-[#FF4D2E] transition-transform duration-300 ease-out group-hover:scale-x-100"
-                />
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <div className="flex items-center gap-3">
-          <a
-            href="#contact"
-            className="group hidden items-center gap-1.5 rounded-full bg-[#0A0A0A] px-4 py-2 text-[13px] font-medium text-white transition-transform duration-300 ease-out hover:-translate-y-0.5 md:inline-flex"
-          >
-            Contact me
-            <ArrowUpRight
-              size={14}
-              strokeWidth={2.25}
-              className="transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-            />
-          </a>
-
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-            className="grid h-10 w-10 place-items-center rounded-full border border-[#E5E5E5] text-[#0A0A0A] md:hidden no-tap-highlight"
-          >
-            {open ? <X size={18} /> : <Menu size={18} />}
-          </button>
+    <>
+      <nav id="desktop-nav" className={`desktop-nav${navHidden ? ' nav-hidden' : ''}`} aria-label="Main navigation">
+        <div className="logo" id="logo">
+          <img src={logo} alt="" className="logo-img" />
+          <h1>{SITE.firstName}</h1>
+        </div>
+        <div>
+          <ul className="nav-links">
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
         </div>
       </nav>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="max-h-[calc(100vh-65px)] overflow-y-auto border-t border-[#E5E5E5] bg-white md:hidden"
+      <nav id="hamburger-nav" aria-label="Mobile navigation">
+        <div className="hamburger-logo">
+          <img
+            src={logo}
+            alt="Scroll to top"
+            className="logo-img-mobile"
+            onClick={scrollTop}
+          />
+          <div className="logo">{SITE.firstName}</div>
+        </div>
+        <div className="hamburger-menu">
+          <button
+            type="button"
+            className={`hamburger-icon${menuOpen ? ' open' : ''}`}
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMenuOpen((v) => !v)}
+            style={{ border: '1px solid hsla(0,0%,100%,.3)' }}
           >
-            <ul className="flex flex-col px-5 py-6">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="block py-3 text-[18px] font-medium text-[#0A0A0A]"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-              <li className="pt-3">
-                <a
-                  href="#contact"
-                  onClick={() => setOpen(false)}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-[#0A0A0A] px-5 py-3 text-[14px] font-medium text-white"
-                >
-                  Contact me
-                  <ArrowUpRight size={14} strokeWidth={2.25} />
+            <span />
+            <span />
+            <span />
+          </button>
+          <div className={`menu-links${menuOpen ? ' open' : ''}`}>
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <a href={link.href} onClick={() => setMenuOpen(false)}>
+                  {link.label}
                 </a>
               </li>
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+            ))}
+          </div>
+        </div>
+      </nav>
+    </>
   );
 }

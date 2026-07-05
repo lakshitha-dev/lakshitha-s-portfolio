@@ -1,0 +1,40 @@
+/* ============================================================
+ * SCROLL-VELOCITY BANNER — two opposite-drifting marquee rows.
+ * Values ported from specs/velocity-banner.md.
+ * ============================================================ */
+.scroll-velocity-banner {
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  padding: 0;
+  margin: 5vh auto;
+}
+
+.parallax {
+  position: relative;
+  overflow: hidden;
+}
+
+.scroller {
+  display: flex;
+  white-space: nowrap;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #292929;
+  letter-spacing: -0.02em;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
+  gap: 2rem;
+}
+
+.scroller span {
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .scroller {
+    font-size: 5rem;
+    line-height: 5rem;
+  }
+}

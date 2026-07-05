@@ -1,163 +1,204 @@
-import { motion } from 'motion/react';
-import { ArrowUpRight, Calendar } from 'lucide-react';
+import './writing.css';
+import { useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, Calendar, Globe, BookOpen } from 'lucide-react';
 import type { MediumArticle } from '../data';
 import { SITE, WRITING_META } from '../data';
-import { EASE, DURATION } from '../lib/motion';
-import { Reveal } from './Reveal';
-
-const ease = EASE;
 
 interface WritingProps {
   articles: MediumArticle[];
   loading: boolean;
 }
 
-function formatDate(raw: string) {
-  if (!raw) return '';
-  const d = new Date(raw);
-  if (Number.isNaN(d.getTime())) return '';
-  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+function formatDate(pubDate: string): string {
+  const d = new Date(pubDate);
+  return Number.isNaN(d.getTime())
+    ? pubDate
+    : d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 }
 
-function SkeletonCard() {
-  return (
-    <div className="border border-[#E5E5E5] bg-white">
-      <div className="aspect-[16/10] animate-pulse bg-[#FAFAFA]" />
-      <div className="space-y-3 p-5">
-        <div className="h-3 w-1/3 animate-pulse rounded bg-[#FAFAFA]" />
-        <div className="h-4 w-4/5 animate-pulse rounded bg-[#FAFAFA]" />
-        <div className="h-3 w-full animate-pulse rounded bg-[#FAFAFA]" />
-      </div>
-    </div>
-  );
-}
-
-function ArticleCard({ article }: { article: MediumArticle }) {
-  return (
-    <a
-      href={article.link}
-      target="_blank"
-      rel="noreferrer"
-      className="group flex flex-col border border-transparent bg-white transition-colors duration-300 hover:bg-[#FAFAFA]"
-    >
-      <div className="relative aspect-[16/10] overflow-hidden bg-[#FAFAFA]">
-        {article.thumbnail ? (
-          <img
-            src={article.thumbnail}
-            alt={`Cover image for: ${article.title}`}
-            loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-          />
-        ) : (
-          <div className="absolute inset-0 grid place-items-center text-[12px] tracking-[0.2em] text-[#6B6B6B]">
-            ARTICLE
-          </div>
-        )}
-      </div>
-
-      <div className="flex flex-1 flex-col p-5 md:p-6">
-        <div className="flex items-center gap-2 text-[12px] text-[#6B6B6B]">
-          <Calendar size={12} strokeWidth={1.8} />
-          {formatDate(article.pubDate)}
-        </div>
-
-        <h3 className="mt-3 text-[16px] font-semibold leading-snug text-[#0A0A0A] line-clamp-2">
-          {article.title}
-        </h3>
-
-        {article.description && (
-          <p className="mt-3 text-[13px] leading-relaxed text-[#6B6B6B] line-clamp-3">
-            {article.description}
-          </p>
-        )}
-
-        <div className="mt-auto flex items-center gap-2 pt-5 text-[13px] font-medium text-[#0A0A0A]">
-          <span>Read article</span>
-          <ArrowUpRight
-            size={14}
-            strokeWidth={2.25}
-            className="text-[#FF4D2E] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-          />
-        </div>
-      </div>
-    </a>
-  );
-}
-
+/** Writing: Medium articles in a publications-style horizontal slider. */
 export default function Writing({ articles, loading }: WritingProps) {
-  const hasArticles = !loading && articles.length > 0;
-  const showCards = loading || hasArticles;
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  const cardStep = () => {
+    const container = scrollRef.current;
+    if (!container) return 0;
+    const card = container.querySelector<HTMLElement>('.publication-card');
+    return card ? card.offsetWidth + 8 : 558;
+  };
+
+  // Keep the active bubble in sync with real scroll position (swipes too).
+  const onScroll = () => {
+    const container = scrollRef.current;
+    const step = cardStep();
+    if (!container || step === 0) return;
+    const index = Math.round(container.scrollLeft / step);
+    setActive(Math.min(Math.max(index, 0), Math.max(articles.length - 1, 0)));
+  };
+
+  const slide = (dir: 1 | -1) => {
+    scrollRef.current?.scrollBy({ left: dir * cardStep(), behavior: 'smooth' });
+  };
+
+  const jumpTo = (index: number) => {
+    scrollRef.current?.scrollTo({ left: index * cardStep(), behavior: 'smooth' });
+  };
 
   return (
-    <section id="writing" className="bg-white py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-5 md:px-8 lg:px-12">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:items-end">
-          <div className="md:col-span-7">
-            <motion.span
-              initial={{ opacity: 0, y: 8 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.4, ease }}
-              className="text-eyebrow block text-[#6B6B6B]"
-            >
-              Writing
-            </motion.span>
-            <h2 className="text-section mt-3 text-[#0A0A0A]">
-              <Reveal delay={0.1}>{WRITING_META.heading}</Reveal>
-            </h2>
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: DURATION.enter, ease, delay: 0.25 }}
-              className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]"
-            >
-              {WRITING_META.intro}
-            </motion.p>
-          </div>
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: DURATION.enter, ease, delay: 0.35 }}
-            className="md:col-span-5 md:flex md:justify-end"
-          >
-            <a
-              href={SITE.medium}
-              target="_blank"
-              rel="noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full border border-[#E5E5E5] px-5 py-3 text-[14px] font-medium text-[#0A0A0A] transition-colors duration-300 hover:border-[#0A0A0A]"
-            >
-              {WRITING_META.ctaLabel}
-              <ArrowUpRight
-                size={16}
-                strokeWidth={2.25}
-                className="text-[#FF4D2E] transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
-            </a>
-          </motion.div>
-        </div>
+    <section id="writing">
+      <p className="section-text-p1">{WRITING_META.eyebrow}</p>
+      <h1 className="title">{WRITING_META.title}</h1>
 
-        <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden border border-[#E5E5E5] bg-[#E5E5E5] md:mt-16 md:grid-cols-3">
-          {showCards
-            ? (loading ? Array.from({ length: 3 }) : articles.slice(0, 3)).map((article, i) => (
-                <motion.div
-                  key={(article as MediumArticle)?.link ?? i}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ duration: 0.5, ease, delay: i * 0.08 }}
-                >
-                  {loading ? <SkeletonCard /> : <ArticleCard article={article as MediumArticle} />}
-                </motion.div>
-              ))
-            : (
-              <div className="col-span-full bg-white p-10 text-center text-[14px] text-[#6B6B6B]">
-                No articles available right now. Check back soon.
-              </div>
-            )}
+      <div className="publications-wrapper">
+        <div style={{ position: 'relative' }}>
+          <button
+            id="publicationSlideLeft"
+            className="btn2 btn-color-1 leftbtn publications-nav-btn left"
+            type="button"
+            aria-label="Previous article"
+            disabled={active === 0}
+            onClick={() => slide(-1)}
+          >
+            <ArrowLeft className="icon" aria-hidden="true" />
+          </button>
+
+          <div
+            id="publicationsContainer"
+            className="publications-scroll-container"
+            ref={scrollRef}
+            onScroll={onScroll}
+          >
+            <div className="publications-container">
+              {loading &&
+                Array.from({ length: 3 }, (_, i) => (
+                  <div key={i} className="publication-card skeleton" aria-hidden="true" />
+                ))}
+
+              {!loading &&
+                articles.map((article) => (
+                  <div key={article.link} className="publication-card">
+                    <div className="publication-main">
+                      {article.thumbnail && (
+                        <a
+                          className="paper-preview"
+                          href={article.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          tabIndex={-1}
+                          aria-hidden="true"
+                        >
+                          <img src={article.thumbnail} alt="" loading="lazy" />
+                        </a>
+                      )}
+                      <div className="publication-info">
+                        <div className="publication-header">
+                          <h3 className="publication-title">{article.title}</h3>
+                          <div className="venue-wrapper">
+                            <p className="publication-venue">Published on Medium</p>
+                          </div>
+                          <div className="publication-metadata">
+                            <div className="publication-date">
+                              <Calendar aria-hidden="true" />
+                              <span>{formatDate(article.pubDate)}</span>
+                            </div>
+                            <div className="publication-venue-info">
+                              <Globe aria-hidden="true" />
+                              <span>medium.com/@{'lakshithaa'}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="publication-abstract">
+                          <h4>Summary</h4>
+                          <div className="abstract-text">{article.description}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {article.categories.length > 0 && (
+                      <div className="coauthors-section">
+                        <h4>Topics</h4>
+                        <div className="coauthors-grid">
+                          {article.categories.map((cat) => (
+                            <div key={cat} className="coauthor-item">
+                              <div className="coauthor-name">{cat}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="publication-actions">
+                      <a
+                        href={article.link}
+                        className="paper-link-btn"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <BookOpen aria-hidden="true" />
+                        <span>Read Article</span>
+                      </a>
+                    </div>
+                  </div>
+                ))}
+
+              {!loading && articles.length === 0 && (
+                <div className="publication-card">
+                  <div className="publication-main">
+                    <div className="publication-info">
+                      <div className="publication-header">
+                        <h3 className="publication-title">Articles live on Medium</h3>
+                      </div>
+                      <div className="publication-abstract">
+                        <h4>Summary</h4>
+                        <div className="abstract-text">
+                          Short technical pieces on engineering, AI agents, and automation.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="publication-actions">
+                    <a
+                      href={SITE.medium}
+                      className="paper-link-btn"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <BookOpen aria-hidden="true" />
+                      <span>{WRITING_META.ctaLabel}</span>
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <button
+            id="publicationSlideRight"
+            className="btn2 btn-color-1 rightbtn publications-nav-btn right"
+            type="button"
+            aria-label="Next article"
+            disabled={articles.length === 0 || active >= articles.length - 1}
+            onClick={() => slide(1)}
+          >
+            <ArrowRight className="icon" aria-hidden="true" />
+          </button>
         </div>
       </div>
+
+      {articles.length > 1 && (
+        <div className="project-bubble-indicators">
+          {articles.map((article, i) => (
+            <button
+              key={article.link}
+              type="button"
+              className={`project-bubble${i === active ? ' active' : ''}`}
+              aria-label={`Go to article ${i + 1}`}
+              onClick={() => jumpTo(i)}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

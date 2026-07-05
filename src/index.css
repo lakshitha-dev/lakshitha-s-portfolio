@@ -1,84 +1,734 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-@import "tailwindcss";
+/* ============================================================
+ * FOUNDATION — global tokens shared by all sections.
+ * Values ported from the reference design-system extraction
+ * (scratchpad/specs/_audit.md §3 canonical table).
+ * Section-specific rules live in per-component CSS files.
+ * ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100;9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Poppins:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Kaushan+Script&family=Roboto:wght@400;500&display=swap');
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
-
-  --color-ink: #0A0A0A;
-  --color-ink-soft: #6B6B6B;
-  --color-paper: #FFFFFF;
-  --color-paper-dim: #FAFAFA;
-  --color-rule: #E5E5E5;
-  --color-accent: #FF4D2E;
-  --color-night: #0E0E0E;
+/* No CSS framework/reset beyond this file — the reference relies on
+ * UA defaults (content-box sizing, native heading sizes, browser
+ * button font, line-height normal). */
+:root {
+  --font-kaushan: "Kaushan Script", cursive;
 }
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+/* === BASE (reference global rules, verbatim values) === */
+* {
+  margin: 0;
+  padding: 0;
+}
 
-  body {
-    background-color: #FFFFFF;
-    color: #0A0A0A;
-    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-    font-feature-settings: "cv11", "ss01";
-    overflow-x: hidden;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
 
-  ::selection {
-    background-color: #FF4D2E;
-    color: #FFFFFF;
-  }
+body,
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
 
-  :focus-visible {
-    outline: 2px solid #FF4D2E;
-    outline-offset: 3px;
-    border-radius: 2px;
-  }
+body {
+  background-color: #ffffff;
+  color: #000000;
+  font-family: "DM Sans", sans-serif;
+}
 
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #FFFFFF;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #E5E5E5;
-    border-radius: 4px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #6B6B6B;
+p {
+  color: #555;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: gray;
+  text-decoration: underline;
+  text-underline-offset: 1rem;
+}
+
+:focus-visible {
+  outline: 2px solid #333;
+  outline-offset: 3px;
+}
+
+/* === SECTION SHELL === */
+section {
+  padding-top: 4vh;
+  height: 96vh;
+  margin: 0 10rem;
+  box-sizing: border-box;
+  min-height: fit-content;
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+@media (min-width: 1280px) {
+  section {
+    margin: 0 5%;
   }
 }
 
-/* === EDITORIAL TYPE SCALE === */
-.text-display {
-  font-size: clamp(2.25rem, 6vw, 4.75rem);
-  line-height: 1.04;
-  letter-spacing: -0.035em;
-  font-weight: 600;
+@media (max-width: 1400px) {
+  section {
+    margin: 0 5%;
+  }
 }
 
-.text-section {
-  font-size: clamp(2rem, 4vw, 3.25rem);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-  font-weight: 600;
+@media (min-width: 1401px) {
+  section {
+    margin: 0 10%;
+  }
 }
 
-.text-eyebrow {
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+/* === SHARED TEXT CLASSES === */
+.section-text-p1 {
+  text-align: center;
+  font-size: 1.2rem;
   font-weight: 500;
 }
 
-/* === UTILITY === */
+.title {
+  font-size: 2.5rem;
+  text-align: center;
+  font-weight: 600;
+  color: #000;
+}
+
+.section-text-p2,
+.section-text-p3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #707070;
+}
+
+.section-text-p2 {
+  margin: -0.8rem 0 2rem;
+}
+
+.section-text-p4 {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #969696;
+}
+
+.name {
+  font-size: 5.8rem;
+  font-weight: 500;
+  font-family: "DM Sans", serif;
+  background: linear-gradient(270deg, #222, #444 40%, #8e8c8c 80%, #222);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: ash-gradient-move 10s ease-in-out infinite;
+}
+
+@keyframes ash-gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .title {
+    font-size: 2rem;
+  }
+  .name {
+    font-size: 4rem !important;
+    white-space: nowrap;
+    word-break: break-word;
+  }
+  .section-text-p2 {
+    color: #434242;
+  }
+  .section-text-p4 {
+    font-size: 0.8rem;
+    color: #434242;
+  }
+}
+
+/* === BUTTON FAMILY === */
+.btn,
+a {
+  transition: all 0.3s ease;
+}
+
+.btn {
+  font-weight: 500;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 1rem 1.5rem;
+  width: auto;
+  min-width: 8.4rem;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  border: none;
+  cursor: pointer;
+  color: #000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+/* Reference CTAs are <button>s; ours are anchors — suppress the
+   global a:hover underline that could never apply in the reference. */
+.btn,
+.btn:hover,
+.btn:active,
+.btn:focus,
+.btn:visited {
+  text-decoration: none !important;
+}
+
+.btn,
+.btn2 {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-color-1,
+.btn-color-2 {
+  backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: url(#frosted);
+  -webkit-backdrop-filter: url(#frosted);
+  color: #000;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: visible;
+  border: 0 solid transparent;
+}
+
+.btn-color-1 {
+  background: hsla(0, 0%, 100%, 0.08);
+  box-shadow:
+    0 0 0 2px hsla(0, 0%, 100%, 0.6),
+    0 16px 32px rgba(0, 0, 0, 0.12);
+  font-weight: 500;
+}
+
+.btn-color-1::before,
+.btn-color-2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 100px;
+  background: linear-gradient(135deg, hsla(0, 0%, 100%, 0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+
+.btn-color-1:hover {
+  background: hsla(0, 0%, 100%, 0.12);
+  box-shadow:
+    0 0 0 2px hsla(0, 0%, 100%, 0.8),
+    0 20px 40px rgba(0, 0, 0, 0.18);
+}
+
+.btn-color-1:hover,
+.btn-color-2:hover {
+  transform: translateY(-3px) scale(1.02);
+  color: #000;
+}
+
+.btn-color-1:hover::before,
+.btn-color-2:hover::before {
+  opacity: 1;
+}
+
+.btn-color-1:active {
+  transform: translateY(-1px) scale(1);
+  box-shadow:
+    0 0 0 2px hsla(0, 0%, 100%, 0.7),
+    0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-color-2 {
+  background: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 0 2px rgba(53, 53, 53, 0.3);
+  min-width: 12rem;
+}
+
+.btn-color-2:hover {
+  box-shadow: 0 0 0 2px rgba(53, 53, 53, 0.5);
+}
+
+/* Frosted icon buttons (hero socials) — 12px-radius squares */
+.social-btn-1 {
+  width: 50px;
+  height: 50px;
+  background: hsla(0, 0%, 100%, 0.08);
+  backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: url(#frosted);
+  -webkit-backdrop-filter: url(#frosted);
+  position: relative;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  box-shadow:
+    0 0 0 2px hsla(0, 0%, 100%, 0.6),
+    0 16px 32px rgba(0, 0, 0, 0.12);
+  overflow: visible;
+  color: #000;
+}
+
+.social-btn-1,
+.svgContainer1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.svgContainer1 {
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.svgContainer1 svg {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.social-btn-1::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, hsla(0, 0%, 100%, 0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-radius: 12px;
+  z-index: 1;
+}
+
+.social-btn-1:hover {
+  background: hsla(0, 0%, 100%, 0.12);
+  box-shadow:
+    0 0 0 2px hsla(0, 0%, 100%, 0.8),
+    0 20px 40px rgba(0, 0, 0, 0.18);
+  transform: translateY(-3px) scale(1.05);
+}
+
+.social-btn-1:hover::before {
+  opacity: 1;
+}
+
+.social-btn-1:hover .svgContainer1 svg {
+  transform: scale(1.1);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.social-btn-1:active {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow:
+    0 0 0 2px hsla(0, 0%, 100%, 0.7),
+    0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Scroll-to-top styles live in contact.css (spec-exact fixed button). */
+
+/* === CAROUSEL ARROWS (arrow glass) === */
+.btn2 {
+  font-weight: 600;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 0.75rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn2.leftbtn,
+.btn2.rightbtn {
+  background: hsla(0, 0%, 100%, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 8px 32px rgba(31, 38, 135, 0.15),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.3);
+  animation: slideButtonFadeIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.btn2.leftbtn {
+  animation-delay: 0.1s;
+}
+
+.btn2.rightbtn {
+  animation-delay: 0.2s;
+}
+
+.btn2.leftbtn::before,
+.btn2.rightbtn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 2px;
+  background: linear-gradient(135deg, hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0.1));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn2.leftbtn:hover::before,
+.btn2.rightbtn:hover::before {
+  opacity: 1;
+}
+
+.btn2.leftbtn::after,
+.btn2.rightbtn::after {
+  content: "";
+  position: absolute;
+  inset: -15px;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.08) 0, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: -1;
+}
+
+.btn2.leftbtn:hover::after,
+.btn2.rightbtn:hover::after {
+  opacity: 1;
+  inset: -20px;
+}
+
+.btn2.leftbtn:hover,
+.btn2.rightbtn:hover {
+  transform: scale(1.12) translateY(-3px);
+  background: hsla(0, 0%, 100%, 0.35);
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  box-shadow:
+    0 12px 40px rgba(31, 38, 135, 0.25),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.5),
+    0 0 0 4px hsla(0, 0%, 100%, 0.1);
+}
+
+.btn2.leftbtn:active,
+.btn2.rightbtn:active {
+  transform: scale(1.05) translateY(-1px);
+  box-shadow:
+    0 4px 16px rgba(31, 38, 135, 0.2),
+    inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn2.leftbtn .icon,
+.btn2.rightbtn .icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  color: #333;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn2.leftbtn:hover .icon,
+.btn2.rightbtn:hover .icon {
+  color: #1a1a1a;
+  transform: scale(1.15);
+}
+
+.btn2.leftbtn:disabled,
+.btn2.rightbtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+  background: hsla(0, 0%, 100%, 0.15);
+  border: 2px solid rgba(0, 0, 0, 0.08);
+}
+
+.btn2.leftbtn:disabled:hover,
+.btn2.rightbtn:disabled:hover {
+  transform: none;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+}
+
+.btn2.leftbtn:focus,
+.btn2.rightbtn:focus {
+  outline: 3px solid rgba(0, 0, 0, 0.3);
+  outline-offset: 3px;
+}
+
+.btn2.leftbtn:focus:not(:focus-visible),
+.btn2.rightbtn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Reference cascade: .btn-color-1 appears LATER than .btn2 in source,
+   so on combined slide buttons its transition + overflow win. */
+.btn2.btn-color-1 {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: visible;
+}
+
+@keyframes slideButtonFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .leftbtn,
+  .rightbtn {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .btn2.leftbtn,
+  .btn2.rightbtn {
+    width: 50px;
+    height: 50px;
+  }
+  .btn2.leftbtn .icon,
+  .btn2.rightbtn .icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .btn2.leftbtn,
+  .btn2.rightbtn {
+    width: 48px;
+    height: 48px;
+  }
+  .btn2.leftbtn .icon,
+  .btn2.rightbtn .icon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* === PAGINATION BUBBLES === */
+.project-bubble-indicators {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+  padding: 1rem 0;
+}
+
+.project-bubble {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+  position: relative;
+  overflow: visible;
+}
+
+.project-bubble::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.project-bubble:hover::before {
+  background-color: rgba(0, 0, 0, 0.05);
+  opacity: 1;
+}
+
+.project-bubble:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+  transform: scale(1.2);
+}
+
+.project-bubble.active {
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 24px;
+  border-radius: 4px;
+  transform: scale(1);
+}
+
+.project-bubble.active:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  transform: scale(1.05);
+}
+
+@media screen and (max-width: 600px) {
+  .project-bubble-indicators {
+    gap: 6px;
+    padding: 0.75rem 0;
+  }
+  .project-bubble {
+    width: 6px;
+    height: 6px;
+  }
+  .project-bubble.active {
+    width: 20px;
+  }
+}
+
+/* === WHITE CARD === */
+.white-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* === EDGE-FADE MASKS for horizontal scrollers === */
+.edge-fade-x {
+  -webkit-mask: linear-gradient(90deg, #0000, #000 3% 97%, #0000);
+  mask: linear-gradient(90deg, #0000, #000 3% 97%, #0000);
+}
+
+.edge-fade-x-wide {
+  -webkit-mask: linear-gradient(90deg, #0000, #000 5% 95%, #0000);
+  mask: linear-gradient(90deg, #0000, #000 5% 95%, #0000);
+}
+
+/* === SCROLL-REVEAL SYSTEM (data-reveal) === */
+[data-reveal] {
+  opacity: 0;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+
+[data-reveal="fade"] {
+  transform: translateY(28px);
+}
+
+[data-reveal="left"] {
+  transform: translateX(-40px);
+}
+
+[data-reveal="right"] {
+  transform: translateX(40px);
+}
+
+[data-reveal="scale"] {
+  transform: scale(0.9);
+}
+
+[data-reveal="blur"] {
+  filter: blur(10px);
+  transform: translateY(16px);
+}
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* === SHARED KEYFRAMES === */
+/* Reference cascade quirk: the translate+rotate version of `spin` wins document-wide. */
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(1turn);
+  }
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px) scale(0.95);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translateX(5px) scale(1.01);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes fadeSlideOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  40% {
+    opacity: 0.5;
+    transform: translateX(-10px) scale(0.98);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-30px) scale(0.95);
+  }
+}
+
+@keyframes swipeHintPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes swipeArrowMove {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(6px);
+  }
+}
+
+/* === MISC === */
 .no-tap-highlight {
   -webkit-tap-highlight-color: transparent;
 }
