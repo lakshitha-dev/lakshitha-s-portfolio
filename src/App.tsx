@@ -1,5 +1,5 @@
 import GridCanvas from './components/GridCanvas';
-import BackgroundVideo from './components/BackgroundVideo';
+import HeroBackdrop from './components/HeroBackdrop';
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -53,7 +53,7 @@ export default function App() {
       <FrostedFilter />
       <Preloader />
       <GridCanvas />
-      <BackgroundVideo />
+      <HeroBackdrop />
       <Navbar />
       <main>
         <Hero />
