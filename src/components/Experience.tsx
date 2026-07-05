@@ -1,9 +1,12 @@
 import './experience.css';
-import { Building2, MapPin, Calendar, Bot, Code2, Sparkles, PenLine } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { Building2, MapPin, Calendar, Bot, Code2 } from 'lucide-react';
 import type { Experience as ExperienceItem } from '../data';
 import { BISTEC_MEMORIES, EXPERIENCE_META, EXPERIENCES, LOGOS } from '../data';
 import { Reveal } from './Reveal';
 import PhotoPile from './PhotoPile';
+import { TechIcon } from './TechIcon';
+import { UpworkIcon } from './UpworkIcon';
 
 /** Split a role description into bullet sentences. */
 function toBullets(description: string): string[] {
@@ -19,7 +22,7 @@ interface EmployerCard {
   location: string;
   period: string;
   logo?: string;
-  roles: { exp: ExperienceItem; Icon: typeof Bot }[];
+  roles: { exp: ExperienceItem; icon: ReactNode }[];
 }
 
 const bistec = EXPERIENCES.filter((e) => e.company === 'BISTEC Global Services');
@@ -32,7 +35,10 @@ const EMPLOYERS: EmployerCard[] = [
     location: 'Colombo, Sri Lanka',
     period: 'Aug 2025 — Present',
     logo: LOGOS.bistec,
-    roles: bistec.map((exp, i) => ({ exp, Icon: i === 0 ? Bot : Code2 })),
+    roles: bistec.map((exp, i) => ({
+      exp,
+      icon: i === 0 ? <Bot aria-hidden="true" /> : <Code2 aria-hidden="true" />,
+    })),
   },
   {
     company: 'Freelance & Writing',
@@ -41,7 +47,12 @@ const EMPLOYERS: EmployerCard[] = [
     period: 'Mar 2025 — Present',
     roles: independent.map((exp) => ({
       exp,
-      Icon: exp.company === 'Upwork' ? Sparkles : PenLine,
+      icon:
+        exp.company === 'Upwork' ? (
+          <UpworkIcon size={20} style={{ color: '#14a800' }} />
+        ) : (
+          <TechIcon slug="medium" title="Medium" />
+        ),
     })),
   },
 ];
@@ -84,12 +95,10 @@ export default function Experience() {
 
             <div className="experience-content">
               <div className="projects-row">
-                {employer.roles.map(({ exp, Icon }) => (
+                {employer.roles.map(({ exp, icon }) => (
                   <div key={exp.id} className="project-section">
                     <div className="project-header">
-                      <div className="project-icon">
-                        <Icon aria-hidden="true" />
-                      </div>
+                      <div className="project-icon">{icon}</div>
                       <div className="project-title-container">
                         <h4 className="project-title-experience">
                           {exp.role}
