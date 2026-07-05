@@ -116,7 +116,7 @@ export interface Milestone {
   image?: { src: string; alt: string; tilt?: 'left' | 'right'; logo?: boolean };
 }
 
-export const GITHUB_USERNAME = 'mlswijerathne';
+export const GITHUB_USERNAME = 'lakshitha-dev';
 export const MEDIUM_USERNAME = 'lakshithaa';
 
 /* ──────────────────────────────────────────────────────────────
@@ -131,7 +131,7 @@ export const SITE = {
   role: 'Associate Software Engineer',
   email: 'lakshitha.dev@outlook.com',
   website: 'https://lakshitha.dev',
-  github: 'https://github.com/mlswijerathne',
+  github: 'https://github.com/lakshitha-dev',
   linkedin: 'https://www.linkedin.com/in/lakshitha-wijerathne/',
   medium: 'https://medium.com/@lakshithaa',
   upwork: 'https://www.upwork.com/freelancers/~01a0bb041b5efe1541',
@@ -475,7 +475,7 @@ export const PROJECTS: Project[] = [
     category: 'AI',
     image: travelplanShowcase,
     liveUrl: 'https://travel-plan.live/',
-    repoUrl: 'https://github.com/mlswijerathne/travel-plan-platform',
+    repoUrl: 'https://github.com/lakshitha-dev/travel-plan-platform',
     year: '2026',
   },
   {
@@ -500,7 +500,7 @@ export const PROJECTS: Project[] = [
     category: 'AI',
     image: articleGenShowcase,
     liveUrl: '#',
-    repoUrl: 'https://github.com/mlswijerathne/n8n-medium-article-generator',
+    repoUrl: 'https://github.com/lakshitha-dev/n8n-medium-article-generator',
     year: '2025',
   },
   {
@@ -512,7 +512,7 @@ export const PROJECTS: Project[] = [
     category: 'Web',
     image: auctionShowcase,
     liveUrl: '#',
-    repoUrl: 'https://github.com/mlswijerathne/AuctionManagement/blob/main/README.md',
+    repoUrl: 'https://github.com/lakshitha-dev/AuctionManagement/blob/main/README.md',
     year: '2024',
   },
   {
@@ -524,7 +524,7 @@ export const PROJECTS: Project[] = [
     category: 'Web',
     image: financeShowcase,
     liveUrl: 'http://152.67.3.153/',
-    repoUrl: 'https://github.com/mlswijerathne/financeManagement/blob/test/README.md',
+    repoUrl: 'https://github.com/lakshitha-dev/financeManagement/blob/test/README.md',
     year: '2024',
   },
   {
@@ -536,7 +536,7 @@ export const PROJECTS: Project[] = [
     category: 'Mobile',
     image: wasteShowcase,
     liveUrl: '#',
-    repoUrl: 'https://github.com/mlswijerathne/Waste-Management-System/blob/main/README.md',
+    repoUrl: 'https://github.com/lakshitha-dev/Waste-Management-System/blob/main/README.md',
     year: '2024',
   },
 ];

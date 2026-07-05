@@ -25,7 +25,7 @@ const CONTACT_ITEMS = [
   },
   {
     label: 'GitHub',
-    text: 'mlswijerathne',
+    text: 'lakshitha-dev',
     href: SITE.github,
     Icon: Github,
   },
