@@ -1,6 +1,15 @@
+import type { CSSProperties } from 'react';
 import { siUpwork } from 'simple-icons';
 
-export function UpworkIcon({ size = 16, className = '' }: { size?: number; className?: string }) {
+export function UpworkIcon({
+  size = 16,
+  className = '',
+  style,
+}: {
+  size?: number;
+  className?: string;
+  style?: CSSProperties;
+}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -11,6 +20,7 @@ export function UpworkIcon({ size = 16, className = '' }: { size?: number; class
       height={size}
       fill="currentColor"
       className={className}
+      style={style}
     >
       <path d={siUpwork.path} />
     </svg>

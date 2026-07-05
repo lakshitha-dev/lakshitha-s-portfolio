@@ -7,16 +7,38 @@
  * ============================================================ */
 #skills {
   position: relative;
+}
+
+/* Animated clock + motion-streak backdrop (own artwork), feathered to
+   white on all four edges like the reference treatment. */
+.skills-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.skills-backdrop svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  left: 20%; /* nudge artwork right of center like the reference (70%) */
+}
+
+.skills-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
   background:
     linear-gradient(180deg, #fff 0, hsla(0, 0%, 100%, 0) 10%, hsla(0, 0%, 100%, 0) 90%, #fff),
     linear-gradient(0deg, #fff 0, hsla(0, 0%, 100%, 0) 10%, hsla(0, 0%, 100%, 0) 90%, #fff),
     linear-gradient(90deg, #fff 0, hsla(0, 0%, 100%, 0) 10%, hsla(0, 0%, 100%, 0) 90%, #fff),
-    linear-gradient(270deg, #fff 0, hsla(0, 0%, 100%, 0) 10%, hsla(0, 0%, 100%, 0) 90%, #fff),
-    radial-gradient(ellipse 60% 55% at 70% 50%, rgba(103, 58, 183, 0.12), rgba(33, 150, 243, 0.08) 55%, transparent 75%);
-  background-attachment: scroll;
-  background-repeat: no-repeat;
-  background-position: 70%;
+    linear-gradient(270deg, #fff 0, hsla(0, 0%, 100%, 0) 10%, hsla(0, 0%, 100%, 0) 90%, #fff);
 }
+
+/* Clock hands animate via SMIL inside SkillsBackdrop.tsx */
 
 @media screen and (max-width: 1400px) {
   #skills {
@@ -101,10 +123,22 @@
   transform: scale(1.1);
 }
 
+/* Rounded-square brand tile with the glyph inside */
+.tech-box {
+  width: 62px;
+  height: 62px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
+}
+
 .tech-icon .tech-icon-glyph {
-  width: 60px;
-  height: 60px;
-  color: #000;
+  width: 36px;
+  height: 36px;
 }
 
 .tech-icon span {
@@ -167,9 +201,14 @@
     height: 85px;
     margin: 5px;
   }
+  .tech-box {
+    width: 52px;
+    height: 52px;
+    border-radius: 13px;
+  }
   .tech-icon .tech-icon-glyph {
-    width: 60px;
-    height: 60px;
+    width: 30px;
+    height: 30px;
   }
   .tech-icon span {
     font-size: 11px;

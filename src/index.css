@@ -146,10 +146,13 @@ section {
   .title {
     font-size: 2rem;
   }
+  /* Reference used 4rem + nowrap for a short name; this longer name
+     wraps to two centered lines instead of overflowing the viewport. */
   .name {
-    font-size: 4rem !important;
-    white-space: nowrap;
+    font-size: clamp(2.2rem, 10.5vw, 3rem) !important;
+    white-space: normal;
     word-break: break-word;
+    line-height: 1.1;
   }
   .section-text-p2 {
     color: #434242;

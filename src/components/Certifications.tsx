@@ -84,9 +84,17 @@ export default function Certifications() {
           {CERTIFICATIONS.map((cert) => (
             <div key={cert.id} className="achievement-container">
               <div className="achv-photo-container">
-                <div className="achv-photo" aria-hidden="true">
-                  <Award size={72} strokeWidth={1.2} />
-                </div>
+                {cert.image ? (
+                  <img
+                    src={cert.image}
+                    alt={`${cert.title} certificate`}
+                    className="achv-photo achv-photo-img"
+                  />
+                ) : (
+                  <div className="achv-photo" aria-hidden="true">
+                    <Award size={72} strokeWidth={1.2} />
+                  </div>
+                )}
               </div>
               <div className="achv-details">
                 <div className="place-container">

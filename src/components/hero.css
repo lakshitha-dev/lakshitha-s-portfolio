@@ -26,12 +26,8 @@
   max-height: 100vh;
 }
 
-.mobile-bg {
-  display: none;
-}
-
-.desktop-bg {
-  display: block;
+.space-canvas {
+  pointer-events: none;
 }
 
 .background-video::after {
@@ -112,26 +108,66 @@
   gap: 1.5rem;
 }
 
+/* Upwork CTA as a solid brand-green box with white glyph */
+#upwork-btn {
+  background: #14a800;
+  color: #fff;
+  box-shadow:
+    0 0 0 2px rgba(20, 168, 0, 0.35),
+    0 16px 32px rgba(20, 168, 0, 0.25);
+}
+
+#upwork-btn::before {
+  background: linear-gradient(135deg, hsla(0, 0%, 100%, 0.25), transparent);
+}
+
+#upwork-btn:hover {
+  background: #119400;
+  box-shadow:
+    0 0 0 2px rgba(20, 168, 0, 0.55),
+    0 20px 40px rgba(20, 168, 0, 0.35);
+}
+
+/* Reference used margin-bottom:-0.5rem here — fine with 40px logo rows,
+   but it collapses text-height rows into each other. Clean spacing instead. */
 .inline-container {
   justify-content: center;
   display: flex;
   align-items: center;
-  margin-bottom: -0.5rem;
+  margin-bottom: 0.35rem;
 }
 
 .inline-2 {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
 }
 
+/* Affiliation logos sized to the .section-text-p4 text (0.9rem ≈ 14px) */
 .uni-logo {
   width: auto;
-  height: 40px;
-  margin-right: 0.5rem;
+  height: 14px;
+  margin-right: 0.35rem;
   object-fit: contain;
   flex-shrink: 0;
 }
 
 /* --- Breakpoints (file order preserved from reference) --- */
+/* Long-name scaling on tablets: the reference's 5.8rem fits a short
+   name; ours needs intermediate steps before the 600px switch. */
+@media screen and (max-width: 1280px) {
+  .name {
+    font-size: 4.6rem;
+  }
+  .section-text.profile-text {
+    max-width: 88vw;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .name {
+    font-size: 3.6rem;
+  }
+}
+
 @media screen and (min-width: 1400px) {
   .profile-section {
     height: 90vh;
@@ -158,12 +194,6 @@
 @media screen and (max-width: 600px) {
   .background-video {
     opacity: 0.6;
-  }
-  .mobile-bg {
-    display: block;
-  }
-  .desktop-bg {
-    display: none;
   }
   .background-video::after {
     background: linear-gradient(
@@ -193,6 +223,25 @@
     text-align: center;
     display: flex;
     justify-content: flex-start;
+    width: 100%;
+    max-width: 100%;
+  }
+  /* Column-flex children size to max-content — cap them so long
+     lines wrap inside the viewport instead of overflowing. */
+  .section-text.profile-text > * {
+    max-width: 100%;
+  }
+  .inline-container {
+    flex-wrap: wrap;
+    padding: 0 0.5rem;
+  }
+  .slogan-inline-btn,
+  .inline-btn-social-container,
+  .btn-container,
+  #social-container {
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
   }
   .name {
     margin-bottom: 0.5rem;
@@ -203,7 +252,7 @@
     margin-bottom: 0.5rem;
   }
   .uni-logo {
-    height: 28px;
+    height: 12px;
   }
   .slogan-inline-btn {
     margin-top: 2rem;

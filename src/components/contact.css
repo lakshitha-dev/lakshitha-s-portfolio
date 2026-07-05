@@ -90,6 +90,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  min-width: 0;
+  word-break: break-word;
 }
 
 .contact-label {
@@ -161,9 +163,8 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Full-color map (grayscale filter removed by request) */
 .map-container iframe {
-  filter: grayscale(100%) contrast(1.1);
-  -webkit-filter: grayscale(100%) contrast(1.1);
   width: 100%;
   height: 100%;
   border: 0;

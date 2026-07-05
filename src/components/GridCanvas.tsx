@@ -50,7 +50,7 @@ export default function GridCanvas() {
 
     const drawGrid = () => {
       ctx.clearRect(0, 0, width, height);
-      ctx.strokeStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.022)';
       ctx.lineWidth = 1;
       for (let x = 0; x <= width; x += GRID_SPACING) {
         ctx.beginPath();
@@ -68,7 +68,7 @@ export default function GridCanvas() {
 
     const frame = () => {
       drawGrid();
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.14)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.07)';
       for (const dot of dots) {
         dot.x += dot.vx;
         dot.y += dot.vy;

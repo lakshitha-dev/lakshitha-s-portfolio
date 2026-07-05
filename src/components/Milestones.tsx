@@ -20,7 +20,11 @@ export default function Milestones() {
                   <img
                     src={m.image.src}
                     alt={m.image.alt}
-                    className={`milestone-photo tilt-${m.image.tilt ?? 'left'}`}
+                    className={
+                      m.image.logo
+                        ? 'milestone-logo'
+                        : `milestone-photo tilt-${m.image.tilt ?? 'left'}`
+                    }
                     loading="lazy"
                   />
                 </Reveal>
@@ -37,7 +41,11 @@ export default function Milestones() {
                   <img
                     src={m.image.src}
                     alt={m.image.alt}
-                    className={`milestone-photo tilt-${m.image.tilt ?? 'right'}`}
+                    className={
+                      m.image.logo
+                        ? 'milestone-logo'
+                        : `milestone-photo tilt-${m.image.tilt ?? 'right'}`
+                    }
                     loading="lazy"
                   />
                 </Reveal>

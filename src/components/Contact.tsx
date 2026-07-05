@@ -1,6 +1,7 @@
 import './contact.css';
 import { Mail, Linkedin, Github, BookOpen, MapPin } from 'lucide-react';
 import { CONTACT_META, SITE } from '../data';
+import { UpworkIcon } from './UpworkIcon';
 
 const CONTACT_ITEMS = [
   {
@@ -8,6 +9,13 @@ const CONTACT_ITEMS = [
     text: SITE.email,
     href: `mailto:${SITE.email}`,
     Icon: Mail,
+  },
+  {
+    label: 'Upwork',
+    text: 'Hire me on Upwork',
+    href: SITE.upwork,
+    Icon: UpworkIcon,
+    color: '#14a800',
   },
   {
     label: 'LinkedIn',
@@ -38,9 +46,13 @@ export default function Contact() {
       <div className="contact-split-container">
         <div className="contact-left-panel">
           <div className="contact-info-list">
-            {CONTACT_ITEMS.map(({ label, text, href, Icon }) => (
+            {CONTACT_ITEMS.map(({ label, text, href, Icon, color }) => (
               <div key={label} className="contact-info-item">
-                <Icon className="contact-item-icon" aria-hidden="true" />
+                <Icon
+                  className="contact-item-icon"
+                  aria-hidden="true"
+                  style={color ? { color } : undefined}
+                />
                 <div className="contact-item-text">
                   <span className="contact-label">{label}</span>
                   <a

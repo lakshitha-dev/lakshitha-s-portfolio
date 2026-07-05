@@ -4,7 +4,8 @@ import { Database, Cloud, Brain, Bot, Sparkles, Braces, Plug } from 'lucide-reac
 import type { LucideIcon } from 'lucide-react';
 import type { LucideSkillIcon, SkillItem } from '../data';
 import { SKILLS_META, SKILL_CATEGORIES } from '../data';
-import { TechIcon } from './TechIcon';
+import { TechIcon, techHex } from './TechIcon';
+import SkillsBackdrop from './SkillsBackdrop';
 
 const LUCIDE_MAP: Record<LucideSkillIcon, LucideIcon> = {
   database: Database,
@@ -16,6 +17,17 @@ const LUCIDE_MAP: Record<LucideSkillIcon, LucideIcon> = {
   plug: Plug,
 };
 
+/* Brand-ish colors for skills without a simple-icons glyph */
+const LUCIDE_COLORS: Record<LucideSkillIcon, string> = {
+  database: '#336791',
+  cloud: '#0078d4',
+  brain: '#8e44ad',
+  bot: '#16a085',
+  sparkles: '#f5a623',
+  braces: '#512bd4',
+  plug: '#7c3aed',
+};
+
 const TILES_PER_ROW = 6;
 
 function chunk<T>(items: T[], size: number): T[][] {
@@ -24,15 +36,30 @@ function chunk<T>(items: T[], size: number): T[][] {
   return rows;
 }
 
+/** Black glyph on light brand tiles (e.g. JavaScript yellow), white otherwise. */
+function glyphColorFor(hex: string): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+  return luminance > 176 ? '#111' : '#fff';
+}
+
 function Tile({ item }: { item: SkillItem }) {
   const Fallback = item.lucide ? LUCIDE_MAP[item.lucide] : null;
+  const tileColor = item.slug ? techHex(item.slug) : LUCIDE_COLORS[item.lucide ?? 'database'];
+  const glyphColor = glyphColorFor(tileColor);
   return (
     <div className="tech-icon">
-      {item.slug ? (
-        <TechIcon slug={item.slug} title={item.name} className="tech-icon-glyph" />
-      ) : (
-        Fallback && <Fallback className="tech-icon-glyph" strokeWidth={1.4} aria-label={item.name} />
-      )}
+      <div className="tech-box" style={{ background: tileColor, color: glyphColor }}>
+        {item.slug ? (
+          <TechIcon slug={item.slug} title={item.name} className="tech-icon-glyph" colored={false} />
+        ) : (
+          Fallback && (
+            <Fallback className="tech-icon-glyph" strokeWidth={1.8} aria-label={item.name} />
+          )
+        )}
+      </div>
       <span>{item.name}</span>
       <div className="experience-level">{item.level}</div>
     </div>
@@ -90,6 +117,7 @@ export default function Skills() {
 
   return (
     <section id="skills" ref={sectionRef}>
+      <SkillsBackdrop />
       <p className="section-text-p1">{SKILLS_META.eyebrow}</p>
       <h1 className="title">{SKILLS_META.title}</h1>
 

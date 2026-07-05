@@ -15,6 +15,7 @@ import VelocityBanner from './components/VelocityBanner';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import { useEffect } from 'react';
 import { useMediumArticles } from './hooks/useMediumArticles';
 
 /**
@@ -34,6 +35,18 @@ function FrostedFilter() {
 
 export default function App() {
   const { articles, loading } = useMediumArticles();
+
+  // Deep links (/#projects etc.): the browser's fragment jump fires
+  // before React renders, so re-run it once sections exist.
+  useEffect(() => {
+    const { hash } = window.location;
+    if (hash.length > 1) {
+      const timer = window.setTimeout(() => {
+        document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'instant' });
+      }, 150);
+      return () => window.clearTimeout(timer);
+    }
+  }, []);
 
   return (
     <div>

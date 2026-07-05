@@ -5,7 +5,7 @@ import nsbmLogo from '../assets/logos/nsbm-logo.png';
 import thomasLogo from '../assets/logos/thomas-logo.png';
 import duothanTeamImg from '../assets/achievements/duothan-team.jpg';
 import duothanAwardImg from '../assets/achievements/duothan-award.jpg';
-import schoolColoursImg from '../assets/milestones/school-colours.jpg';
+import schoolImg from '../assets/milestones/school.jpg';
 import bistecWorkImg from '../assets/milestones/bistec-work.jpg';
 import bistecAwardImg from '../assets/milestones/bistec-award.jpg';
 import travelplanArchImg from '../assets/projects/travelplan-arch.jpg';
@@ -17,6 +17,13 @@ import bistecLimitless from '../assets/bistec/limitless-workshop.jpg';
 import bistecOffice from '../assets/bistec/office-selfie.jpg';
 import bistecAvurudu from '../assets/bistec/avurudu.jpg';
 import bistecEventNight from '../assets/bistec/event-night.jpg';
+import certOracle from '../assets/certifications/oracle-oci.jpg';
+import certDocker from '../assets/certifications/kodekloud-docker.jpg';
+import certPromptEng from '../assets/certifications/kodekloud-prompt-eng.jpg';
+import certClaudeApi from '../assets/certifications/skilljar-dpmsgghttfg4.jpg';
+import certAgentSkills from '../assets/certifications/skilljar-e743bxyvhbxn.jpg';
+import certClaudeCode from '../assets/certifications/skilljar-ik8erqn6f7wk.jpg';
+import certMcp from '../assets/certifications/skilljar-t5vwf9tbdcdk.jpg';
 /* Generated showcase set (SHOWCASE_IMAGE_PROMPTS.md) — one visual identity
  * across the carousel. Real screenshots remain in src/assets/projects/
  * (docmind.jpg, article-generator.jpg, travelplan-chat.jpg) to swap back. */
@@ -62,6 +69,7 @@ export interface Certification {
   credentialId?: string;
   credentialUrl: string;
   skills: string[];
+  image?: string;
 }
 
 export interface Achievement {
@@ -106,7 +114,7 @@ export interface Milestone {
   title: string;
   subtitle: string;
   description: string;
-  image?: { src: string; alt: string; tilt?: 'left' | 'right' };
+  image?: { src: string; alt: string; tilt?: 'left' | 'right'; logo?: boolean };
 }
 
 export const GITHUB_USERNAME = 'mlswijerathne';
@@ -239,6 +247,8 @@ export const SKILL_CATEGORIES: { category: string; items: SkillItem[] }[] = [
       { name: 'TypeScript', slug: 'typescript', level: 'Experienced' },
       { name: 'JavaScript', slug: 'javascript', level: 'Experienced' },
       { name: 'Java', slug: 'openjdk', level: 'Experienced' },
+      { name: 'Dart', slug: 'dart', level: 'Intermediate' },
+      { name: 'C', slug: 'c', level: 'Intermediate' },
       { name: 'SQL', lucide: 'database', level: 'Experienced' },
     ],
   },
@@ -262,6 +272,7 @@ export const SKILL_CATEGORIES: { category: string; items: SkillItem[] }[] = [
       { name: 'Copilot Studio', lucide: 'bot', level: 'Experienced' },
       { name: 'Google ADK', lucide: 'bot', level: 'Experienced' },
       { name: 'LangChain', slug: 'langchain', level: 'Experienced' },
+      { name: 'LangGraph', slug: 'langgraph', level: 'Intermediate' },
       { name: 'Semantic Kernel', lucide: 'brain', level: 'Intermediate' },
       { name: 'OpenAI API', lucide: 'sparkles', level: 'Experienced' },
       { name: 'Google Gemini', slug: 'googlegemini', level: 'Experienced' },
@@ -274,6 +285,7 @@ export const SKILL_CATEGORIES: { category: string; items: SkillItem[] }[] = [
     category: 'Databases',
     items: [
       { name: 'PostgreSQL', slug: 'postgresql', level: 'Experienced' },
+      { name: 'MongoDB', slug: 'mongodb', level: 'Intermediate' },
       { name: 'Qdrant', slug: 'qdrant', level: 'Experienced' },
       { name: 'Cosmos DB', lucide: 'database', level: 'Intermediate' },
       { name: 'Supabase', slug: 'supabase', level: 'Experienced' },
@@ -553,6 +565,46 @@ export const ACHIEVEMENTS: Achievement[] = [
 
 export const CERTIFICATIONS: Certification[] = [
   {
+    id: 'claude-code',
+    title: 'Claude Code in Action',
+    issuer: 'Anthropic Academy',
+    issueDate: 'May 2026',
+    credentialId: 'ik8erqn6f7wk',
+    credentialUrl: 'https://verify.skilljar.com/c/ik8erqn6f7wk',
+    skills: ['Claude Code', 'AI-Assisted Development', 'Agentic Coding'],
+    image: certClaudeCode,
+  },
+  {
+    id: 'claude-api',
+    title: 'Claude with the Anthropic API',
+    issuer: 'Anthropic Academy',
+    issueDate: 'May 2026',
+    credentialId: 'dpmsgghttfg4',
+    credentialUrl: 'https://verify.skilljar.com/c/dpmsgghttfg4',
+    skills: ['Anthropic API', 'LLM Integration', 'Tool Use'],
+    image: certClaudeApi,
+  },
+  {
+    id: 'mcp-intro',
+    title: 'Introduction to Model Context Protocol',
+    issuer: 'Anthropic Academy',
+    issueDate: 'May 2026',
+    credentialId: 't5vwf9tbdcdk',
+    credentialUrl: 'https://verify.skilljar.com/c/t5vwf9tbdcdk',
+    skills: ['MCP', 'AI Agents', 'Tool Integration'],
+    image: certMcp,
+  },
+  {
+    id: 'agent-skills',
+    title: 'Introduction to Agent Skills',
+    issuer: 'Anthropic Academy',
+    issueDate: 'April 2026',
+    credentialId: 'e743bxyvhbxn',
+    credentialUrl: 'https://verify.skilljar.com/c/e743bxyvhbxn',
+    skills: ['Agent Skills', 'AI Agents', 'Claude'],
+    image: certAgentSkills,
+  },
+  {
     id: '1',
     title: 'Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate',
     issuer: 'Oracle',
@@ -561,6 +613,7 @@ export const CERTIFICATIONS: Certification[] = [
     credentialId: '323322023OCI25AICFA',
     credentialUrl: 'https://catalog-education.oracle.com/ords/certview/sharebadge?id=2CE2289737F138E3D8CF83C9C3E691D25031A8B3DC8FF90FBAE2949D52B5896D',
     skills: ['AI', 'Machine Learning', 'OCI', 'Cloud Computing'],
+    image: certOracle,
   },
   {
     id: '2',
@@ -570,6 +623,7 @@ export const CERTIFICATIONS: Certification[] = [
     credentialId: '8cb36898-661b-4fc0-92fb-fb26edb7fd82',
     credentialUrl: 'https://kodekloud.com/certificate-verification/8cb36898-661b-4fc0-92fb-fb26edb7fd82',
     skills: ['Docker', 'Containerization', 'DevOps'],
+    image: certDocker,
   },
   {
     id: '3',
@@ -579,23 +633,7 @@ export const CERTIFICATIONS: Certification[] = [
     credentialId: '7e82fdfd-34a6-4d97-835d-425f4ba4af99',
     credentialUrl: 'https://kodekloud.com/certificate-verification/7e82fdfd-34a6-4d97-835d-425f4ba4af99',
     skills: ['Prompt Engineering', 'AI'],
-  },
-  {
-    id: '4',
-    title: 'Back-End Web Development with .NET',
-    issuer: 'LinkedIn',
-    issueDate: 'December 2024',
-    credentialUrl: 'https://www.linkedin.com/learning/certificates/aa0fe4347e51431a9a4297f13124a0fea87f040201c2c4457dd81bcf799910ef',
-    skills: ['Back-End Development', '.NET Framework'],
-  },
-  {
-    id: '5',
-    title: 'Postman API Fundamentals Student Expert',
-    issuer: 'Canvas Credentials (Badgr)',
-    issueDate: 'November 2024',
-    credentialId: '6744375943453f06d99008e2',
-    credentialUrl: 'https://badges.parchment.com/public/assertions/W6ixtovrSTadv0h2dc-6iA',
-    skills: ['API Development', 'Postman', 'RESTful APIs'],
+    image: certPromptEng,
   },
 ];
 
@@ -608,29 +646,27 @@ export const MILESTONES: Milestone[] = [
   {
     id: '1',
     date: '2019',
-    title: 'School Colours Award',
-    subtitle: "St. Thomas' College, Matale",
+    title: "St. Thomas' College, Matale",
+    subtitle: 'School Education & Colours Award',
     description:
-      'Received Colours at the 2019 Colours Night — the foundation years of discipline and teamwork, on and off the field.',
-    image: { src: schoolColoursImg, alt: 'Receiving the Colours award on stage in 2019', tilt: 'left' },
+      'The foundation years — discipline, teamwork, and a Colours award at the 2019 Colours Night, on and off the field.',
+    image: { src: schoolImg, alt: "School days at St. Thomas' College, Matale", tilt: 'left' },
   },
   {
     id: '2',
     date: '2022',
-    title: 'Started BSc (Hons) in Software Engineering',
-    subtitle: 'NSBM Green University',
-    description: 'Began the degree — and wrote my first lines of production-bound code the same year.',
+    title: 'Joined NSBM Green University',
+    subtitle: 'BSc (Hons) in Software Engineering',
+    description:
+      'Began the degree — and wrote my first lines of production-bound code the same year.',
+    image: {
+      src: duothanAwardImg,
+      alt: 'Receiving a certificate on stage at NSBM',
+      tilt: 'right',
+    },
   },
   {
     id: '3',
-    date: 'Mar 2025',
-    title: 'Began Technical Writing',
-    subtitle: 'Medium',
-    description:
-      'Started publishing articles that translate complex engineering concepts into clear, accessible content.',
-  },
-  {
-    id: '4',
     date: 'Aug 2025',
     title: 'Software Engineer Intern',
     subtitle: 'BISTEC Global Services',
@@ -639,28 +675,12 @@ export const MILESTONES: Milestone[] = [
     image: { src: bistecWorkImg, alt: 'Working with the team at BISTEC Global Services', tilt: 'right' },
   },
   {
-    id: '5',
-    date: 'Sep 2025',
-    title: 'Started Freelancing on Upwork',
-    subtitle: 'AI Agent Developer',
-    description:
-      'Began shipping AI agents, RAG systems, and n8n automation workflows for businesses worldwide.',
-  },
-  {
-    id: '6',
-    date: 'Oct 2025',
-    title: 'Oracle Certified AI Foundations Associate',
-    subtitle: 'Oracle Cloud Infrastructure 2025',
-    description:
-      'Earned the OCI AI Foundations certification alongside Docker and prompt-engineering credentials.',
-  },
-  {
-    id: '7',
+    id: '4',
     date: 'Jan 2026',
     title: 'Associate Software Engineer',
-    subtitle: 'BISTEC Global Services',
+    subtitle: 'BISTEC Global Services · Agent Accelerator team',
     description:
-      'Promoted to full-time on the Agent Accelerator team — building production MCP gateways and Copilot Studio agents on Azure.',
+      'Now full-time — building production MCP gateways and Copilot Studio agents on Azure.',
     image: { src: bistecAwardImg, alt: 'Recognition on stage at BISTEC Hearts Academy', tilt: 'left' },
   },
 ];

@@ -247,12 +247,18 @@
 }
 
 @media screen and (max-width: 600px) {
+  /* Portrait photo: keep natural aspect ratio instead of the
+     reference's square crop (which beheaded this portrait). */
   .section-pic-container {
     margin: 1rem auto;
     width: 85vw;
-    height: 85vw;
+    height: auto;
     max-width: 340px;
-    max-height: 340px;
+    max-height: none;
+  }
+  .about-pic {
+    width: 100%;
+    height: auto;
   }
   .text-container {
     text-align: justify;

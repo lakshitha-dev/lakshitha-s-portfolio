@@ -28,6 +28,10 @@ import {
   siApachekafka,
   siGooglegemini,
   siMedium,
+  siDart,
+  siC,
+  siLanggraph,
+  siMongodb,
 } from 'simple-icons';
 
 const ICONS = {
@@ -60,17 +64,28 @@ const ICONS = {
   apachekafka: siApachekafka,
   googlegemini: siGooglegemini,
   medium: siMedium,
+  dart: siDart,
+  c: siC,
+  langgraph: siLanggraph,
+  mongodb: siMongodb,
 } as const;
 
 export type TechIconSlug = keyof typeof ICONS;
+
+/** Official brand hex for a slug (e.g. '#3178C6'). */
+export function techHex(slug: TechIconSlug): string {
+  return `#${ICONS[slug].hex}`;
+}
 
 interface TechIconProps {
   slug: TechIconSlug;
   title: string;
   className?: string;
+  /** Render in the brand's official color (default) or inherit currentColor. */
+  colored?: boolean;
 }
 
-export function TechIcon({ slug, title, className = '' }: TechIconProps) {
+export function TechIcon({ slug, title, className = '', colored = true }: TechIconProps) {
   const icon = ICONS[slug];
   return (
     <svg
@@ -79,7 +94,7 @@ export function TechIcon({ slug, title, className = '' }: TechIconProps) {
       role="img"
       aria-label={title}
       className={className}
-      fill="currentColor"
+      fill={colored ? `#${icon.hex}` : 'currentColor'}
     >
       <path d={icon.path} />
     </svg>

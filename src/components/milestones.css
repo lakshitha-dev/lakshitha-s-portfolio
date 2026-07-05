@@ -142,6 +142,12 @@
   transform: rotate(5deg);
 }
 
+/* Logo milestones render flat — no frame, shadow, or tilt */
+.milestone-logo {
+  height: auto;
+  max-width: 180px;
+}
+
 /* per-item stagger (mirrors the reference's ordinal margin offsets) */
 .timeline-item:nth-child(even) .milestone-photo {
   margin-top: 50px;
