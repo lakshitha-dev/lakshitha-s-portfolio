@@ -3,9 +3,8 @@ import profileImg from '../assets/profile.jpg';
 import bistecLogo from '../assets/logos/bistec-logo.png';
 import nsbmLogo from '../assets/logos/nsbm-logo.png';
 import thomasLogo from '../assets/logos/thomas-logo.png';
-import duothanTeamImg from '../assets/achievements/duothan-team.jpg';
 import duothanAwardImg from '../assets/achievements/duothan-award.jpg';
-import schoolImg from '../assets/milestones/school.jpg';
+import schoolColoursImg from '../assets/milestones/school-colours.jpg';
 import bistecWorkImg from '../assets/milestones/bistec-work.jpg';
 import bistecAwardImg from '../assets/milestones/bistec-award.jpg';
 import travelplanArchImg from '../assets/projects/travelplan-arch.jpg';
@@ -157,7 +156,7 @@ export const HERO = {
     {
       logo: nsbmLogo,
       logoAlt: 'NSBM Green University',
-      text: 'BSc (Hons) in Software Engineering — NSBM Green University',
+      text: 'BSc (Hons) in Computer Science — NSBM Green University',
     },
     {
       logo: bistecLogo,
@@ -200,7 +199,7 @@ export const ABOUT = {
       heading: 'Academic Standing',
       logo: { src: nsbmLogo, alt: 'NSBM Green University' },
       lines: [
-        { text: 'BSc (Hons) in Software Engineering', highlight: true },
+        { text: 'BSc (Hons) in Computer Science', highlight: true },
         { text: 'Specializing in AI & Full-Stack' },
         { text: 'NSBM Green University' },
         { text: '2022 — 2026', highlight: true },
@@ -556,7 +555,6 @@ export const ACHIEVEMENTS: Achievement[] = [
     description:
       'Placed 5th at Duothan 5.0 — the university hackathon themed "Crack the code, Create the Future" — competing as team 404_NOTFOUND, building and shipping a working solution against the clock.',
     images: [
-      { src: duothanTeamImg, alt: 'Team 404_NOTFOUND at Duothan 5.0' },
       { src: duothanAwardImg, alt: 'Receiving the Duothan 5.0 certificate on stage' },
     ],
   },
@@ -646,16 +644,20 @@ export const MILESTONES: Milestone[] = [
     id: '1',
     date: '2019',
     title: "St. Thomas' College, Matale",
-    subtitle: 'School Education & Colours Award',
+    subtitle: 'O/Ls & A/Ls (Physical Science stream) · Colours Award',
     description:
-      'The foundation years — discipline, teamwork, and a Colours award at the 2019 Colours Night, on and off the field.',
-    image: { src: schoolImg, alt: "School days at St. Thomas' College, Matale", tilt: 'left' },
+      'Completed my O/Ls and A/Ls in the Physical Science stream — the foundation years of discipline and teamwork, capped with a Colours award at the 2019 Colours Night.',
+    image: {
+      src: schoolColoursImg,
+      alt: 'Receiving the Colours award on stage at the 2019 Colours Night',
+      tilt: 'left',
+    },
   },
   {
     id: '2',
     date: '2022',
     title: 'Joined NSBM Green University',
-    subtitle: 'BSc (Hons) in Software Engineering',
+    subtitle: 'BSc (Hons) in Computer Science',
     description:
       'Began the degree — and wrote my first lines of production-bound code the same year.',
     image: {
