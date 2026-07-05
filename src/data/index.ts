@@ -500,7 +500,7 @@ export const PROJECTS: Project[] = [
     category: 'AI',
     image: articleGenShowcase,
     liveUrl: '#',
-    repoUrl: '#',
+    repoUrl: 'https://github.com/mlswijerathne/n8n-medium-article-generator',
     year: '2025',
   },
   {
