@@ -166,7 +166,6 @@ export const HERO = {
     },
   ],
   buttons: [
-    { label: 'Download CV', href: '/resume.pdf', download: true },
     { label: 'Contact Info', href: '#contact', download: false },
   ],
 };
