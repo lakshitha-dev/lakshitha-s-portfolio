@@ -4,7 +4,9 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/',
+  /* Served from the repo subpath on github.io while the lakshitha.dev
+     registration is lapsed. Restore to '/' when the domain is back. */
+  base: '/lakshitha-s-portfolio/',
   build: {
     outDir: 'dist',
   },

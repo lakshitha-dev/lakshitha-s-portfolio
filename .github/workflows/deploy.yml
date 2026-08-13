@@ -40,4 +40,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          cname: lakshitha.dev
+          # cname: lakshitha.dev   # re-enable once the domain registration is renewed
