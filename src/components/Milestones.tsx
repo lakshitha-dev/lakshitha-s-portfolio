@@ -16,7 +16,7 @@ export default function Milestones() {
           <div key={m.id} className="timeline-item" {...{ 'date-is': m.date }}>
             <div className="timeline-upper">
               {m.image && i % 2 === 1 && (
-                <Reveal variant="left">
+                <Reveal variant="left" className="milestone-photo-wrap">
                   <img
                     src={m.image.src}
                     alt={m.image.alt}
@@ -37,7 +37,7 @@ export default function Milestones() {
                 </div>
               </Reveal>
               {m.image && i % 2 === 0 && (
-                <Reveal variant="right">
+                <Reveal variant="right" className="milestone-photo-wrap">
                   <img
                     src={m.image.src}
                     alt={m.image.alt}

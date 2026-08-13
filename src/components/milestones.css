@@ -125,13 +125,23 @@
 }
 
 /* Photo treatment — staggered/tilted polaroid drop like the reference */
+/* The Reveal wrapper is the flex item; without this it shrinks and drags the
+   photo below its 260px frame on items with longer text. */
+.milestone-photo-wrap {
+  flex-shrink: 0;
+}
+
+/* One shared 4:3 frame so portrait and landscape sources render identically */
 .milestone-photo {
-  height: auto;
+  width: 260px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  flex-shrink: 0;
+  max-width: 100%;
   border-radius: 10px;
   box-shadow:
     0 0 20px rgba(0, 0, 0, 0.4),
     inset 0 0 10px hsla(0, 0%, 100%, 0.3);
-  max-width: 200px;
 }
 
 .milestone-photo.tilt-left {
@@ -162,15 +172,9 @@
   .timeline-item::before {
     font-size: 2rem;
   }
-  .timeline-item:nth-child(even) .milestone-photo {
-    max-width: 300px;
-  }
 }
 
 @media screen and (max-width: 1280px) {
-  .milestone-photo {
-    max-width: 200px;
-  }
   .timeline-item:nth-child(odd) .milestone-photo {
     margin-top: 0;
   }
@@ -179,5 +183,8 @@
 @media screen and (max-width: 600px) {
   .timeline-upper {
     flex-direction: column;
+  }
+  .milestone-photo {
+    width: 200px;
   }
 }

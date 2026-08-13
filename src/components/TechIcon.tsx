@@ -32,6 +32,9 @@ import {
   siC,
   siLanggraph,
   siMongodb,
+  siOpencv,
+  siStreamlit,
+  siSqlite,
 } from 'simple-icons';
 
 const ICONS = {
@@ -68,6 +71,9 @@ const ICONS = {
   c: siC,
   langgraph: siLanggraph,
   mongodb: siMongodb,
+  opencv: siOpencv,
+  streamlit: siStreamlit,
+  sqlite: siSqlite,
 } as const;
 
 export type TechIconSlug = keyof typeof ICONS;

@@ -24,6 +24,10 @@
 /* Constrain the details column so cards clamp near the reference's
    ~800px min-content width instead of one-line descriptions. */
 .achv-details {
+  /* Needs an explicit basis: as a bare flex item it collapses to min-content,
+     which used to be masked by the secondary photo sitting in this column. */
+  flex: 1 1 340px;
+  min-width: 300px;
   max-width: 420px;
 }
 
@@ -32,9 +36,10 @@
   display: flex;
   text-align: initial;
   flex-wrap: wrap;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
   gap: 1rem;
-  justify-content: space-around;
+  justify-content: flex-start;
   margin-top: 2.5rem;
 }
 
@@ -64,14 +69,16 @@
   object-fit: cover;
 }
 
+/* Second photo tucks under the main one in the same column, leaning against it */
 .achv-secondary-photo {
   border-radius: 0.8rem;
-  width: 220px;
+  width: 200px;
   height: auto;
-  margin: 0.5rem auto 0;
+  align-self: flex-start;
+  margin-left: 1.5rem;
   display: block;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  transform: rotate(2deg);
+  transform: rotate(-3deg);
   transition: transform 0.3s ease;
 }
 

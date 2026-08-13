@@ -59,6 +59,13 @@ export default function Certifications() {
                   alt={achievement.images[0].alt}
                   className="achv-photo achv-photo-img"
                 />
+                {achievement.images[1] && (
+                  <img
+                    src={achievement.images[1].src}
+                    alt={achievement.images[1].alt}
+                    className="achv-secondary-photo"
+                  />
+                )}
               </div>
               <div className="achv-details">
                 <div className="place-container">
@@ -70,13 +77,6 @@ export default function Certifications() {
                 <div className="text-container achv-text">
                   <p className="achv-desc">{achievement.description}</p>
                 </div>
-                {achievement.images[1] && (
-                  <img
-                    src={achievement.images[1].src}
-                    alt={achievement.images[1].alt}
-                    className="achv-secondary-photo"
-                  />
-                )}
               </div>
             </div>
           ))}

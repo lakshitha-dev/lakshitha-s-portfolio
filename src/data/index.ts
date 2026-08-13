@@ -4,7 +4,9 @@ import bistecLogo from '../assets/logos/bistec-logo.png';
 import nsbmLogo from '../assets/logos/nsbm-logo.png';
 import thomasLogo from '../assets/logos/thomas-logo.png';
 import duothanAwardImg from '../assets/achievements/duothan-award.jpg';
-import schoolColoursImg from '../assets/milestones/school-colours.jpg';
+import pandoraAwardImg from '../assets/achievements/pandora-award.jpg';
+import schoolPortraitImg from '../assets/milestones/school-portrait.jpg';
+import nsbmPortraitImg from '../assets/milestones/nsbm-portrait.jpg';
 import bistecWorkImg from '../assets/milestones/bistec-work.jpg';
 import bistecAwardImg from '../assets/milestones/bistec-award.jpg';
 import travelplanArchImg from '../assets/projects/travelplan-arch.jpg';
@@ -30,6 +32,8 @@ import expenseShowcase from '../assets/projects/expense-agent-showcase.jpg';
 import servicenowShowcase from '../assets/projects/servicenow-showcase.jpg';
 import docmindShowcase from '../assets/projects/docmind-showcase.jpg';
 import travelplanShowcase from '../assets/projects/travelplan-showcase.jpg';
+import pandoraShowcase from '../assets/projects/pandora-showcase.jpg';
+import samsShowcase from '../assets/projects/sams-showcase.jpg';
 import quizbankShowcase from '../assets/projects/quizbank-showcase.jpg';
 import articleGenShowcase from '../assets/projects/article-generator-showcase.jpg';
 import auctionShowcase from '../assets/projects/auction-showcase.jpg';
@@ -234,8 +238,9 @@ export const SKILLS_META = {
   title: 'Tech Skills',
 };
 
-/* Evidence-based: extracted from ExpenseAgent, ServiceNow platform,
- * QuizBank, DocMind, Medium Article Generator, and Travel Plan Platform. */
+/* Evidence-based: extracted from ExpenseAgent, ServiceNow platform, QuizBank,
+ * DocMind, Medium Article Generator, Travel Plan Platform, Pandora Knowledge
+ * Guardian, and SAMS. */
 export const SKILL_CATEGORIES: { category: string; items: SkillItem[] }[] = [
   {
     category: 'Programming Languages',
@@ -261,6 +266,7 @@ export const SKILL_CATEGORIES: { category: string; items: SkillItem[] }[] = [
       { name: 'Tailwind CSS', slug: 'tailwindcss', level: 'Experienced' },
       { name: 'Node.js', slug: 'nodedotjs', level: 'Intermediate' },
       { name: 'Flutter', slug: 'flutter', level: 'Intermediate' },
+      { name: 'Streamlit', slug: 'streamlit', level: 'Intermediate' },
     ],
   },
   {
@@ -273,7 +279,10 @@ export const SKILL_CATEGORIES: { category: string; items: SkillItem[] }[] = [
       { name: 'LangGraph', slug: 'langgraph', level: 'Intermediate' },
       { name: 'Semantic Kernel', lucide: 'brain', level: 'Intermediate' },
       { name: 'OpenAI API', lucide: 'sparkles', level: 'Experienced' },
+      { name: 'Azure OpenAI', lucide: 'sparkles', level: 'Experienced' },
       { name: 'Google Gemini', slug: 'googlegemini', level: 'Experienced' },
+      { name: 'RAG & Hybrid Search', lucide: 'brain', level: 'Experienced' },
+      { name: 'OpenCV', slug: 'opencv', level: 'Intermediate' },
       { name: 'n8n', slug: 'n8n', level: 'Experienced' },
       { name: 'LlamaIndex', lucide: 'brain', level: 'Intermediate' },
       { name: 'Prompt Engineering', lucide: 'sparkles', level: 'Experienced' },
@@ -285,11 +294,13 @@ export const SKILL_CATEGORIES: { category: string; items: SkillItem[] }[] = [
       { name: 'PostgreSQL', slug: 'postgresql', level: 'Experienced' },
       { name: 'MongoDB', slug: 'mongodb', level: 'Intermediate' },
       { name: 'Qdrant', slug: 'qdrant', level: 'Experienced' },
+      { name: 'Azure AI Search', lucide: 'database', level: 'Experienced' },
       { name: 'Cosmos DB', lucide: 'database', level: 'Intermediate' },
       { name: 'Supabase', slug: 'supabase', level: 'Experienced' },
       { name: 'Firebase', slug: 'firebase', level: 'Experienced' },
       { name: 'SQL Server', lucide: 'database', level: 'Intermediate' },
       { name: 'MySQL', slug: 'mysql', level: 'Intermediate' },
+      { name: 'SQLite', slug: 'sqlite', level: 'Intermediate' },
     ],
   },
   {
@@ -479,6 +490,30 @@ export const PROJECTS: Project[] = [
     year: '2026',
   },
   {
+    id: 'pandora',
+    title: 'Pandora Knowledge Guardian',
+    description:
+      'RAG system that turns a plain-language incident report into a cited Situation Report — and says plainly when the corpus does not know. Hybrid BM25 + vector retrieval over a record-aware index, three specialist agents filling one document concurrently, and a measured relevance floor that refuses instead of guessing.',
+    tags: ['Python', 'FastAPI', 'Azure AI Search', 'Azure OpenAI', 'Next.js', 'LangChain'],
+    category: 'AI',
+    image: pandoraShowcase,
+    liveUrl: '#',
+    repoUrl: 'https://github.com/lakshitha-dev/Pandora',
+    year: '2026',
+  },
+  {
+    id: 'sams',
+    title: 'SAMS — Smart Attendance Management System',
+    description:
+      'Turns a phone photo of a paper class sign-in sheet into structured attendance records. A seven-stage OpenCV pipeline deskews the image and locates the table with no OCR and no fixed coordinates, then marks every signature cell Present, Absent, or Ambiguous — escalating borderline cells to a human instead of guessing.',
+    tags: ['Python', 'OpenCV', 'Streamlit', 'SQLite', 'Azure'],
+    category: 'Computer Vision',
+    image: samsShowcase,
+    liveUrl: 'https://sams-cgv.azurewebsites.net/',
+    repoUrl: 'https://github.com/lakshitha-dev/smart-attendance-cgv',
+    year: '2026',
+  },
+  {
     id: 'quizbank',
     title: 'QuizBank — AI Evaluation Platform',
     description:
@@ -547,6 +582,20 @@ export const CERTIFICATIONS_META = {
 };
 
 export const ACHIEVEMENTS: Achievement[] = [
+  {
+    id: 'pandora',
+    place: '2nd Place',
+    title: "Pandora '26 — RAG Builderthon",
+    organizer: 'NSBM Green University · ASE',
+    description:
+      "1st Runner-Up as team Zeylix at Pandora '26, a five-hour RAG buildathon. I built the retrieval and agent service behind Pandora Knowledge Guardian — hybrid search on Azure AI Search, with agents that cite every claim and admit when they don't know.",
+    images: [
+      {
+        src: pandoraAwardImg,
+        alt: "Team Zeylix receiving the 1st Runner-Up award at the Pandora '26 RAG Builderthon",
+      },
+    ],
+  },
   {
     id: 'duothan',
     place: '5th Place',
@@ -648,8 +697,8 @@ export const MILESTONES: Milestone[] = [
     description:
       'Completed my O/Ls and A/Ls in the Physical Science stream — the foundation years of discipline and teamwork, capped with a Colours award at the 2019 Colours Night.',
     image: {
-      src: schoolColoursImg,
-      alt: 'Receiving the Colours award on stage at the 2019 Colours Night',
+      src: schoolPortraitImg,
+      alt: "In school uniform on the grounds at St. Thomas' College, Matale",
       tilt: 'left',
     },
   },
@@ -661,8 +710,8 @@ export const MILESTONES: Milestone[] = [
     description:
       'Began the degree — and wrote my first lines of production-bound code the same year.',
     image: {
-      src: duothanAwardImg,
-      alt: 'Receiving a certificate on stage at NSBM',
+      src: nsbmPortraitImg,
+      alt: 'On campus at NSBM Green University',
       tilt: 'right',
     },
   },

@@ -10,6 +10,7 @@ const CHIP_VARIANT: Record<string, string> = {
   AI: 'ai-ml',
   Web: 'fullstack',
   Mobile: 'backend',
+  'Computer Vision': 'computer-vision',
 };
 
 const TAG_SLUGS: Record<string, TechIconSlug> = {
@@ -18,6 +19,10 @@ const TAG_SLUGS: Record<string, TechIconSlug> = {
   LangChain: 'langchain',
   n8n: 'n8n',
   React: 'react',
+  'Next.js': 'nextdotjs',
+  OpenCV: 'opencv',
+  Streamlit: 'streamlit',
+  SQLite: 'sqlite',
   'ASP.NET Core': 'dotnet',
   Flutter: 'flutter',
   Firebase: 'firebase',

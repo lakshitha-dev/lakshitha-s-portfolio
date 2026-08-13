@@ -151,6 +151,36 @@ small.
 > accent (#4caf50), blue secondary (#2196f3), one orange status dot. Minimal flat-3D SaaS
 > style, soft studio lighting, gentle shadows, no text, no faces, 16:10 landscape. --ar 16:10
 
+## 10. Pandora Knowledge Guardian
+
+> A clean modern AI-retrieval illustration on a pure white background with a faint gray grid.
+> Center: a tall frosted-glass document panel with thin white border, its body made of four
+> stacked neutral content bars, and three small glass citation chips clipped to its right edge
+> connected by thin curved lines back to the document. To the left, a vertical stack of three
+> small translucent glass record cards fanned slightly, each with a tiny purple index dot,
+> suggesting a searchable corpus. To the right, three identical small glass agent tiles arranged
+> in a vertical column, each linked by a thin indigo line into the same document panel — three
+> workers, one shared output. Bottom-left, a single small glass gauge dial with its needle
+> resting below a marked threshold line, glowing faint indigo. Color palette: white and glass
+> surfaces, black glyphs, purple primary accent (#673ab7), indigo secondary (#3f51b5). Minimal
+> flat-3D SaaS style, soft studio lighting, gentle shadows, generous negative space, no text, no
+> faces, 16:10 landscape. --ar 16:10
+
+## 11. SAMS — Smart Attendance Management System
+
+> A clean modern computer-vision illustration on a pure white background with a faint gray grid.
+> Left: a slightly tilted frosted-glass sheet of paper in gentle isometric perspective, ruled
+> into a simple table of empty rows and columns, with a thin green scanning line sweeping across
+> it and four small corner brackets marking detected table edges. An arrow of three small glass
+> chevrons flows to the right. Right: an upright frosted-glass results panel with thin white
+> border showing a vertical list of five rows, each row a neutral bar with a small circular
+> status dot — three green check dots, one gray cross dot, one amber question-mark dot slightly
+> larger and glowing to signal a case escalated for review. Above the panel, one small floating
+> glass badge holding a magnifier glyph. Color palette: white and glass surfaces, black glyphs,
+> green primary accent (#4caf50), blue secondary (#2196f3), one amber status dot. Minimal
+> flat-3D SaaS style, soft studio lighting, gentle shadows, precise and orderly, no text, no
+> faces, 16:10 landscape. --ar 16:10
+
 ---
 
 ### Consistency checklist (apply to every generation)
