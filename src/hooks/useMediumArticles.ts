@@ -29,7 +29,7 @@ export function useMediumArticles() {
           });
           setArticles(parsed);
         } else {
-          const res = await fetch('/medium-articles.json');
+          const res = await fetch(`${import.meta.env.BASE_URL}medium-articles.json`);
           const data: MediumArticle[] = await res.json();
           setArticles(data);
         }
