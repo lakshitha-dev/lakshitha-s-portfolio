@@ -10,6 +10,12 @@ export default defineConfig({
   build: {
     outDir: 'dist',
   },
+  /* Plain CSS, no PostCSS plugins. Declaring this inline stops Vite from
+     picking up a postcss.config from a parent folder (C:\dev has a
+     Tailwind one that breaks this build). */
+  css: {
+    postcss: {},
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, '.'),
