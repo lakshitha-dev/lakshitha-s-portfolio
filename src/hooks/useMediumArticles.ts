@@ -17,7 +17,10 @@ export function useMediumArticles() {
           const parsed: MediumArticle[] = items.map((item) => {
             const title = item.querySelector('title')?.textContent || '';
             const pubDate = item.querySelector('pubDate')?.textContent || '';
-            const link = item.querySelector('link')?.nextSibling?.textContent || item.querySelector('link')?.textContent || '';
+            // XML parse: <link> holds its URL as text; nextSibling is only a
+            // fallback for HTML-style parsing, where <link> is a void element.
+            const linkEl = item.querySelector('link');
+            const link = (linkEl?.textContent?.trim() || linkEl?.nextSibling?.textContent?.trim() || '');
             const content = item.getElementsByTagNameNS('*', 'encoded')[0]?.textContent || '';
             const description = content.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 160) + '\u2026';
             const thumbnail = content.match(/<img[^>]+src="([^"]+)"/)?.[1] || '';
