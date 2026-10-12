@@ -14,6 +14,8 @@ import bistecLimitless from '../assets/bistec/limitless-workshop.jpg';
 import bistecOffice from '../assets/bistec/office-selfie.jpg';
 import bistecAvurudu from '../assets/bistec/avurudu.jpg';
 import bistecEventNight from '../assets/bistec/event-night.jpg';
+import bistecHeartsDayTeam from '../assets/bistec/hearts-day-team.jpg';
+import bistecHeartsDaySession from '../assets/bistec/hearts-day-session.jpg';
 import certOracle from '../assets/certifications/oracle-oci.jpg';
 import certDocker from '../assets/certifications/kodekloud-docker.jpg';
 import certPromptEng from '../assets/certifications/kodekloud-prompt-eng.jpg';
@@ -383,15 +385,26 @@ export const WRITING_META = {
 
 /* Two-row photo collage inside the BISTEC experience card.
  * Fills column by column; `tall` photos span both rows. */
-export const BISTEC_MEMORIES: { src: string; alt: string; tall?: boolean }[] = [
-  { src: bistecWorksession, alt: 'Working session with the team at BISTEC' },
-  { src: bistecOffice, alt: 'With the team at the BISTEC office' },
-  { src: bistecHearts, alt: 'Recognition at BISTEC Hearts Academy' },
-  { src: bistecHackathon, alt: 'Internal hackathon team at BISTEC' },
-  { src: bistecAiExpo, alt: 'Delegate at the In Pursuit of AI expo', tall: true },
-  { src: bistecLimitless, alt: 'Limitless workshop with colleagues' },
-  { src: bistecEventNight, alt: 'Event night with the BISTEC team' },
-  { src: bistecAvurudu, alt: 'Avurudu celebrations at BISTEC', tall: true },
+export interface MemoryPhoto {
+  src: string;
+  alt: string;
+  /** Named cell in the .photo-collage grid-template-areas (experience.css). */
+  area: string;
+  /** object-position when the tile crops the photo. */
+  focus?: string;
+}
+
+export const BISTEC_MEMORIES: MemoryPhoto[] = [
+  { src: bistecHeartsDayTeam, alt: 'The BISTEC team at Hearts Academy Day 2026', area: 'team', focus: 'center 62%' },
+  { src: bistecHeartsDaySession, alt: 'Colleagues in a session at Hearts Academy Day 2026', area: 'session', focus: 'center 55%' },
+  { src: bistecWorksession, alt: 'Working session with the team at BISTEC', area: 'work' },
+  { src: bistecOffice, alt: 'With the team at the BISTEC office', area: 'office' },
+  { src: bistecHearts, alt: 'Recognition at BISTEC Hearts Academy', area: 'award' },
+  { src: bistecHackathon, alt: 'Internal hackathon team at BISTEC', area: 'hackathon' },
+  { src: bistecAiExpo, alt: 'Delegate at the In Pursuit of AI expo', area: 'expo' },
+  { src: bistecLimitless, alt: 'Limitless workshop with colleagues', area: 'workshop' },
+  { src: bistecEventNight, alt: 'Event night with the BISTEC team', area: 'night' },
+  { src: bistecAvurudu, alt: 'Avurudu celebrations at BISTEC', area: 'avurudu' },
 ];
 
 export const FEATURED_META = {

@@ -1,11 +1,13 @@
+import type { MemoryPhoto } from '../data';
+
 interface PhotoPileProps {
-  photos: { src: string; alt: string; tall?: boolean }[];
+  photos: MemoryPhoto[];
 }
 
 /**
- * Two-row photo collage: equal-height tiles filled column by column,
- * photos crop-fitted with object-fit cover; `tall` photos span both
- * rows — matching the reference's memories grid.
+ * Photo collage: every photo is placed in a named grid area, and each
+ * breakpoint's grid-template-areas (experience.css) tiles them into a
+ * full rectangle, so no empty cells appear at any width.
  */
 export default function PhotoPile({ photos }: PhotoPileProps) {
   return (
@@ -15,7 +17,8 @@ export default function PhotoPile({ photos }: PhotoPileProps) {
           key={photo.src}
           src={photo.src}
           alt={photo.alt}
-          className={`collage-item${photo.tall ? ' tall' : ''}`}
+          className="collage-item"
+          style={{ gridArea: photo.area, objectPosition: photo.focus }}
           loading="lazy"
           draggable={false}
         />

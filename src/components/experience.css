@@ -278,13 +278,18 @@
 
 /* Two-row photo collage (memories grid inside the employer card):
    equal-height tiles fill column by column; .tall spans both rows. */
+/* Each breakpoint's areas tile all ten photos into a full rectangle (no
+   empty cells): the team photo is the feature tile, portraits run tall.
+   Area names come from BISTEC_MEMORIES in src/data/index.ts. */
 .photo-collage {
   display: grid;
-  grid-template-rows: repeat(2, 150px);
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(150px, 1fr);
-  gap: 14px;
-  padding: 0 1rem;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: 150px;
+  grid-template-areas:
+    "team team team expo work office"
+    "team team team expo award avurudu"
+    "session session hackathon workshop night avurudu";
+  gap: 12px;
 }
 
 .collage-item {
@@ -301,10 +306,6 @@
   -webkit-user-drag: none;
 }
 
-.collage-item.tall {
-  grid-row: span 2;
-}
-
 .collage-item:hover {
   box-shadow: 0 18px 60px -10px rgba(0, 0, 0, 0.35);
   transform: scale(1.03);
@@ -312,27 +313,33 @@
 
 @media screen and (max-width: 1024px) {
   .photo-collage {
-    grid-template-rows: repeat(2, 120px);
-    grid-auto-columns: minmax(120px, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 130px;
+    grid-template-areas:
+      "team team team expo"
+      "team team team expo"
+      "session session work office"
+      "session session award avurudu"
+      "hackathon workshop night avurudu";
     gap: 10px;
   }
 }
 
-/* Mobile: switch to row-flow so nothing overflows horizontally */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 560px) {
   .photo-collage {
-    grid-auto-flow: row;
-    grid-template-rows: none;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 110px;
-    padding: 0;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .photo-collage {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-rows: 120px;
+    grid-template-areas:
+      "team team"
+      "team team"
+      "work office"
+      "expo award"
+      "expo hackathon"
+      "session session"
+      "session session"
+      "workshop avurudu"
+      "night avurudu";
+    gap: 8px;
   }
 }
 
