@@ -1,15 +1,11 @@
 import type { TechIconSlug } from '../components/TechIcon';
 import profileImg from '../assets/profile.jpg';
+import heroPortrait from '../assets/hero-portrait.jpg';
 import bistecLogo from '../assets/logos/bistec-logo.png';
 import nsbmLogo from '../assets/logos/nsbm-logo.png';
 import thomasLogo from '../assets/logos/thomas-logo.png';
 import duothanAwardImg from '../assets/achievements/duothan-award.jpg';
 import pandoraAwardImg from '../assets/achievements/pandora-award.jpg';
-import schoolPortraitImg from '../assets/milestones/school-portrait.jpg';
-import nsbmPortraitImg from '../assets/milestones/nsbm-portrait.jpg';
-import bistecWorkImg from '../assets/milestones/bistec-work.jpg';
-import bistecAwardImg from '../assets/milestones/bistec-award.jpg';
-import travelplanArchImg from '../assets/projects/travelplan-arch.jpg';
 import bistecWorksession from '../assets/bistec/team-worksession.jpg';
 import bistecHearts from '../assets/bistec/hearts-academy.jpg';
 import bistecAiExpo from '../assets/bistec/ai-expo.jpg';
@@ -39,6 +35,7 @@ import articleGenShowcase from '../assets/projects/article-generator-showcase.jp
 import auctionShowcase from '../assets/projects/auction-showcase.jpg';
 import financeShowcase from '../assets/projects/finance-showcase.jpg';
 import wasteShowcase from '../assets/projects/waste-showcase.jpg';
+import affectlearnShowcase from '../assets/projects/affectlearn-showcase.jpg';
 
 export interface Project {
   id: string;
@@ -102,7 +99,8 @@ export type LucideSkillIcon =
   | 'bot'
   | 'sparkles'
   | 'braces'
-  | 'plug';
+  | 'plug'
+  | 'flask';
 
 export interface SkillItem {
   name: string;
@@ -117,7 +115,6 @@ export interface Milestone {
   title: string;
   subtitle: string;
   description: string;
-  image?: { src: string; alt: string; tilt?: 'left' | 'right'; logo?: boolean };
 }
 
 export const GITHUB_USERNAME = 'lakshitha-dev';
@@ -155,22 +152,16 @@ export const NAV_LINKS: { label: string; href: string }[] = [
 
 export const HERO = {
   name: 'Lakshitha Wijerathne',
-  roleLine: 'Software Engineer Specializing in AI Agents & Automation',
-  affiliations: [
-    {
-      logo: nsbmLogo,
-      logoAlt: 'NSBM Green University',
-      text: 'BSc (Hons) in Computer Science — NSBM Green University',
-    },
-    {
-      logo: bistecLogo,
-      logoAlt: 'BISTEC Global Services',
-      text: 'Associate Software Engineer at BISTEC Global Services',
-    },
-  ],
-  buttons: [
-    { label: 'Contact Info', href: '#contact', download: false },
-  ],
+  role: 'Associate Software Engineer',
+  roleLead: 'Associate Software Engineer specializing in',
+  roleFocus: 'AI agents and automation.',
+  badgeTagline: 'AI agents and automation',
+  photo: heroPortrait,
+  photoAlt: 'Portrait of Lakshitha Wijerathne',
+  employer: { logo: bistecLogo, name: 'BISTEC Global Services' },
+  university: { logo: nsbmLogo, name: 'NSBM Green University' },
+  primaryCta: { label: 'Contact me', href: '#contact' },
+  secondaryCta: { label: 'View projects', href: '#projects' },
 };
 
 export const LOADING = {
@@ -240,7 +231,8 @@ export const SKILLS_META = {
 
 /* Evidence-based: extracted from ExpenseAgent, ServiceNow platform, QuizBank,
  * DocMind, Medium Article Generator, Travel Plan Platform, Pandora Knowledge
- * Guardian, and SAMS. */
+ * Guardian, SAMS, and AffectLearn (ML models, fine-tuning, FastAPI backend,
+ * test suites). */
 export const SKILL_CATEGORIES: { category: string; items: SkillItem[] }[] = [
   {
     category: 'Programming Languages',
@@ -267,6 +259,8 @@ export const SKILL_CATEGORIES: { category: string; items: SkillItem[] }[] = [
       { name: 'Node.js', slug: 'nodedotjs', level: 'Intermediate' },
       { name: 'Flutter', slug: 'flutter', level: 'Intermediate' },
       { name: 'Streamlit', slug: 'streamlit', level: 'Intermediate' },
+      { name: 'WebSockets', lucide: 'plug', level: 'Intermediate' },
+      { name: 'SQLAlchemy + Alembic', slug: 'sqlalchemy', level: 'Intermediate' },
     ],
   },
   {
@@ -276,22 +270,34 @@ export const SKILL_CATEGORIES: { category: string; items: SkillItem[] }[] = [
       { name: 'Copilot Studio', lucide: 'bot', level: 'Experienced' },
       { name: 'Google ADK', lucide: 'bot', level: 'Experienced' },
       { name: 'LangChain', slug: 'langchain', level: 'Experienced' },
-      { name: 'LangGraph', slug: 'langgraph', level: 'Intermediate' },
+      { name: 'LangGraph', slug: 'langgraph', level: 'Experienced' },
       { name: 'Semantic Kernel', lucide: 'brain', level: 'Intermediate' },
       { name: 'OpenAI API', lucide: 'sparkles', level: 'Experienced' },
       { name: 'Azure OpenAI', lucide: 'sparkles', level: 'Experienced' },
       { name: 'Google Gemini', slug: 'googlegemini', level: 'Experienced' },
       { name: 'RAG & Hybrid Search', lucide: 'brain', level: 'Experienced' },
-      { name: 'OpenCV', slug: 'opencv', level: 'Intermediate' },
       { name: 'n8n', slug: 'n8n', level: 'Experienced' },
       { name: 'LlamaIndex', lucide: 'brain', level: 'Intermediate' },
       { name: 'Prompt Engineering', lucide: 'sparkles', level: 'Experienced' },
     ],
   },
   {
+    category: 'Machine Learning',
+    items: [
+      { name: 'PyTorch', slug: 'pytorch', level: 'Intermediate' },
+      { name: 'scikit-learn', slug: 'scikitlearn', level: 'Intermediate' },
+      { name: 'MediaPipe', slug: 'mediapipe', level: 'Intermediate' },
+      { name: 'ONNX Runtime', slug: 'onnx', level: 'Intermediate' },
+      { name: 'OpenCV', slug: 'opencv', level: 'Intermediate' },
+      { name: 'Hugging Face Transformers', slug: 'huggingface', level: 'Intermediate' },
+      { name: 'QLoRA / PEFT', lucide: 'brain', level: 'Intermediate' },
+    ],
+  },
+  {
     category: 'Databases',
     items: [
       { name: 'PostgreSQL', slug: 'postgresql', level: 'Experienced' },
+      { name: 'Redis', slug: 'redis', level: 'Intermediate' },
       { name: 'MongoDB', slug: 'mongodb', level: 'Intermediate' },
       { name: 'Qdrant', slug: 'qdrant', level: 'Experienced' },
       { name: 'Azure AI Search', lucide: 'database', level: 'Experienced' },
@@ -315,6 +321,14 @@ export const SKILL_CATEGORIES: { category: string; items: SkillItem[] }[] = [
       { name: 'Cloudflare', slug: 'cloudflare', level: 'Intermediate' },
       { name: 'Git', slug: 'git', level: 'Experienced' },
       { name: 'GitHub', slug: 'github', level: 'Experienced' },
+    ],
+  },
+  {
+    category: 'Testing',
+    items: [
+      { name: 'pytest', slug: 'pytest', level: 'Intermediate' },
+      { name: 'Vitest', slug: 'vitest', level: 'Intermediate' },
+      { name: 'Playwright', lucide: 'flask', level: 'Intermediate' },
     ],
   },
 ];
@@ -385,18 +399,19 @@ export const FEATURED_META = {
   title: 'Final Year Project',
 };
 
+/* Evidence-based: facts and metrics from the AffectLearn thesis
+ * (C:\dev\AffectLearn\Research\Research\docs\thesis-senate, ch. 4–5). */
 export const FEATURED = {
-  name: 'Travel Plan Platform: an AI-powered travel marketplace for Sri Lanka',
-  tagline: 'Live at travel-plan.live — 13 microservices, one conversational travel agent.',
+  name: 'AffectLearn: an affect-aware adaptive e-learning platform',
+  tagline:
+    'BSc (Hons) Computer Science research, NSBM Green University, 2026. Live at affectlearn.tech.',
   description:
-    'Connects tourists with hotels, tour guides, and vehicle owners in one marketplace. A streaming AI assistant calls live services as tools to answer travel questions, recommend providers, and generate full multi-day itineraries with cost breakdowns — on top of a Spring Boot microservices backbone with saga-orchestrated multi-provider booking and Kafka-driven review pipelines.',
+    'Most learning platforms only react to quiz scores, after a learner has already struggled. AffectLearn watches for disengagement and confusion while the learner studies. In-browser MediaPipe reduces the webcam to facial-geometry signals (no image ever leaves the device), alongside mouse, keyboard and performance signals. A LangGraph multi-agent pipeline on FastAPI decides through a logged gate whether to step in, then GPT-4o writes help for the exact lesson section the learner is on.',
   stats: [
-    { value: '13', label: 'Microservices' },
-    { value: '5', label: 'User roles' },
-    { value: '<2 min', label: 'AI trip planning<br/>(from ~3 hours)' },
+    { value: '0.92', label: 'Engagement AUC<br/>(EngageNet test set)' },
+    { value: '7', label: 'LangGraph<br/>pipeline nodes' },
+    { value: '2,300', label: 'Automated<br/>tests' },
   ],
-  image: travelplanArchImg,
-  imageAlt: 'Travel Plan Platform architecture overview',
   team: [
     { src: nsbmLogo, alt: 'NSBM Green University' },
     { src: profileImg, alt: 'Lakshitha Wijerathne' },
@@ -405,30 +420,117 @@ export const FEATURED = {
   /* **text** segments render as <strong> metric emphasis */
   achievements: [
     {
-      title: 'Conversational AI Travel Agent',
-      text: 'An SSE-streamed chat assistant with tool-calling into live hotel, guide, vehicle, and trip-plan services — powered by **Google Gemini** with **LangChain4j** and **Google ADK**.',
+      title: 'Privacy-First Affect Sensing',
+      text: 'MediaPipe runs in the browser and turns each webcam frame into **11 facial-geometry signals**. No image is ever sent, and a behaviour-only mode skips the camera entirely.',
     },
     {
-      title: 'Saga-Orchestrated Booking',
-      text: 'Multi-provider bookings execute as a single transaction with the **Saga pattern** — automatic rollback and a refund engine keep every party consistent.',
+      title: 'Multi-Agent Decision Pipeline',
+      text: 'A **7-node LangGraph** graph covers affect detection, a learner-profile gate, a pedagogical agent, content and video adapters, and delivery, with every decision logged for review.',
     },
     {
-      title: 'Event-Driven with Kafka',
-      text: '**4 Kafka topics** plus dead-letter queues drive itinerary creation, review prompts, and rating recalculation across services.',
+      title: 'Engagement Model at 0.92 AUC',
+      text: 'A gradient-boosted model on facial geometry scored **0.9225 AUC** on held-out EngageNet participants and runs live on CPU through **ONNX Runtime**.',
     },
     {
-      title: '13-Service Architecture',
-      text: '**11 domain microservices** behind Spring Cloud Gateway and Eureka discovery — each service owns its own database.',
+      title: 'Gated, Escalating Help',
+      text: 'An **11-check gate** with confidence floors, cooldowns and a per-session cap decides when to step in. Help escalates from a hint to a breakdown, a new explanation, then a **YouTube** video.',
     },
     {
-      title: 'Deployed & Live',
-      text: 'Running at **travel-plan.live** — Next.js 16 frontend, Dockerized services, and **GitHub Actions CI** on every push.',
+      title: 'LLM Help, Measured',
+      text: '**GPT-4o** produced 180 of 180 usable replies in offline evaluation. A QLoRA fine-tuned **Llama-3-8B** reached 0.82 action accuracy offline.',
     },
     {
-      title: '~3 Hours to Under 2 Minutes',
-      text: 'The AI agent compresses typical trip planning from hours of manual research into a **two-minute conversation**.',
+      title: 'Tested and Live on Azure',
+      text: '**2,300 automated tests**, GitHub Actions CI/CD, and **Azure App Service** with PostgreSQL 16 and Redis. In a 20-learner simulation every help card was traced, with a median **3.52 s** from reading to card.',
     },
   ],
+  /* The thesis's four stated contributions (ch. 1.8, 6.3) with their
+   * strongest supporting result (ch. 5). */
+  research: {
+    heading: 'Research Contributions',
+    contributions: [
+      {
+        tag: 'C1 · Artefact',
+        metric: 'Live platform',
+        text: 'A working multi-agent platform with a logged adaptation gate between image-free detectors and grounded, escalating LLM help that learners can also request.',
+      },
+      {
+        tag: 'C2 · Empirical',
+        metric: '0.9225 AUC',
+        text: 'Image-free engagement detection evaluated per participant: 95% CI 0.889–0.948, significant at p = 0.0005, plus a label audit explaining the DAiSEE ceiling.',
+      },
+      {
+        tag: 'C3 · Method',
+        metric: 'Gate replay',
+        text: 'A new offline method that measures, before any trial, how precisely and how often a tutoring system would intervene.',
+      },
+      {
+        tag: 'C4 · Knowledge',
+        metric: '83% on target',
+        text: 'Facial-channel help offers landed on the target state 83% of the time, 2.88× the base rate, and extra gate checks were shown to pace help rather than sharpen it.',
+      },
+    ],
+  },
+};
+
+/* Self-playing learner-cycle panel in the Final Year Project section.
+ * Mirrors AffectLearn's real flow (thesis ch. 4.4): detection, gate,
+ * pedagogical agent, then escalating help. Confidence readings in the
+ * script are illustrative; the 0.70 floor is the real gate setting. */
+export type DemoState = 'focused' | 'confused' | 'bored';
+
+export interface DemoBeat {
+  state: DemoState;
+  /** Position on that state's help ladder. */
+  level: number;
+  /** Illustrative detector reading compared against the gate floor. */
+  confidence: number;
+  /** Learner response shown at the end of the beat, leading to the next. */
+  press?: 'advance' | 'resolve';
+}
+
+export const AFFECT_DEMO = {
+  title: 'Live learner cycle',
+  note: 'Illustrative session. The live system runs this graph on each learner every 30 seconds, and 0.70 is its real gate floor for facial and interaction readings.',
+  summary:
+    'An auto-playing illustration of AffectLearn. While the learner is focused, the gate holds back. When a confused or bored reading crosses the 0.70 floor, the gate passes and the agents step in, and each time the learner says they are still stuck, help escalates from a hint to a breakdown, a new explanation and a short video.',
+  floor: 0.7,
+  states: [
+    { id: 'focused', label: 'Focused' },
+    { id: 'confused', label: 'Confused' },
+    { id: 'bored', label: 'Bored' },
+  ] as { id: DemoState; label: string }[],
+  signals: 'Face geometry, mouse and keyboard',
+  detection: { focused: 'engaged', confused: 'confused', bored: 'bored' } as Record<DemoState, string>,
+  ladders: {
+    confused: [
+      { title: 'Hint', text: 'A short nudge, written by GPT-4o for the section on screen.', agent: 'chooses a hint' },
+      { title: 'Step-by-step breakdown', text: 'The same idea split into small, ordered steps.', agent: 'escalates to a breakdown' },
+      { title: 'A new explanation', text: 'The concept explained a different way.', agent: 'tries a new explanation' },
+      { title: 'Short video', text: 'One short YouTube explainer, found by the video sub-agent.', agent: 'delegates to the video agent' },
+    ],
+    bored: [
+      { title: 'Harder challenge', text: 'A tougher question to pull the learner back in.', agent: 'raises the challenge' },
+      { title: 'Skip ahead', text: 'Moves the learner on to the next section.', agent: 'skips ahead' },
+    ],
+  },
+  advanceLabel: { confused: 'Still stuck', bored: "I'd rather move on" },
+  resolveLabel: 'Got it',
+  focusedCard: {
+    title: 'No interruption',
+    text: 'The gate holds back. The reading is just recorded and the learner keeps going.',
+  },
+  /* One loop of the session, about 4.3 s per beat. */
+  script: [
+    { state: 'focused', level: 0, confidence: 0.42 },
+    { state: 'confused', level: 0, confidence: 0.81, press: 'advance' },
+    { state: 'confused', level: 1, confidence: 0.84, press: 'advance' },
+    { state: 'confused', level: 2, confidence: 0.79, press: 'advance' },
+    { state: 'confused', level: 3, confidence: 0.83, press: 'resolve' },
+    { state: 'focused', level: 0, confidence: 0.38 },
+    { state: 'bored', level: 0, confidence: 0.76, press: 'advance' },
+    { state: 'bored', level: 1, confidence: 0.78, press: 'resolve' },
+  ] as DemoBeat[],
 };
 
 export const PROJECTS_META = {
@@ -437,6 +539,18 @@ export const PROJECTS_META = {
 };
 
 export const PROJECTS: Project[] = [
+  {
+    id: 'affectlearn',
+    title: 'AffectLearn: Affect-Aware Adaptive E-Learning',
+    description:
+      'Final-year research platform that watches for disengagement and confusion from in-browser facial geometry and interaction signals, with no webcam image leaving the device. A LangGraph multi-agent pipeline on FastAPI decides through a logged gate when to step in, and GPT-4o writes help for the exact lesson section, escalating from hint to video. Engagement model: 0.92 AUC on held-out EngageNet participants.',
+    tags: ['Next.js', 'FastAPI', 'LangGraph', 'MediaPipe', 'GPT-4o', 'Azure'],
+    category: 'AI',
+    image: affectlearnShowcase,
+    liveUrl: 'https://affectlearn.tech/',
+    repoUrl: 'https://github.com/mlswijerathne/AffectLearn',
+    year: '2026',
+  },
   {
     id: 'expense-agent',
     title: 'Enterprise Expense Agent & MCP Gateway',
@@ -696,11 +810,6 @@ export const MILESTONES: Milestone[] = [
     subtitle: 'O/Ls & A/Ls (Physical Science stream) · Colours Award',
     description:
       'Completed my O/Ls and A/Ls in the Physical Science stream — the foundation years of discipline and teamwork, capped with a Colours award at the 2019 Colours Night.',
-    image: {
-      src: schoolPortraitImg,
-      alt: "In school uniform on the grounds at St. Thomas' College, Matale",
-      tilt: 'left',
-    },
   },
   {
     id: '2',
@@ -709,11 +818,6 @@ export const MILESTONES: Milestone[] = [
     subtitle: 'BSc (Hons) in Computer Science',
     description:
       'Began the degree — and wrote my first lines of production-bound code the same year.',
-    image: {
-      src: nsbmPortraitImg,
-      alt: 'On campus at NSBM Green University',
-      tilt: 'right',
-    },
   },
   {
     id: '3',
@@ -722,7 +826,6 @@ export const MILESTONES: Milestone[] = [
     subtitle: 'BISTEC Global Services',
     description:
       'First industry role — built the QuizBank AI evaluation platform end to end and did R&D on Cloudflare, Supabase, and Google ADK.',
-    image: { src: bistecWorkImg, alt: 'Working with the team at BISTEC Global Services', tilt: 'right' },
   },
   {
     id: '4',
@@ -731,7 +834,6 @@ export const MILESTONES: Milestone[] = [
     subtitle: 'BISTEC Global Services · Agent Accelerator team',
     description:
       'Now full-time — building production MCP gateways and Copilot Studio agents on Azure.',
-    image: { src: bistecAwardImg, alt: 'Recognition on stage at BISTEC Hearts Academy', tilt: 'left' },
   },
 ];
 

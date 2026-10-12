@@ -35,6 +35,15 @@ import {
   siOpencv,
   siStreamlit,
   siSqlite,
+  siPytorch,
+  siScikitlearn,
+  siMediapipe,
+  siOnnx,
+  siHuggingface,
+  siRedis,
+  siSqlalchemy,
+  siPytest,
+  siVitest,
 } from 'simple-icons';
 
 const ICONS = {
@@ -74,6 +83,15 @@ const ICONS = {
   opencv: siOpencv,
   streamlit: siStreamlit,
   sqlite: siSqlite,
+  pytorch: siPytorch,
+  scikitlearn: siScikitlearn,
+  mediapipe: siMediapipe,
+  onnx: siOnnx,
+  huggingface: siHuggingface,
+  redis: siRedis,
+  sqlalchemy: siSqlalchemy,
+  pytest: siPytest,
+  vitest: siVitest,
 } as const;
 
 export type TechIconSlug = keyof typeof ICONS;

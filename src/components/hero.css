@@ -1,7 +1,8 @@
 /* ============================================================
  * HERO (#profile) + background video layer.
- * Values ported from specs/hero.md. Shared .name gradient,
- * .btn family, and .social-btn-1 live in index.css.
+ * Copy column beside a frosted-glass ID badge on a lanyard.
+ * Shared .btn / .btn-color-1 / .social-btn-1 and the
+ * ash-gradient-move keyframes live in index.css.
  * ============================================================ */
 
 /* --- Background stack --- */
@@ -44,54 +45,12 @@
   z-index: 1;
 }
 
-/* --- Layout --- */
+/* --- Shared layout classes (About uses .section-container,
+       Projects uses .btn-container) --- */
 .section-container {
   display: flex;
   align-items: center;
   gap: 2rem;
-}
-
-#profile {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-  /* Reference quirk kept as-is: fadeInBlur keyframes are intentionally
-     undefined, so this declaration never animates. */
-  animation: fadeInBlur 1s ease-out;
-}
-
-.section-text {
-  align-self: center;
-  text-align: center;
-}
-
-.section-text.profile-text {
-  position: absolute;
-  top: 27vh;
-  right: 0;
-  margin-right: 6vw;
-  align-items: flex-end;
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.slogan-inline-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  margin-top: 68vh;
-  flex-direction: column;
-}
-
-.inline-btn-social-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  flex-wrap: wrap;
 }
 
 .btn-container {
@@ -101,11 +60,149 @@
   margin-top: 10px;
 }
 
-#social-container {
+/* --- Layout --- */
+#profile {
+  position: relative;
+  height: auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  /* Clears the fixed desktop nav (13vh + 20px offset). */
+  padding-top: calc(13vh + 20px + 1.5rem);
+  padding-bottom: 3rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  align-items: center;
+  column-gap: clamp(2.5rem, 6vw, 7rem);
+  /* Clip the lanyard strap at the top edge; keep badge shadows. */
+  overflow-x: visible;
+  overflow-y: clip;
+}
+
+/* --- Copy column --- */
+.hero-copy {
   display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-  gap: 1.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.hero-affiliations {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.75rem;
+  list-style: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #707070;
+}
+
+.hero-affiliations li {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.hero-affiliations img {
+  display: block;
+  width: auto;
+  height: 20px;
+  object-fit: contain;
+}
+
+.hero-affiliations li:last-child img {
+  height: 24px;
+}
+
+.hero-name {
+  margin-top: 1.625rem;
+  padding-bottom: 0.12em;
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(4.5rem, 7.8vw, 7rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  background: linear-gradient(270deg, #222, #444 40%, #8e8c8c 80%, #222);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: ash-gradient-move 10s ease-in-out infinite;
+}
+
+.hero-name span {
+  display: block;
+}
+
+.hero-role {
+  margin-top: 1.125rem;
+  max-width: 32ch;
+  font-size: 1.375rem;
+  line-height: 1.45;
+  font-weight: 500;
+  color: #707070;
+}
+
+.hero-role strong {
+  font-weight: 500;
+  color: #1c1c1c;
+  white-space: nowrap;
+}
+
+.hero-actions {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 1.75rem;
+}
+
+.hero-ctas,
+.hero-socials {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* --- Buttons --- */
+.hero-btn-primary {
+  background: #1c1c1c;
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.18),
+    0 16px 32px rgba(0, 0, 0, 0.18);
+}
+
+.hero-btn-primary:hover {
+  background: #111;
+  color: #fff;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.18),
+    0 20px 40px rgba(0, 0, 0, 0.24);
+}
+
+.hero-btn-primary:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* The white glass ring alone vanishes on the white hero; add a hairline. */
+#profile .btn-color-1,
+#profile .social-btn-1:not(#upwork-btn) {
+  box-shadow:
+    0 0 0 2px hsla(0, 0%, 100%, 0.6),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.07),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.9),
+    0 16px 32px rgba(0, 0, 0, 0.12);
+}
+
+#profile .btn-color-1:hover,
+#profile .social-btn-1:not(#upwork-btn):hover {
+  box-shadow:
+    0 0 0 2px hsla(0, 0%, 100%, 0.8),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.09),
+    inset 0 1px 0 #fff,
+    0 20px 40px rgba(0, 0, 0, 0.18);
 }
 
 /* Upwork CTA as a solid brand-green box with white glyph */
@@ -128,66 +225,492 @@
     0 20px 40px rgba(20, 168, 0, 0.35);
 }
 
-/* Reference used margin-bottom:-0.5rem here — fine with 40px logo rows,
-   but it collapses text-height rows into each other. Clean spacing instead. */
-.inline-container {
-  justify-content: center;
+/* --- Badge on a lanyard --- */
+.hero-stage {
+  position: relative;
+  width: 360px;
+  height: 540px;
+  justify-self: end;
+  transform-origin: 50% -250px;
+}
+
+.hero-lanyard {
+  position: absolute;
+  inset: 0;
+  perspective: 1200px;
+  transform-origin: 50% -250px;
+}
+
+.hero-strap {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - 8px);
+  width: 40px;
+  height: 100vh;
+  margin-left: -20px;
+  border-radius: 0 0 6px 6px;
+  background: linear-gradient(90deg, #0e0e0e, #2b2b2b 50%, #0e0e0e);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+.hero-strap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 6px;
+  left: 5px;
+  right: 5px;
+  border-left: 1px dashed hsla(0, 0%, 100%, 0.22);
+  border-right: 1px dashed hsla(0, 0%, 100%, 0.22);
+}
+
+.hero-clip {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: -18px;
+  width: 56px;
+  height: 34px;
+  margin-left: -28px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #f4f4f4, #bcbcbc);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    inset 0 -2px 3px rgba(0, 0, 0, 0.22),
+    0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+.hero-clip::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 9px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.hero-badge {
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  background: hsla(0, 0%, 100%, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow:
+    inset 0 0 0 1px hsla(0, 0%, 100%, 0.9),
+    inset 0 1px 0 #fff,
+    0 0 0 1px rgba(0, 0, 0, 0.07),
+    0 50px 100px -30px rgba(17, 17, 26, 0.45),
+    0 18px 36px -18px rgba(17, 17, 26, 0.25);
+  /* --tilt-* are set from Hero.tsx while the pointer is over the hero. */
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-badge-slot {
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  width: 60px;
+  height: 10px;
+  margin-left: -30px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.14);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.25),
+    0 1px 0 hsla(0, 0%, 100%, 0.9);
+}
+
+.hero-badge-photo {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 40px;
+  height: 350px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #8a8a8a;
+}
+
+.hero-badge-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+}
+
+.hero-badge-meta {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hero-badge-id {
   display: flex;
   align-items: center;
-  margin-bottom: 0.35rem;
+  gap: 12px;
 }
 
-.inline-2 {
-  margin-bottom: 0;
+.hero-badge-mark {
+  flex: none;
+  width: 40px;
+  height: 40px;
 }
 
-/* Affiliation logos sized to the .section-text-p4 text (0.9rem ≈ 14px) */
-.uni-logo {
+.hero-badge-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.hero-badge-name {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #111;
+  white-space: nowrap;
+}
+
+.hero-badge-role {
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+  white-space: nowrap;
+}
+
+.hero-badge-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.hero-badge-logo {
+  display: block;
   width: auto;
-  height: 14px;
-  margin-right: 0.35rem;
-  object-fit: contain;
-  flex-shrink: 0;
+  height: 18px;
 }
 
-/* --- Breakpoints (file order preserved from reference) --- */
-/* Long-name scaling on tablets: the reference's 5.8rem fits a short
-   name; ours needs intermediate steps before the 600px switch. */
-@media screen and (max-width: 1280px) {
-  .name {
-    font-size: 4.6rem;
+.hero-badge-logo--uni {
+  display: none;
+}
+
+.hero-badge-tagline {
+  font-size: 12px;
+  font-weight: 500;
+  color: #555;
+}
+
+.hero-badge-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(
+    circle at var(--sheen-x, 30%) var(--sheen-y, 12%),
+    hsla(0, 0%, 100%, 0.5),
+    hsla(0, 0%, 100%, 0) 45%
+  );
+}
+
+/* --- Entry: waits for the preloader to lift (Preloader adds
+       html.is-loaded), so the motion is actually seen. --- */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-rise,
+  .hero-stage {
+    opacity: 0;
   }
-  .section-text.profile-text {
-    max-width: 88vw;
+  .is-loaded .hero-rise {
+    animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .is-loaded .hero-rise--name {
+    animation-delay: 70ms;
+  }
+  .is-loaded .hero-rise--role {
+    animation-delay: 140ms;
+  }
+  .is-loaded .hero-rise--actions {
+    animation-delay: 210ms;
+  }
+  .is-loaded .hero-stage {
+    animation: hero-drop 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }
 
-@media screen and (max-width: 900px) {
-  .name {
-    font-size: 3.6rem;
+@media (prefers-reduced-motion: reduce) {
+  .hero-badge {
+    transition: none;
   }
 }
 
-@media screen and (min-width: 1400px) {
-  .profile-section {
-    height: 90vh;
-    margin-top: 10vh;
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  .slogan-inline-btn {
-    margin-top: 50vh;
-  }
-}
-
-@media screen and (min-width: 1280px) and (max-width: 1400px) {
-  .slogan-inline-btn {
-    margin-top: 82vh;
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
+/* Swings from the strap's anchor above the badge (transform-origin). */
+@keyframes hero-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-160px) rotate(-8deg);
+  }
+  45% {
+    opacity: 1;
+    transform: translateY(8px) rotate(3deg);
+  }
+  65% {
+    transform: translateY(-2px) rotate(-1.4deg);
+  }
+  82% {
+    transform: translateY(0) rotate(0.5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .hero-badge {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: #f4f4f4;
+  }
+}
+
+/* --- Breakpoints --- */
 @media screen and (max-width: 1400px) {
-  #profile,
   .section-container {
     display: block;
+  }
+}
+
+/* Hamburger nav is in flow above the hero from here down. */
+@media screen and (max-width: 1280px) {
+  #profile {
+    min-height: calc(100vh - 13vh);
+    min-height: calc(100dvh - 13vh);
+    padding-top: 4rem;
+  }
+}
+
+/* Stacked, centred: badge on top, copy below. */
+@media screen and (max-width: 1023px) {
+  #profile {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    row-gap: 2.125rem;
+    min-height: 0;
+    padding-top: 3.5rem;
+    padding-bottom: 3rem;
+    text-align: center;
+  }
+
+  .hero-stage {
+    order: -1;
+    justify-self: center;
+    width: 248px;
+    height: 360px;
+    transform-origin: 50% -110px;
+  }
+
+  /* Resting hang: the whole lanyard leans slightly from its anchor. */
+  .hero-lanyard {
+    perspective: 900px;
+    transform: rotate(-3deg);
+    transform-origin: 50% -110px;
+  }
+
+  .hero-strap {
+    width: 36px;
+    margin-left: -18px;
+  }
+
+  .hero-clip {
+    top: -15px;
+    width: 54px;
+    height: 32px;
+    margin-left: -27px;
+  }
+
+  .hero-clip::after {
+    left: 13px;
+    right: 13px;
+  }
+
+  .hero-badge {
+    border-radius: 26px;
+  }
+
+  .hero-badge-slot {
+    top: 12px;
+    width: 54px;
+    height: 9px;
+    margin-left: -27px;
+  }
+
+  .hero-badge-photo {
+    left: 14px;
+    right: 14px;
+    top: 30px;
+    height: 224px;
+    border-radius: 16px;
+  }
+
+  .hero-badge-meta {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    gap: 12px;
+  }
+
+  .hero-badge-id {
+    gap: 9px;
+  }
+
+  .hero-badge-mark {
+    width: 30px;
+    height: 30px;
+  }
+
+  .hero-badge-text {
+    gap: 2px;
+  }
+
+  .hero-badge-name {
+    font-size: 15px;
+  }
+
+  .hero-badge-role {
+    font-size: 12px;
+  }
+
+  .hero-badge-foot {
+    padding-top: 12px;
+  }
+
+  .hero-badge-logo {
+    height: 15px;
+  }
+
+  /* The badge carries both affiliations here, so the strip above the
+     name is kept for screen readers only. */
+  .hero-badge-logo--uni {
+    display: block;
+    height: 19px;
+  }
+
+  .hero-badge-tagline {
+    display: none;
+  }
+
+  .hero-affiliations {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .hero-copy {
+    width: 100%;
+    align-items: center;
+  }
+
+  .hero-name {
+    margin-top: 0;
+    font-size: clamp(2.6rem, 13vw, 4.5rem);
+  }
+
+  .hero-role {
+    margin-top: 0.625rem;
+    max-width: 28ch;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #434242;
+  }
+
+  .hero-role strong {
+    color: #111;
+  }
+
+  .hero-actions {
+    margin-top: 1.5rem;
+    width: 100%;
+    max-width: 26rem;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .hero-ctas {
+    width: 100%;
+    gap: 0.625rem;
+  }
+
+  .hero-ctas .btn {
+    flex: 1;
+    min-width: 0;
+    padding: 1rem 1.125rem;
+  }
+
+  .hero-socials {
+    justify-content: center;
+    gap: 0.875rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .is-loaded .hero-rise {
+      animation-delay: 380ms;
+    }
+    .is-loaded .hero-rise--name {
+      animation-delay: 380ms;
+    }
+    .is-loaded .hero-rise--role {
+      animation-delay: 450ms;
+    }
+    .is-loaded .hero-rise--actions {
+      animation-delay: 520ms;
+    }
+  }
+}
+
+/* Short phones (browser toolbars showing): shrink the badge so the
+   primary CTA stays above the fold. zoom scales its layout box too. */
+@media screen and (max-width: 1023px) and (max-height: 800px) {
+  #profile {
+    padding-top: 3rem;
+    row-gap: 1.75rem;
+  }
+  .hero-stage {
+    zoom: 0.8;
+  }
+}
+
+@media screen and (max-width: 1023px) and (max-height: 700px) {
+  #profile {
+    padding-top: 2.5rem;
+  }
+  .hero-stage {
+    zoom: 0.68;
   }
 }
 
@@ -205,66 +728,9 @@
     );
   }
 
-  #profile {
-    gap: 2rem;
-    height: 66vh;
-    padding: 0 1rem;
-    margin: 17vh 0 0;
-    margin-bottom: 0;
-  }
-  #profile,
-  .section-text.profile-text {
-    flex-direction: column;
-    align-items: center;
-  }
-  .section-text.profile-text {
-    position: static;
-    margin: 0;
-    text-align: center;
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    max-width: 100%;
-  }
-  /* Column-flex children size to max-content — cap them so long
-     lines wrap inside the viewport instead of overflowing. */
-  .section-text.profile-text > * {
-    max-width: 100%;
-  }
-  .inline-container {
-    flex-wrap: wrap;
-    padding: 0 0.5rem;
-  }
-  .slogan-inline-btn,
-  .inline-btn-social-container,
-  .btn-container,
-  #social-container {
-    width: 100%;
-    max-width: 100%;
-    flex-wrap: wrap;
-  }
-  .name {
-    margin-bottom: 0.5rem;
-  }
-  .inline-2,
-  .inline-container {
-    justify-content: center;
-    margin-bottom: 0.5rem;
-  }
-  .uni-logo {
-    height: 12px;
-  }
-  .slogan-inline-btn {
-    margin-top: 2rem;
-    gap: 1rem;
-  }
-  .inline-btn-social-container {
-    gap: 1rem;
-  }
   .btn-container {
+    width: 100%;
+    max-width: 100%;
     flex-wrap: wrap;
-  }
-  .section-text-p2 {
-    margin-bottom: 1rem;
   }
 }

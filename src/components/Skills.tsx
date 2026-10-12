@@ -1,6 +1,6 @@
 import './skills.css';
 import { useEffect, useRef, useState } from 'react';
-import { Database, Cloud, Brain, Bot, Sparkles, Braces, Plug } from 'lucide-react';
+import { Database, Cloud, Brain, Bot, Sparkles, Braces, Plug, FlaskConical } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import type { LucideSkillIcon, SkillItem } from '../data';
 import { SKILLS_META, SKILL_CATEGORIES } from '../data';
@@ -15,6 +15,7 @@ const LUCIDE_MAP: Record<LucideSkillIcon, LucideIcon> = {
   sparkles: Sparkles,
   braces: Braces,
   plug: Plug,
+  flask: FlaskConical,
 };
 
 /* Brand-ish colors for skills without a simple-icons glyph */
@@ -26,6 +27,7 @@ const LUCIDE_COLORS: Record<LucideSkillIcon, string> = {
   sparkles: '#f5a623',
   braces: '#512bd4',
   plug: '#7c3aed',
+  flask: '#2ead33',
 };
 
 const TILES_PER_ROW = 6;

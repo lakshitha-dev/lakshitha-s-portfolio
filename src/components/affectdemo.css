@@ -1,0 +1,495 @@
+/* ============================================================
+ * AFFECTLEARN DEMO: self-playing learner cycle in the Final
+ * Year Project section. Glass panel; each beat lights the
+ * pipeline stage by stage, then shows the help card.
+ * Indigo = active agent / reading above floor, green = help.
+ * ============================================================ */
+/* --beat (one script beat) is set inline from AffectLearnDemo's BEAT_MS. */
+.ald {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  padding: 1.25rem;
+  border-radius: 24px;
+  background: hsla(0, 0%, 100%, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    inset 0 0 0 1px hsla(0, 0%, 100%, 0.9),
+    inset 0 1px 0 #fff,
+    0 0 0 1px rgba(0, 0, 0, 0.07),
+    0 30px 60px -28px rgba(17, 17, 26, 0.3);
+  font-family: "DM Sans", sans-serif;
+  color: #0a0a0a;
+}
+
+.ald-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.ald-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.ald-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0a0a0a;
+}
+
+/* Live dot: pulses while the session plays. */
+.ald-title::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #9ca3af;
+}
+
+.ald.is-playing .ald-title::before {
+  background: #16a34a;
+  animation: ald-live 1.6s ease-in-out infinite;
+}
+
+@keyframes ald-live {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.ald-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.05);
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.ald-toggle:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* --- Status track: current learner state + loop progress --- */
+.ald-track {
+  margin: 0.9rem 0 1.1rem;
+}
+
+.ald-states {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.ald-state {
+  flex: 1;
+  padding: 0.38rem 0.6rem;
+  border-radius: 999px;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #777;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.ald-state.is-active {
+  background: #fff;
+  color: #0a0a0a;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.ald-progress {
+  display: flex;
+  gap: 4px;
+  margin-top: 0.6rem;
+}
+
+.ald-progress span {
+  position: relative;
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.ald-progress span.is-done {
+  background: #4f46e5;
+}
+
+.ald-progress i {
+  position: absolute;
+  inset: 0;
+  background: #4f46e5;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: ald-fill var(--beat) linear forwards;
+}
+
+.ald:not(.is-playing) .ald-progress i {
+  animation-play-state: paused;
+}
+
+@keyframes ald-fill {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* --- Pipeline stages --- */
+.ald-flow {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.ald-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  opacity: 0.32;
+  transform: translateY(4px);
+  transition:
+    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ald-stage.is-lit {
+  opacity: 1;
+  transform: none;
+}
+
+.ald-stage.is-lit.tone-off {
+  opacity: 0.45;
+}
+
+/* Connector drawn down from the previous stage as this one lights. */
+.ald-stage:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: -0.9rem;
+  width: 2px;
+  height: 0.9rem;
+  border-radius: 1px;
+  background: #4f46e5;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.3s ease;
+}
+
+.ald-stage.is-lit:not(:first-child)::before {
+  transform: scaleY(1);
+}
+
+.ald-stage.tone-off::before {
+  background: #c9cbd2;
+}
+
+.ald-stage-icon {
+  flex: none;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: #fff;
+  color: #0a0a0a;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 6px 14px -8px rgba(17, 17, 26, 0.35);
+  transition:
+    box-shadow 0.3s ease,
+    color 0.3s ease;
+}
+
+.ald-stage.is-lit.tone-on .ald-stage-icon {
+  color: #4f46e5;
+  box-shadow:
+    0 0 0 1.5px rgba(79, 70, 229, 0.5),
+    0 0 18px rgba(79, 70, 229, 0.22);
+}
+
+.ald-stage.is-lit.tone-pass .ald-stage-icon {
+  color: #15803d;
+  box-shadow:
+    0 0 0 1.5px rgba(22, 163, 74, 0.5),
+    0 0 18px rgba(22, 163, 74, 0.2);
+}
+
+.ald-stage.tone-hold .ald-stage-icon {
+  color: #6b7280;
+}
+
+.ald-stage-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem 0.5rem;
+  min-width: 0;
+  min-height: 36px;
+}
+
+.ald-stage-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.ald-stage-detail {
+  width: 100%;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.ald-chip {
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(79, 70, 229, 0.1);
+  color: #4338ca;
+}
+
+.tone-pass .ald-chip {
+  background: rgba(22, 163, 74, 0.12);
+  color: #15803d;
+}
+
+.tone-hold .ald-chip {
+  background: rgba(0, 0, 0, 0.06);
+  color: #555;
+}
+
+/* --- Confidence meter on the detection stage --- */
+.ald-meter {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  margin-top: 0.15rem;
+}
+
+.ald-meter-bar {
+  position: relative;
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.07);
+}
+
+.ald-meter-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #9ca3af;
+  transform: scaleX(var(--fill, 0));
+  transform-origin: left;
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.3s ease;
+}
+
+.ald-meter.is-above .ald-meter-fill {
+  background: #4f46e5;
+}
+
+.ald-meter-floor {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  left: calc(var(--floor, 0.7) * 100%);
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: #0a0a0a;
+}
+
+.ald-meter-text {
+  flex: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #0a0a0a;
+}
+
+.ald-meter-text span {
+  font-weight: 500;
+  color: #777;
+}
+
+/* --- Help card --- */
+.ald-card {
+  margin-top: 1.1rem;
+  padding: 1rem;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.07),
+    0 16px 32px -18px rgba(17, 17, 26, 0.35);
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ald-card.is-lit {
+  opacity: 1;
+  transform: none;
+}
+
+.ald-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.ald-card-icon {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: #fff;
+  background: radial-gradient(circle at 35% 30%, #4ade80, #16a34a);
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.14);
+}
+
+.ald-card.is-quiet .ald-card-icon {
+  color: #4b5563;
+  background: #f1f1f3;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+.ald-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0a0a0a;
+}
+
+.ald-card-text {
+  margin-top: 0.15rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #555;
+}
+
+.ald-ladder {
+  display: flex;
+  gap: 0.3rem;
+  margin: 0.85rem 0 0.75rem;
+}
+
+.ald-ladder span {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.08);
+  transition: background-color 0.3s ease;
+}
+
+.ald-ladder span.is-on {
+  background: #16a34a;
+}
+
+/* Learner responses: presentational; the script "presses" them. */
+.ald-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.ald-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #0a0a0a;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    background-color 0.16s ease;
+}
+
+.ald-btn-dark {
+  color: #fff;
+  background: #1c1c1c;
+  box-shadow:
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.15),
+    0 8px 18px -8px rgba(0, 0, 0, 0.45);
+}
+
+.ald-btn.is-disabled {
+  opacity: 0.4;
+}
+
+.ald-btn.is-pressing {
+  transform: scale(0.94);
+  background: #ececef;
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.16),
+    0 0 0 4px rgba(79, 70, 229, 0.18);
+}
+
+.ald-btn-dark.is-pressing {
+  background: #000;
+  box-shadow:
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.15),
+    0 0 0 4px rgba(79, 70, 229, 0.3);
+}
+
+.ald-note {
+  margin-top: 0.9rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: #777;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .ald {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: #f7f7f8;
+  }
+}

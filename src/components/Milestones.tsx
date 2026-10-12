@@ -15,20 +15,6 @@ export default function Milestones() {
         {MILESTONES.map((m, i) => (
           <div key={m.id} className="timeline-item" {...{ 'date-is': m.date }}>
             <div className="timeline-upper">
-              {m.image && i % 2 === 1 && (
-                <Reveal variant="left" className="milestone-photo-wrap">
-                  <img
-                    src={m.image.src}
-                    alt={m.image.alt}
-                    className={
-                      m.image.logo
-                        ? 'milestone-logo'
-                        : `milestone-photo tilt-${m.image.tilt ?? 'left'}`
-                    }
-                    loading="lazy"
-                  />
-                </Reveal>
-              )}
               <Reveal variant={i % 2 === 0 ? 'left' : 'right'}>
                 <div className="milestone-details">
                   <h1>{m.title}</h1>
@@ -36,20 +22,6 @@ export default function Milestones() {
                   <p>{m.description}</p>
                 </div>
               </Reveal>
-              {m.image && i % 2 === 0 && (
-                <Reveal variant="right" className="milestone-photo-wrap">
-                  <img
-                    src={m.image.src}
-                    alt={m.image.alt}
-                    className={
-                      m.image.logo
-                        ? 'milestone-logo'
-                        : `milestone-photo tilt-${m.image.tilt ?? 'right'}`
-                    }
-                    loading="lazy"
-                  />
-                </Reveal>
-              )}
             </div>
           </div>
         ))}

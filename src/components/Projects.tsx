@@ -17,6 +17,7 @@ const TAG_SLUGS: Record<string, TechIconSlug> = {
   Python: 'python',
   FastAPI: 'fastapi',
   LangChain: 'langchain',
+  LangGraph: 'langgraph',
   n8n: 'n8n',
   React: 'react',
   'Next.js': 'nextdotjs',

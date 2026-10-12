@@ -19,14 +19,20 @@ export default function Preloader() {
     let hideTimer = 0;
     let unmountTimer = 0;
 
+    // html.is-loaded starts the hero's entry animation (hero.css).
+    const hide = () => {
+      setHidden(true);
+      document.documentElement.classList.add('is-loaded');
+      unmountTimer = window.setTimeout(() => setGone(true), 850);
+    };
+
     const tick = (now: number) => {
       const p = Math.min(100, Math.round(((now - start) / DURATION) * 100));
       setPercent(p);
       if (p < 100) {
         raf = requestAnimationFrame(tick);
       } else {
-        setHidden(true);
-        unmountTimer = window.setTimeout(() => setGone(true), 850);
+        hide();
       }
     };
     raf = requestAnimationFrame(tick);
@@ -34,8 +40,7 @@ export default function Preloader() {
     // Safety: never trap the page if rAF is throttled.
     hideTimer = window.setTimeout(() => {
       setPercent(100);
-      setHidden(true);
-      unmountTimer = window.setTimeout(() => setGone(true), 850);
+      hide();
     }, DURATION + 1200);
 
     return () => {

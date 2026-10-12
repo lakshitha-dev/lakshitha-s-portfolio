@@ -1,6 +1,7 @@
 import './featured.css';
 import { useState } from 'react';
 import { FEATURED, FEATURED_META, QUOTE_BLOCK } from '../data';
+import AffectLearnDemo from './AffectLearnDemo';
 import { Reveal } from './Reveal';
 
 function StatLabel({ label }: { label: string }) {
@@ -29,7 +30,10 @@ function CardText({ text }: { text: string }) {
   );
 }
 
-/** Featured project: overview grid, stat chips, and achievements marquee. */
+/**
+ * Featured project: overview grid with the interactive learner-cycle demo,
+ * stat chips, research contributions, and the achievements marquee.
+ */
 export default function FeaturedProject() {
   const [paused, setPaused] = useState(false);
 
@@ -77,11 +81,26 @@ export default function FeaturedProject() {
             </div>
           </div>
 
-          <Reveal variant="right" delay={0.12} className="nsf-image-wrap">
-            <div className="nsf-image-wrap-inner">
-              <img src={FEATURED.image} alt={FEATURED.imageAlt} />
-            </div>
+          <Reveal variant="right" delay={0.12} className="nsf-visual">
+            <AffectLearnDemo />
           </Reveal>
+        </div>
+
+        <div className="nsf-research">
+          <Reveal variant="left">
+            <h3 className="nsf-achievements-title">{FEATURED.research.heading}</h3>
+          </Reveal>
+          <div className="nsf-research-grid">
+            {FEATURED.research.contributions.map((c, i) => (
+              <Reveal key={c.tag} variant="fade" delay={0.08 * i} className="nsf-research-cell">
+                <article className="nsf-research-card">
+                  <span className="nsf-research-tag">{c.tag}</span>
+                  <p className="nsf-research-metric">{c.metric}</p>
+                  <p className="nsf-research-text">{c.text}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
         </div>
 
         <div className="nsf-achievements">

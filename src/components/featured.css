@@ -29,7 +29,7 @@
 /* --- Overview grid --- */
 .nsf-overview {
   display: grid;
-  grid-template-columns: 1.4fr 0.6fr;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
   align-items: center;
   gap: clamp(1.5rem, 4vw, 3rem);
   width: 100%;
@@ -128,19 +128,84 @@
   filter: grayscale(20%);
 }
 
-/* --- Image column --- */
-.nsf-image-wrap {
+/* --- Visual column (interactive learner-cycle demo) --- */
+.nsf-visual {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 0;
 }
 
-.nsf-image-wrap img {
-  height: auto;
-  max-height: 38vh;
-  object-fit: contain;
-  border-radius: 12px;
-  max-width: 100%;
+/* --- Research contributions --- */
+.nsf-research {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2.25rem auto 0;
+}
+
+.nsf-research-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.nsf-research-cell {
+  height: 100%;
+}
+
+.nsf-research-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.2rem 1.25rem;
+  border: 1px solid #e6e6e6;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.nsf-research-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+  border-color: #0a0a0a;
+}
+
+.nsf-research-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #666;
+}
+
+.nsf-research-metric {
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #0a0a0a;
+}
+
+.nsf-research-text {
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+@media (max-width: 1024px) {
+  .nsf-research-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .nsf-research-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* --- Key Achievements marquee --- */
@@ -332,11 +397,9 @@
   .nsf-overview {
     grid-template-columns: 1fr;
   }
-  .nsf-image-wrap {
-    order: -1;
-  }
-  .nsf-image-wrap img {
-    max-height: 28vh;
+  /* Stories read first on narrow screens; the demo follows the text. */
+  .nsf-visual {
+    justify-content: flex-start;
   }
 }
 
