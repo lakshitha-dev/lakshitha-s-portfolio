@@ -22,13 +22,5 @@
       "solid-principles",
       "clean-code"
     ]
-  },
-  {
-    "title": "How to Configure Your Flutter App with Firebase Using the FlutterFire CLI",
-    "pubDate": "Mon, 17 Mar 2025 05:04:07 GMT",
-    "link": "https://lakshithaa.medium.com/how-to-configure-your-flutter-app-with-firebase-using-the-flutterfire-cli-a95b3210f933?source=rss-bd24d7a9a1d9------2",
-    "thumbnail": "https://cdn-images-1.medium.com/max/686/1*vV0EgCx8_rAz3XQzKSVUlg.jpeg",
-    "description": "Firebase is a powerful backend-as-a-service (BaaS) platform that provides developers with tools to build, improve, and grow their applications. Integrating Fire…",
-    "categories": []
   }
 ]
