@@ -1,5 +1,17 @@
 [
   {
+    "title": "From Source Code to Exploit: How Shannon Rethinks AI Penetration Testing",
+    "pubDate": "Wed, 14 Oct 2026 13:01:04 GMT",
+    "link": "https://lakshithaa.medium.com/from-source-code-to-exploit-how-shannon-rethinks-ai-penetration-testing-a4f448ebfd3c?source=rss-bd24d7a9a1d9------2",
+    "thumbnail": "https://cdn-images-1.medium.com/max/1024/1*34Ekewy5FOntohCYhXKxoQ.png",
+    "description": "A technical walkthrough of the open-source, code-aware AI pentester — its agent architecture, its “no exploit, no report” philosophy, how to run it safely on a …",
+    "categories": [
+      "penetration-testing",
+      "devsecops",
+      "artificial-intelligence"
+    ]
+  },
+  {
     "title": "Building a Production-Ready RAG System: Architecture, Pipelines, and CI/CD on Azure",
     "pubDate": "Wed, 18 Mar 2026 06:14:12 GMT",
     "link": "https://lakshithaa.medium.com/building-a-production-ready-rag-system-architecture-pipelines-and-ci-cd-on-azure-5f64d52498f1?source=rss-bd24d7a9a1d9------2",
